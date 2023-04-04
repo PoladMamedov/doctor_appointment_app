@@ -38,26 +38,94 @@
                <input type="text" class="form-control " id="searchInput" placeholder="Our Visit">
                <label for="searchInput ">Поиск визита</label>
             </div>
-            <select class="form-select form-select-lg  fs-6" style="width: 280px" aria-label=".form-select-lg example">
-               <option selected>Статус визита</option>
-               <option value="1">Open</option>
-               <option value="2">Done</option>
+            <select class=" select-options form-select form-select-lg  fs-6" style="width: 280px"
+               aria-label=".form-select-lg example">
+               <option value="Статус визита" selected>Статус визита</option>
+               <option value="Open">Open</option>
+               <option value="Done">Done</option>
 
             </select>
-            <select class="form-select form-select-lg  fs-6" style="width: 260px" aria-label=".form-select-lg example">
-               <option selected>Срочность визита</option>
-               <option value="1">High</option>
-               <option value="2">Normal</option>
-               <option value="3">Low</option>
+            <select class=" select-urgency form-select form-select-lg  fs-6" style="width: 260px"
+               aria-label=".form-select-lg example">
+               <option value="Срочность визита" selected>Срочность визита</option>
+               <option value="High">High</option>
+               <option value="Normal">Normal</option>
+               <option value="Low">Low</option>
             </select>
 
             <input class="btn  btn-outline-primary" type="submit" value="Поиск">
          </form>
-         <ul class="mt-5 p-0 border rounded border-primary-subtle visits">
+         <div class="mt-5 p-0  visits-container">
             <h2 class="text-left text-primary-emphasis p-2 mb-4">Ваши визиты:</h2>
+
+            <ul class="visit-wrap d-flex flex-wrap p-2 gap-5  justify-content-center">
+               <li class=" visit-card border rounded border-primary-subtle">
+                  <p class="patient-name text-center fs-5 mt-3">
+                     Заверталюк Егор
+                  </p>
+                  <p class="patient-doctor text-center fs-5">
+                     Кардиолог
+                  </p>
+                  <div class="status-wrap d-flex justify-content-center m-4">
+                     <p class="visit-status me-5 mb-0   text-white bg-dark rounded p-2">
+                        Done
+                     </p>
+                     <p class="visit-urgency mb-0 text-white bg-dark rounded p-2">
+                        High
+                     </p>
+                  </div>
+                  <div class="btn-wrap ms-5 me-5  mb-3">
+
+                     <button class="btn btn-secondary more-btn  fs-6">Показать больше</button>
+                     <button class="btn  btn-outline-primary">Редактировать</button>
+                  </div>
+               </li>
+               <li class=" visit-card border rounded border-primary-subtle">
+                  <p class="patient-name text-center fs-5 mt-3">
+                     Дмитрий Богданович
+                  </p>
+                  <p class="patient-doctor text-center fs-5">
+                     Стоматолог
+                  </p>
+                  <div class="status-wrap d-flex justify-content-center m-4">
+                     <p class="visit-status me-5 mb-0  text-white bg-dark rounded p-2">
+                        Open
+                     </p>
+                     <p class="visit-urgency mb-0  text-white bg-dark rounded p-2">
+                        Low
+                     </p>
+                  </div>
+                  <div class="btn-wrap ms-5 me-5  mb-3">
+
+                     <button class="btn btn-secondary more-btn   fs-6">Показать больше</button>
+                     <button class="btn  btn-outline-primary">Редактировать</button>
+                  </div>
+               </li>
+               <li class=" visit-card border rounded border-primary-subtle">
+                  <p class="patient-name text-center fs-5 mt-3">
+                     Полад Мамедов
+                  </p>
+                  <p class="patient-doctor text-center fs-5">
+                     Хирург
+                  </p>
+                  <div class="status-wrap d-flex justify-content-center m-4">
+                     <p class="visit-status me-5 mb-0  text-white bg-dark rounded p-2">
+                        Open
+                     </p>
+                     <p class="visit-urgency mb-0  text-white bg-dark rounded  p-2">
+                        Normal
+                     </p>
+                  </div>
+                  <div class="btn-wrap ms-5 me-5 mb-3">
+
+                     <button class="btn btn-secondary more-btn   fs-6">Показать больше</button>
+                     <button class="btn  btn-outline-primary">Редактировать</button>
+                  </div>
+               </li>
+            </ul>
             <p class="no-item p-2">No items has been added</p>
 
-         </ul>
+         </div>
          <!-- готова форма для входу, вона не повинна тут бути, просто готова верстка яку після вставки в JS звідси видалимо -->
          <form class="w-50 d-flex flex-column border border-primary rounded p-4">
             <div class="mb-3">
