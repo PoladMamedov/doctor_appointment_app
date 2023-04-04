@@ -5,3 +5,11 @@ body {
 .navbar {
    padding: 0;
 }
+
+.main-logo {
+   transition: all .5s ease;
+}
+
+.main-logo:hover {
+   transform: scale(1.2);
+}
