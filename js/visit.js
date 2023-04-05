@@ -56,7 +56,6 @@ export default class VisitForm {
 
     newVisitForm.querySelector("#visit-submit-btn").addEventListener("click", (e) => {
         e.preventDefault();
-        // ! запрос и рендер карточки
       });
 
     newVisitForm.querySelector("#visit-cancel-btn").addEventListener("click", (e) => {
@@ -91,6 +90,13 @@ class VisitCardiologistForm extends VisitForm {
    <input id="age" placeholder="вік" type="text" class="form-control mb-2">`;
     newCardiologistVisitForm.querySelector("#priority-select").insertAdjacentHTML("afterend", additionalInfo);
     newCardiologistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 1;
+
+    newCardiologistVisitForm.querySelector("#visit-submit-btn").addEventListener("click", (e) => {
+      
+      // ! запрос и рендер карточки
+    });
+
+
     return newCardiologistVisitForm;
   }
 }

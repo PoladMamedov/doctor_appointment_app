@@ -4,12 +4,12 @@ import VisitForm from "./visit.js";
 
 // чтобы работала форма визита нужно раскоментировать кнопку и код ниже, код ниже будет запускаться после входа и появления кнопки создать визит.
 
-// const form = new VisitForm();
-// const createVisitBtn = document.querySelector("#create-visit-btn");
-// createVisitBtn.addEventListener("click", (e) => {
-//   const visitForm = form.render();
-//   document.body.prepend(visitForm);
-// });
+const form = new VisitForm();
+const createVisitBtn = document.querySelector("#create-visit-btn");
+createVisitBtn.addEventListener("click", (e) => {
+  const visitForm = form.render();
+  document.body.prepend(visitForm);
+});
 
 const searchInput = document.getElementById('searchInput');
 const list = document.querySelector('.visit-wrap');
