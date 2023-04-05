@@ -1,3 +1,5 @@
+import Modal from "./Modal.js";
+
 import DoctorAPIService from "./doctor_api_service.js";
 async function ok() {
   const request = new DoctorAPIService();
@@ -8,3 +10,12 @@ async function ok() {
   console.log(allCards);
 }
 ok();
+
+
+const register = new Modal();
+
+const btn = document.querySelector('.authorization-btn');
+
+btn.addEventListener('click', (e)=>{
+    document.body.append(register.render())
+}) 
