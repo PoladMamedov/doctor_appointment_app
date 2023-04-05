@@ -1,6 +1,37 @@
 import DoctorAPIService from "./doctor_api_service.js";
 
 export default class VisitForm {
+  createFormInfoObject(form){
+    
+  }
+  doctorSelect(form){
+    form.querySelector("#visit-doctor-select").addEventListener("change", (e) => {
+      if (e.target.selectedIndex === 1) {
+        form.remove();
+        const newCardiologistForm = new VisitCardiologistForm();
+        document.body.prepend(newCardiologistForm.render());
+      } else if (e.target.selectedIndex === 2) {
+        form.remove();
+        const newDentistForm = new VisitDentistForm();
+        document.body.prepend(newDentistForm.render());
+      } else if (e.target.selectedIndex === 3) {
+        form.remove();
+        const newTherapistForm = new VisitTherapistForm();
+        document.body.prepend(newTherapistForm.render());
+      }
+    });
+  }
+   handleClickOutsideTheForm(e, form) {
+    if (
+      form.contains(e.target) ||
+      e.target.id === "create-visit-btn"
+    ) {
+      return;
+    } else {
+      form.remove();
+      document.body.removeEventListener("click", this.handleClickOutsideTheForm);
+    }
+  }
   render() {
     const newVisitForm = document.createElement("form");
     newVisitForm.classList.add(
@@ -26,9 +57,9 @@ export default class VisitForm {
        <option>Стоматолог</option>
        <option>Терапевт</option>
     </select>
-    <input id="fio" placeholder="П.І.Б." type="text" class="form-control mb-2">
-    <input id="visit-purpose" placeholder="Ціль візиту" type="text" class="form-control mb-2">
-    <input id="decription" placeholder="Опис" type="text" class="form-control mb-2">
+    <input required id="fio" placeholder="П.І.Б." type="text" class="form-control mb-2">
+    <input required id="visit-purpose" placeholder="Ціль візиту" type="text" class="form-control mb-2">
+    <input required id="decription" placeholder="Опис" type="text" class="form-control mb-2">
     <select id="priority-select" class="form-select mb-2">
        <option selected disabled>Терміновість:</option>
        <option>Звичайна</option>
@@ -36,45 +67,21 @@ export default class VisitForm {
        <option>Невідкладна</option>
     </select>
     <button id="visit-submit-btn" type="submit" class="btn btn-primary">Створити запис</button>
-    <button id="visit-cancel-btn" type="reset" class="btn btn-danger mt-2">Скасувати</button>`;
+    <button id="visit-cancel-btn" type="button" class="btn btn-danger mt-2">Скасувати</button>`;
 
-    newVisitForm.querySelector("#visit-doctor-select").addEventListener("change", (e) => {
-        if (e.target.selectedIndex === 1) {
-          newVisitForm.remove();
-          const newCardiologistForm = new VisitCardiologistForm();
-          document.body.prepend(newCardiologistForm.render());
-        } else if (e.target.selectedIndex === 2) {
-          newVisitForm.remove();
-          const newDentistForm = new VisitDentistForm();
-          document.body.prepend(newDentistForm.render());
-        } else if (e.target.selectedIndex === 3) {
-          newVisitForm.remove();
-          const newTherapistForm = new VisitTherapistForm();
-          document.body.prepend(newTherapistForm.render());
-        }
-      });
-
+    this.doctorSelect(newVisitForm);
+    
     newVisitForm.querySelector("#visit-submit-btn").addEventListener("click", (e) => {
         e.preventDefault();
       });
 
     newVisitForm.querySelector("#visit-cancel-btn").addEventListener("click", (e) => {
-        e.preventDefault();
         newVisitForm.remove();
       });
 
-    function handleClickOutsideTheForm(e) {
-      if (
-        newVisitForm.contains(e.target) ||
-        e.target.id === "create-visit-btn"
-      ) {
-        return;
-      } else {
-        newVisitForm.remove();
-        document.body.removeEventListener("click", handleClickOutsideTheForm);
-      }
-    }
-    document.body.addEventListener("click", handleClickOutsideTheForm);
+    document.body.addEventListener("click", (e)=>{
+      this.handleClickOutsideTheForm(e, newVisitForm)
+    });
 
     return newVisitForm;
   }
@@ -84,10 +91,10 @@ class VisitCardiologistForm extends VisitForm {
   render() {
     const newCardiologistVisitForm = super.render();
     const additionalInfo = 
-   `<input id="pressure" placeholder="Звичайний тиск" type="text" class="form-control mb-2">
-   <input id="mass-index" placeholder="індекс маси тіла" type="text" class="form-control mb-2">
-   <input id="heart-diseases" placeholder="Перенесені захворювання серцево-судинної системи" type="text" class="form-control mb-2">
-   <input id="age" placeholder="вік" type="text" class="form-control mb-2">`;
+   `<input required id="pressure" placeholder="Звичайний тиск" type="text" class="form-control mb-2">
+   <input required id="mass-index" placeholder="індекс маси тіла" type="text" class="form-control mb-2">
+   <input required id="heart-diseases" placeholder="Перенесені захворювання серцево-судинної системи" type="text" class="form-control mb-2">
+   <input required id="age" placeholder="вік" type="text" class="form-control mb-2">`;
     newCardiologistVisitForm.querySelector("#priority-select").insertAdjacentHTML("afterend", additionalInfo);
     newCardiologistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 1;
 
@@ -103,7 +110,7 @@ class VisitCardiologistForm extends VisitForm {
 class VisitDentistForm extends VisitForm {
   render() {
     const newDentistVisitForm = super.render();
-    const additionalInfo = `<input id="last-visit" placeholder="дата останнього візиту" type="text" class="form-control mb-2">`;
+    const additionalInfo = `<input required id="last-visit" placeholder="дата останнього візиту" type="text" class="form-control mb-2">`;
     newDentistVisitForm.querySelector("#priority-select").insertAdjacentHTML("afterend", additionalInfo);
     newDentistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 2;
     return newDentistVisitForm;
@@ -112,7 +119,7 @@ class VisitDentistForm extends VisitForm {
 class VisitTherapistForm extends VisitForm {
   render() {
     const newTherapistVisitForm = super.render();
-    const additionalInfo = `<input id="age" placeholder="вік" type="text" class="form-control mb-2">`;
+    const additionalInfo = `<input required id="age" placeholder="вік" type="text" class="form-control mb-2">`;
     newTherapistVisitForm.querySelector("#priority-select").insertAdjacentHTML("afterend", additionalInfo);
     newTherapistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 3;
     return newTherapistVisitForm;

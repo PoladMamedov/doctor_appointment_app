@@ -10,6 +10,7 @@ const form = new VisitForm();
 const createVisitBtn = document.querySelector("#create-visit-btn");
 createVisitBtn.addEventListener("click", (e) => {
   const visitForm = form.render();
+  console.log(document.body.contains(visitForm))
   document.body.prepend(visitForm);
 });
 
