@@ -1,13 +1,16 @@
 import DoctorAPIService from "./doctor_api_service.js";
-async function ok() {
-  const request = new DoctorAPIService();
-  const token = await request.getToken("poladikksp@gmail.com", "12345");
-  console.log(token);
+import VisitForm from "./visit.js";
 
-  const allCards = await request.qetAllCards(token);
-  console.log(allCards);
-}
-ok();
+
+// чтобы работала форма визита нужно раскоментировать кнопку и код ниже, код ниже будет запускаться после входа и появления кнопки создать визит.
+
+// const form = new VisitForm();
+// const createVisitBtn = document.querySelector("#create-visit-btn");
+// createVisitBtn.addEventListener("click", (e) => {
+//   const visitForm = form.render();
+//   document.body.prepend(visitForm);
+// });
+
 const searchInput = document.getElementById('searchInput');
 const list = document.querySelector('.visit-wrap');
 const selectStatus = document.querySelector('.select-options');

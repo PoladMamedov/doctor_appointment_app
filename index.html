@@ -14,7 +14,6 @@
 
 <body>
    <header class="header">
-
       <nav
          class="navbar navbar-expand-lg bg-body-tertiary border border-success p-2 mb-2 border-opacity-25 bg-primary-subtle">
 
@@ -23,16 +22,15 @@
                <img class="main-logo" src="./img/logo.png" alt="logo" width="80" height="80">
             </a>
             <button type="button" class="btn btn-primary authorization-btn  fs-4">Вход</button>
-            <!-- Сменить кнопку при входе ->
-               
-            <!-- <button type="button" class="btn btn-primary registration-btn  fs-4">Создать визит</button> -->
+
+            <!-- Сменить кнопку при входе НЕ МЕНЯТЬ айди на кнопке создания визита -->
+            <!-- <button id="create-visit-btn" type="button" class="btn btn-primary registration-btn  fs-4">Создать визит</button> -->
 
          </div>
       </nav>
    </header>
    <main>
       <div class="container-fluid container-lg ">
-
          <form class="d-flex justify-content-between mt-4">
             <div class="form-floating  w-25 h-25">
                <input type="text" class="form-control " id="searchInput" placeholder="Our Visit">
@@ -43,7 +41,6 @@
                <option value="Статус визита" selected>Статус визита</option>
                <option value="Open">Open</option>
                <option value="Done">Done</option>
-
             </select>
             <select class=" select-urgency form-select form-select-lg  fs-6" style="width: 260px"
                aria-label=".form-select-lg example">
@@ -52,12 +49,10 @@
                <option value="Normal">Normal</option>
                <option value="Low">Low</option>
             </select>
-
             <input class="btn  btn-outline-primary" type="submit" value="Поиск">
          </form>
          <div class="mt-5 p-0  visits-container">
             <h2 class="text-left text-primary-emphasis p-2 mb-4">Ваши визиты:</h2>
-
             <ul class="visit-wrap d-flex flex-wrap p-2 gap-5  justify-content-center">
                <li class=" visit-card border rounded border-primary-subtle">
                   <p class="patient-name text-center fs-5 mt-3">
@@ -139,37 +134,7 @@
             <button type="submit" class="btn btn-primary">Submit</button>
          </form>
 
-         <!-- готова форма для створення картки запису, теж саме, просто готова верстка -->
-         <form class="w-50 d-flex flex-column border border-primary rounded p-4">
-            <label class="form-label">Заповніть форму:</label>
-            <select name="Doctor" class="form-select mb-2">
-               <option value="1">Кардіолог</option>
-               <option value="2">Стоматолог</option>
-               <option value="2">Терапевт</option>
-            </select>
-            <input placeholder="Ціль візиту" type="text" class="form-control mb-2">
-            <input placeholder="Опис" type="text" class="form-control mb-2">
-            <select name="Priority" class="form-select mb-2">
-               <option value="1">Звичайна</option>
-               <option value="2">Пріоритетна</option>
-               <option value="2">Невідкладна</option>
-            </select>
-            <input placeholder="П.І.Б." type="text" class="form-control mb-2">
-            <input placeholder="Звичайний тиск" type="text" class="form-control mb-2">
-            <input placeholder="індекс маси тіла" type="text" class="form-control mb-2">
-            <input placeholder="Перенесені захворювання серцево-судинної системи" type="text" class="form-control mb-2">
-            <input placeholder="вік" type="text" class="form-control mb-2">
-            <input placeholder="дата останнього візиту" type="text" class="form-control mb-2">
-            <button type="submit" class="btn btn-primary">Створити запис</button>
-         </form>
-
    </main>
-
-
-
-
-
-   </div>
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
       crossorigin="anonymous"></script>
