@@ -44,10 +44,10 @@ export default class Modal {
         btnCancel.innerHTML = 'Скасувати'
         btnCancel.classList.add('btn', 'btn-danger', 'mt-2')
         form.append(divEmail, divPassword, btnForm, btnCancel);
-        btnCancel.addEventListener('click', ()=>{
+        btnCancel.addEventListener('click', () => {
             form.remove()
-        })       
-        return form;  
+        })
+        return form;
     };
 }
 
