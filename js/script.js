@@ -64,7 +64,6 @@ function applyFilters() {
     }
   });
 }
-ok();
 
 
 const register = new Modal();
