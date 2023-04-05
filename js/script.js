@@ -1,3 +1,5 @@
+import Modal from "./Modal.js";
+
 import DoctorAPIService from "./doctor_api_service.js";
 import VisitForm from "./visit.js";
 
@@ -62,3 +64,13 @@ function applyFilters() {
     }
   });
 }
+ok();
+
+
+const register = new Modal();
+
+const btn = document.querySelector('.authorization-btn');
+
+btn.addEventListener('click', (e)=>{
+    document.body.append(register.render())
+}) 
