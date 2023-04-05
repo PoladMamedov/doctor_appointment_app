@@ -1,9 +1,7 @@
 import DoctorAPIService from "./doctor_api_service.js";
+const request = new DoctorAPIService();
 
 export default class VisitForm {
-  createFormInfoObject(form){
-    
-  }
   doctorSelect(form){
     form.querySelector("#visit-doctor-select").addEventListener("change", (e) => {
       if (e.target.selectedIndex === 1) {
@@ -88,6 +86,19 @@ export default class VisitForm {
 }
 
 class VisitCardiologistForm extends VisitForm {
+  createCardiolojistObj(form){
+    return {
+      doctor: form.querySelector("#visit-doctor-select").value,
+      name: form.querySelector("#fio").value,
+      purpose: form.querySelector("#visit-purpose").value,
+      description: form.querySelector("#decription").value,
+      priority: form.querySelector("#priority-select").value,
+      pressure: form.querySelector("#pressure").value,
+      massIndex: form.querySelector("#mass-index").value,
+      heartDiseases: form.querySelector("#heart-diseases").value,
+      age: form.querySelector("#age").value,
+    }
+  }
   render() {
     const newCardiologistVisitForm = super.render();
     const additionalInfo = 
@@ -97,31 +108,73 @@ class VisitCardiologistForm extends VisitForm {
    <input required id="age" placeholder="вік" type="text" class="form-control mb-2">`;
     newCardiologistVisitForm.querySelector("#priority-select").insertAdjacentHTML("afterend", additionalInfo);
     newCardiologistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 1;
+    newCardiologistVisitForm.querySelector("#visit-submit-btn").addEventListener("click", async (e) => {
+      // ! добавление на сервер, дата это вернувшийся обьект с айди
+      const data = await request.postCard(localStorage.Authorization, this.createCardiolojistObj(newCardiologistVisitForm))
 
-    newCardiologistVisitForm.querySelector("#visit-submit-btn").addEventListener("click", (e) => {
-      
-      // ! запрос и рендер карточки
+      // ! вот тут нужно вызвать функцию создающую карточку, передать в нее дату
+
+      // ! после добавления карточки закрываем форму
+      newCardiologistVisitForm.remove()
     });
-
-
     return newCardiologistVisitForm;
   }
 }
+
 class VisitDentistForm extends VisitForm {
+  createDentistObj(form){
+    return {
+      doctor: form.querySelector("#visit-doctor-select").value,
+      name: form.querySelector("#fio").value,
+      purpose: form.querySelector("#visit-purpose").value,
+      description: form.querySelector("#decription").value,
+      priority: form.querySelector("#priority-select").value,
+      lastDate: form.querySelector("#last-visit").value,
+    }
+  }
   render() {
     const newDentistVisitForm = super.render();
     const additionalInfo = `<input required id="last-visit" placeholder="дата останнього візиту" type="text" class="form-control mb-2">`;
     newDentistVisitForm.querySelector("#priority-select").insertAdjacentHTML("afterend", additionalInfo);
     newDentistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 2;
+    newDentistVisitForm.querySelector("#visit-submit-btn").addEventListener("click", async (e) => {
+      // ! добавление на сервер, дата это вернувшийся обьект с айди
+      const data = await request.postCard(localStorage.Authorization, this.createDentistObj(newDentistVisitForm))
+
+      // ! вот тут нужно вызвать функцию создающую карточку, передать в нее дату
+
+      // ! после добавления карточки закрываем форму
+      newDentistVisitForm.remove()
+    });
     return newDentistVisitForm;
   }
 }
+
 class VisitTherapistForm extends VisitForm {
+  createTherapistObj(form){
+    return {
+      doctor: form.querySelector("#visit-doctor-select").value,
+      name: form.querySelector("#fio").value,
+      purpose: form.querySelector("#visit-purpose").value,
+      description: form.querySelector("#decription").value,
+      priority: form.querySelector("#priority-select").value,
+      age: form.querySelector("#age").value,
+    }
+  }
   render() {
     const newTherapistVisitForm = super.render();
     const additionalInfo = `<input required id="age" placeholder="вік" type="text" class="form-control mb-2">`;
     newTherapistVisitForm.querySelector("#priority-select").insertAdjacentHTML("afterend", additionalInfo);
     newTherapistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 3;
+    newTherapistVisitForm.querySelector("#visit-submit-btn").addEventListener("click", async (e) => {
+      // ! добавление на сервер, дата это вернувшийся обьект с айди
+      const data = await request.postCard(localStorage.Authorization, this.createTherapistObj(newTherapistVisitForm))
+      
+      // ! вот тут нужно вызвать функцию создающую карточку, передать в нее дату
+
+      // ! после добавления карточки закрываем форму
+      newTherapistVisitForm.remove()
+    });
     return newTherapistVisitForm;
   }
 }

@@ -10,9 +10,10 @@ const autorization = async (email, password) => {
     }).then((res) => checkStatus(res));
     if (getToken) {
       console.log("Авторизація пройшла успішно")
-      localStorage.setItem("Authorization", `Bearer ${getToken}`);
+      localStorage.setItem("Authorization", getToken);
       document.querySelector("#form").remove();
-      document.querySelector(".authorization-btn").textContent = "Створити візит";
+      document.querySelector(".authorization-btn").remove();
+      document.querySelector("#create-visit-btn").style.display = "block";
 
 
       // виклик данних з сервера, get запрос на отримання списка карток користувача
