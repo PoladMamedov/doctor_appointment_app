@@ -66,10 +66,7 @@ function applyFilters() {
 }
 
 
-const register = new Modal();
-
 const btn = document.querySelector('.authorization-btn');
-
 btn.addEventListener('click', (e)=>{
-    document.body.append(register.render())
+    new Modal().render();
 }) 
