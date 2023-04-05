@@ -1,3 +1,4 @@
+
 const searchInput = document.getElementById('searchInput');
 const list = document.querySelector('.visit-wrap');
 const selectStatus = document.querySelector('.select-options');
