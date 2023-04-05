@@ -15,14 +15,26 @@ export default class Modal {
             "translate-middle",
             "bg-light"
         );
-        form.innerHTML = `<div class="mb-3">
-        <label class="form-label">Email address</label>
-        <input type="email" class="form-control" required>
-        </div>
-        <div class="mb-3">
-        <label class="form-label">Password</label>
-        <input type="password" class="form-control" required>
-        </div>`
+        const divEmail = document.createElement('div');
+        divEmail.classList.add('mb-3');
+        const labelEmail = document.createElement('label');
+        labelEmail.classList.add('form-label');
+        labelEmail.innerHTML = 'Email address';
+        const email = document.createElement('input');
+        email.type = 'email';
+        email.classList.add('form-control');
+        email.required;
+        const divPassword = document.createElement('div');
+        divPassword.classList.add('mb-3');
+        const labelPassword = document.createElement('label');
+        labelPassword.classList.add('form-label');
+        labelPassword.innerHTML = 'Password';
+        const password = document.createElement('input');
+        password.type = 'password';
+        password.classList.add('form-control');
+        password.required;
+        divEmail.append(labelEmail, email);
+        divPassword.append(labelPassword, password);
         const btnForm = document.createElement('button');
         btnForm.type = 'submit';
         btnForm.innerText = 'Увійти';
@@ -31,12 +43,11 @@ export default class Modal {
         btnCancel.type = 'reset';
         btnCancel.innerHTML = 'Скасувати'
         btnCancel.classList.add('btn', 'btn-danger', 'mt-2')
-        form.append(btnForm, btnCancel);
-        btnCancel.addEventListener('click', () => {
+        form.append(divEmail, divPassword, btnForm, btnCancel);
+        btnCancel.addEventListener('click', ()=>{
             form.remove()
-        })
-
-        return form;
+        })       
+        return form;  
     };
 }
 
