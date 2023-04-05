@@ -1,118 +1,61 @@
+import autorization from "./RequestLogin.js";
+
 export default class Modal {
-    render() {
-        const form = document.createElement('form');
-        form.classList.add(
-            'w-50',
-            'd-flex',
-            'flex-column',
-            'border',
-            'border-primary',
-            'rounded',
-            'p-4',
-            "position-absolute",
-            "top-50",
-            "start-50",
-            "translate-middle",
-            "bg-light"
+    constructor() {
+        this.body = document.querySelector("body");
+        this.form = document.createElement("form");
+        this.labelEmail = document.createElement("label");
+        this.inputEmail = document.createElement("input");
+        this.labelPass = document.createElement("label");
+        this.inputPass = document.createElement("input");
+        this.submitBtn = document.createElement("button");
+        this.cancelBtn =  document.createElement("button");
+      }
+    
+      createElement() {
+        this.form.classList.add("w-50","d-flex","flex-column","border","border-primary","rounded","p-4","position-absolute","top-50","start-50","translate-middle","bg-light");
+        this.form.id = ("form")
+        this.labelEmail.classList.add("form-label");
+        this.labelEmail.setAttribute("for", "email")
+        this.labelEmail.innerText = "Email address";
+        this.inputEmail.classList.add("form-control");
+        this.inputEmail.id = "email";
+        this.labelPass.innerText = "Password";
+        this.labelPass.classList.add("form-label");
+        this.labelPass.setAttribute("for", "password")
+        this.inputEmail.type = "email";
+        this.inputPass.type = "password";
+        this.inputPass.id = "password";
+        this.inputPass.classList.add("form-control");
+        this.submitBtn.innerText = "Увійти";
+        this.cancelBtn.innerText = "Скасувати";
+        this.submitBtn.classList.add("btn", "btn-primary", "mt-3");
+        this.cancelBtn.classList.add("btn", "btn-danger", "mt-2");
+
+       
+        this.form.append(
+          this.labelEmail,
+          this.inputEmail,
+          this.labelPass,
+          this.inputPass,
+          this.submitBtn,
+          this.cancelBtn
         );
-        const divEmail = document.createElement('div');
-        divEmail.classList.add('mb-3');
-        const labelEmail = document.createElement('label');
-        labelEmail.classList.add('form-label');
-        labelEmail.innerHTML = 'Email address';
-        const email = document.createElement('input');
-        email.type = 'email';
-        email.classList.add('form-control');
-        email.required;
-        const divPassword = document.createElement('div');
-        divPassword.classList.add('mb-3');
-        const labelPassword = document.createElement('label');
-        labelPassword.classList.add('form-label');
-        labelPassword.innerHTML = 'Password';
-        const password = document.createElement('input');
-        password.type = 'password';
-        password.classList.add('form-control');
-        password.required;
-        divEmail.append(labelEmail, email);
-        divPassword.append(labelPassword, password);
-        const btnForm = document.createElement('button');
-        btnForm.type = 'submit';
-        btnForm.innerText = 'Увійти';
-        btnForm.classList.add('btn', 'btn-primary');
-        const btnCancel = document.createElement('button');
-        btnCancel.type = 'reset';
-        btnCancel.innerHTML = 'Скасувати'
-        btnCancel.classList.add('btn', 'btn-danger', 'mt-2')
-        form.append(divEmail, divPassword, btnForm, btnCancel);
-        btnCancel.addEventListener('click', () => {
-            form.remove()
-        })
-        return form;
-    };
+        this.cancelBtn.addEventListener('click', () => {
+                this.form.remove()});
+
+        this.submitBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+        //   console.log(this.inputEmail.value, this.inputPass.value)
+          autorization(this.inputEmail.value, this.inputPass.value);
+        });
+      }
+
+      render(selector) {
+        this.createElement();
+        document.querySelector("body").append(this.form);
+      }
+
 }
 
-
-
-
-// export default class Modal {
-//     constructor() {
-//         this.form = null;
-//     }
-
-//     render() {
-//         this.form = document.createElement('form');
-//         this.form.classList.add(
-//             'w-50',
-//             'd-flex',
-//             'flex-column',
-//             'border',
-//             'border-primary',
-//             'rounded',
-//             'p-4',
-//             "position-absolute",
-//             "top-50",
-//             "start-50",
-//             "translate-middle",
-//             "bg-light"
-//         );
-//         this.form.innerHTML = `<div class="mb-3">
-//         <label class="form-label">Email address</label>
-//         <input type="email" class="form-control" required>
-//         </div>
-//         <div class="mb-3">
-//         <label class="form-label">Password</label>
-//         <input type="password" class="form-control" required>
-//         </div>`
-//         const btnForm = document.createElement('button');
-//         btnForm.type = 'submit';
-//         btnForm.innerText = 'Увійти';
-//         btnForm.classList.add('btn', 'btn-primary');
-//         const btnCancel = document.createElement('button');
-//         btnCancel.type = 'reset';
-//         btnCancel.innerHTML = 'Скасувати'
-//         btnCancel.classList.add('btn', 'btn-danger', 'mt-2')
-//         btnCancel.addEventListener('click', () => {
-//             this.deleteForm();
-//         });
-//         this.form.append(btnForm, btnCancel);
-//         document.body.prepend(this.form);
-//         return this.form;
-//     }
-
-//     deleteForm() {
-//         this.form.remove();
-//     }
-// }
-
-// const modal = new Modal();
-// const authorizationBtn = document.querySelector('.authorization-btn');
-// authorizationBtn.addEventListener('click', () => {
-//     modal.render();
-// });
-
-// document.addEventListener('click', (event) => {
-//     if (event.target !== modal.form && !modal.form.contains(event.target)) {
-//         modal.deleteForm();
-//     }
-// });
 
