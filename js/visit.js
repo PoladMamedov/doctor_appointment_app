@@ -6,10 +6,8 @@ const list = document.querySelector('.visit-wrap');
 const selectStatus = document.querySelector('.select-options');
 const selectUrgency = document.querySelector('.select-urgency');
 let visitCards = document.querySelectorAll('.visit-wrap .visit-card');
-const randomVisit = ['Open', 'Done'];
-const randomIndex = Math.floor(Math.random() * randomVisit.length);
-const randomValue = randomVisit[randomIndex];
-console.log(randomValue);
+const noItem = document.querySelector('.no-item')
+
 
 
 class VisitFilters {
@@ -69,11 +67,14 @@ selectUrgency.addEventListener('change', () => {
 class VisitCard {
   render({ doctor, name, priority }) {
     const newCard = document.createElement('li');
+    const randomVisit = ['Open', 'Done'];
+    const randomIndex = Math.floor(Math.random() * randomVisit.length);
+    const randomValue = randomVisit[randomIndex];
     newCard.classList.add('visit-card', 'border', 'rounded', 'border-primary-subtle');
     newCard.innerHTML = `
       <p class="patient-name text-center fs-5 mt-3"> ${name} </p>
       <p class="patient-doctor text-center fs-5"> ${doctor} </p>
-      <div class="status-wrap">
+      <div class="status-wrap hide">
         <p class="visit-status visit-text">${randomValue}</p>
         <p class="visit-urgency visit-text"> ${priority} </p>
       </div>
@@ -84,11 +85,19 @@ class VisitCard {
     `;
 
     list.appendChild(newCard);
+    newCard.addEventListener('click', (e) => {
+      if (e.target.classList.contains('more-btn')) {
+        const wrap = e.target.closest('.visit-card').querySelector('.status-wrap');
+        wrap.classList.toggle('hide')
+
+      }
+    })
     visitCards = document.querySelectorAll('.visit-wrap .visit-card');
     filters.applyFilters(visitCards);
     return list;
   }
 }
+
 
 export default class VisitForm {
   doctorSelect(form) {
@@ -202,6 +211,7 @@ class VisitCardiologistForm extends VisitForm {
       const data = await request.postCard(localStorage.Authorization, this.createCardiolojistObj(newCardiologistVisitForm))
       const card = new VisitCard()
       card.render(data)
+      noItem.remove()
       // ! вот тут нужно вызвать функцию создающую карточку, передать в нее дату
 
       // ! после добавления карточки закрываем форму
@@ -234,6 +244,7 @@ class VisitDentistForm extends VisitForm {
       // ! вот тут нужно вызвать функцию создающую карточку, передать в нее дату
       const card = new VisitCard()
       card.render(data)
+      noItem.remove()
 
       // ! после добавления карточки закрываем форму
       newDentistVisitForm.remove()
@@ -263,6 +274,7 @@ class VisitTherapistForm extends VisitForm {
       const data = await request.postCard(localStorage.Authorization, this.createTherapistObj(newTherapistVisitForm))
       const card = new VisitCard()
       card.render(data)
+      noItem.remove()
 
       // ! вот тут нужно вызвать функцию создающую карточку, передать в нее дату
 
