@@ -66,6 +66,16 @@ selectUrgency.addEventListener('change', () => {
 });
 class VisitCard {
   render({ doctor, name, priority }) {
+    if (priority === "Звичайна") {
+      priority = 'Low'
+    }
+    if (priority === "Пріоритетна") {
+      priority = 'Normal'
+    }
+    if (priority === "Невідкладна") {
+      priority = 'High'
+    }
+    console.log(priority);
     const newCard = document.createElement('li');
     const randomVisit = ['Open', 'Done'];
     const randomIndex = Math.floor(Math.random() * randomVisit.length);
