@@ -6,35 +6,11 @@ const list = document.querySelector('.visit-wrap');
 const selectStatus = document.querySelector('.select-options');
 const selectUrgency = document.querySelector('.select-urgency');
 let visitCards = document.querySelectorAll('.visit-wrap .visit-card');
+const randomVisit = ['Open', 'Done'];
+const randomIndex = Math.floor(Math.random() * randomVisit.length);
+const randomValue = randomVisit[randomIndex];
+console.log(randomValue);
 
-class VisitCard {
-  render({ doctor, name, priority }) {
-
-    list.innerHTML += `<li class=" visit-card border rounded border-primary-subtle">
-    <p class="patient-name text-center fs-5 mt-3">
-       ${name}
-    </p>
-    <p class="patient-doctor text-center fs-5">
-       ${doctor}
-    </p>
-    <div class="status-wrap ">
-       <p class="visit-status visit-text">
-          Done
-       </p>
-       <p class="visit-urgency visit-text">
-          ${priority}
-       </p>
-    </div>
-    <div class="btn-wrap ms-5 me-5  mb-3">
-       <button class="btn btn-secondary more-btn  fs-6">Показать больше</button>
-       <button class="btn  btn-outline-primary">Редактировать</button>
-    </div>
- </li>`;
-    visitCards = document.querySelectorAll('.visit-wrap .visit-card'); // update the list of cards
-    filters.applyFilters();
-    return list;
-  }
-}
 
 class VisitFilters {
   constructor(list, visitCards) {
@@ -48,7 +24,8 @@ class VisitFilters {
   }
 
   applyFilters() {
-    this.visitCards.forEach((card) => {
+    this.visitCards = visitCards;
+    visitCards.forEach((card) => {
       const cardStatus = card.querySelector('.visit-status').textContent.trim();
       const cardUrgency = card.querySelector('.visit-urgency').textContent.trim();
       const cardName = card.querySelector('p').textContent.toLowerCase().replace(/\s/g, '');
@@ -56,7 +33,7 @@ class VisitFilters {
 
       const isStatusMatch =
         this.filters.status === '' ||
-        this.filters.status === 'Статус визита' || // добавлено условие для показа всех карточек
+        this.filters.status === 'Статус визита' ||
         this.filters.status === cardStatus;
 
       const isUrgencyMatch =
@@ -89,6 +66,29 @@ selectUrgency.addEventListener('change', () => {
   filters.filters.urgency = selectUrgency.value;
   filters.applyFilters();
 });
+class VisitCard {
+  render({ doctor, name, priority }) {
+    const newCard = document.createElement('li');
+    newCard.classList.add('visit-card', 'border', 'rounded', 'border-primary-subtle');
+    newCard.innerHTML = `
+      <p class="patient-name text-center fs-5 mt-3"> ${name} </p>
+      <p class="patient-doctor text-center fs-5"> ${doctor} </p>
+      <div class="status-wrap">
+        <p class="visit-status visit-text">${randomValue}</p>
+        <p class="visit-urgency visit-text"> ${priority} </p>
+      </div>
+      <div class="btn-wrap ms-5 me-5 mb-3">
+        <button class="btn btn-secondary more-btn fs-6">Показать больше</button>
+        <button class="btn btn-outline-primary">Редактировать</button>
+      </div>
+    `;
+
+    list.appendChild(newCard);
+    visitCards = document.querySelectorAll('.visit-wrap .visit-card');
+    filters.applyFilters(visitCards);
+    return list;
+  }
+}
 
 export default class VisitForm {
   doctorSelect(form) {
