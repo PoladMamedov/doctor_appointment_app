@@ -1,8 +1,97 @@
 import DoctorAPIService from "./doctor_api_service.js";
 const request = new DoctorAPIService();
 
+const searchInput = document.getElementById('searchInput');
+const list = document.querySelector('.visit-wrap');
+const selectStatus = document.querySelector('.select-options');
+const selectUrgency = document.querySelector('.select-urgency');
+let visitCards = document.querySelectorAll('.visit-wrap .visit-card');
+
+class VisitCard {
+  render({ doctor, name, priority }) {
+
+    list.innerHTML += `<li class=" visit-card border rounded border-primary-subtle">
+    <p class="patient-name text-center fs-5 mt-3">
+       ${name}
+    </p>
+    <p class="patient-doctor text-center fs-5">
+       ${doctor}
+    </p>
+    <div class="status-wrap ">
+       <p class="visit-status visit-text">
+          Done
+       </p>
+       <p class="visit-urgency visit-text">
+          ${priority}
+       </p>
+    </div>
+    <div class="btn-wrap ms-5 me-5  mb-3">
+       <button class="btn btn-secondary more-btn  fs-6">Показать больше</button>
+       <button class="btn  btn-outline-primary">Редактировать</button>
+    </div>
+ </li>`;
+    visitCards = document.querySelectorAll('.visit-wrap .visit-card'); // update the list of cards
+    filters.applyFilters();
+    return list;
+  }
+}
+
+class VisitFilters {
+  constructor(list, visitCards) {
+    this.list = list;
+    this.visitCards = visitCards;
+    this.filters = {
+      searchText: '',
+      status: '',
+      urgency: '',
+    };
+  }
+
+  applyFilters() {
+    this.visitCards.forEach((card) => {
+      const cardStatus = card.querySelector('.visit-status').textContent.trim();
+      const cardUrgency = card.querySelector('.visit-urgency').textContent.trim();
+      const cardName = card.querySelector('p').textContent.toLowerCase().replace(/\s/g, '');
+      const isNameMatch = cardName.includes(this.filters.searchText);
+
+      const isStatusMatch =
+        this.filters.status === '' ||
+        this.filters.status === 'Статус визита' || // добавлено условие для показа всех карточек
+        this.filters.status === cardStatus;
+
+      const isUrgencyMatch =
+        this.filters.urgency === '' ||
+        this.filters.urgency === 'Срочность визита' ||
+        this.filters.urgency === cardUrgency;
+
+      if (isNameMatch && isStatusMatch && isUrgencyMatch) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+}
+
+const filters = new VisitFilters(list, visitCards);
+
+searchInput.addEventListener('input', () => {
+  filters.filters.searchText = searchInput.value.toLowerCase().replace(/\s/g, '');
+  filters.applyFilters();
+});
+
+selectStatus.addEventListener('change', () => {
+  filters.filters.status = selectStatus.value;
+  filters.applyFilters();
+});
+
+selectUrgency.addEventListener('change', () => {
+  filters.filters.urgency = selectUrgency.value;
+  filters.applyFilters();
+});
+
 export default class VisitForm {
-  doctorSelect(form){
+  doctorSelect(form) {
     form.querySelector("#visit-doctor-select").addEventListener("change", (e) => {
       if (e.target.selectedIndex === 1) {
         form.remove();
@@ -19,7 +108,7 @@ export default class VisitForm {
       }
     });
   }
-   handleClickOutsideTheForm(e, form) {
+  handleClickOutsideTheForm(e, form) {
     if (
       form.contains(e.target) ||
       e.target.id === "create-visit-btn"
@@ -47,8 +136,8 @@ export default class VisitForm {
       "bg-light",
       "z-3"
     );
-    newVisitForm.innerHTML = 
-    `<label class="form-label">Заповніть форму:</label>
+    newVisitForm.innerHTML =
+      `<label class="form-label">Заповніть форму:</label>
     <select id="visit-doctor-select" class="form-select mb-2">
        <option selected disabled>Оберіть лікаря:</option>
        <option>Кардіолог</option>
@@ -68,16 +157,16 @@ export default class VisitForm {
     <button id="visit-cancel-btn" type="button" class="btn btn-danger mt-2">Скасувати</button>`;
 
     this.doctorSelect(newVisitForm);
-    
+
     newVisitForm.querySelector("#visit-submit-btn").addEventListener("click", (e) => {
-        e.preventDefault();
-      });
+      e.preventDefault();
+    });
 
     newVisitForm.querySelector("#visit-cancel-btn").addEventListener("click", (e) => {
-        newVisitForm.remove();
-      });
+      newVisitForm.remove();
+    });
 
-    document.body.addEventListener("click", (e)=>{
+    document.body.addEventListener("click", (e) => {
       this.handleClickOutsideTheForm(e, newVisitForm)
     });
 
@@ -86,7 +175,7 @@ export default class VisitForm {
 }
 
 class VisitCardiologistForm extends VisitForm {
-  createCardiolojistObj(form){
+  createCardiolojistObj(form) {
     return {
       doctor: form.querySelector("#visit-doctor-select").value,
       name: form.querySelector("#fio").value,
@@ -101,8 +190,8 @@ class VisitCardiologistForm extends VisitForm {
   }
   render() {
     const newCardiologistVisitForm = super.render();
-    const additionalInfo = 
-   `<input required id="pressure" placeholder="Звичайний тиск" type="text" class="form-control mb-2">
+    const additionalInfo =
+      `<input required id="pressure" placeholder="Звичайний тиск" type="text" class="form-control mb-2">
    <input required id="mass-index" placeholder="індекс маси тіла" type="text" class="form-control mb-2">
    <input required id="heart-diseases" placeholder="Перенесені захворювання серцево-судинної системи" type="text" class="form-control mb-2">
    <input required id="age" placeholder="вік" type="text" class="form-control mb-2">`;
@@ -111,7 +200,8 @@ class VisitCardiologistForm extends VisitForm {
     newCardiologistVisitForm.querySelector("#visit-submit-btn").addEventListener("click", async (e) => {
       // ! добавление на сервер, дата это вернувшийся обьект с айди
       const data = await request.postCard(localStorage.Authorization, this.createCardiolojistObj(newCardiologistVisitForm))
-
+      const card = new VisitCard()
+      card.render(data)
       // ! вот тут нужно вызвать функцию создающую карточку, передать в нее дату
 
       // ! после добавления карточки закрываем форму
@@ -122,7 +212,7 @@ class VisitCardiologistForm extends VisitForm {
 }
 
 class VisitDentistForm extends VisitForm {
-  createDentistObj(form){
+  createDentistObj(form) {
     return {
       doctor: form.querySelector("#visit-doctor-select").value,
       name: form.querySelector("#fio").value,
@@ -142,6 +232,8 @@ class VisitDentistForm extends VisitForm {
       const data = await request.postCard(localStorage.Authorization, this.createDentistObj(newDentistVisitForm))
 
       // ! вот тут нужно вызвать функцию создающую карточку, передать в нее дату
+      const card = new VisitCard()
+      card.render(data)
 
       // ! после добавления карточки закрываем форму
       newDentistVisitForm.remove()
@@ -151,7 +243,7 @@ class VisitDentistForm extends VisitForm {
 }
 
 class VisitTherapistForm extends VisitForm {
-  createTherapistObj(form){
+  createTherapistObj(form) {
     return {
       doctor: form.querySelector("#visit-doctor-select").value,
       name: form.querySelector("#fio").value,
@@ -169,7 +261,9 @@ class VisitTherapistForm extends VisitForm {
     newTherapistVisitForm.querySelector("#visit-submit-btn").addEventListener("click", async (e) => {
       // ! добавление на сервер, дата это вернувшийся обьект с айди
       const data = await request.postCard(localStorage.Authorization, this.createTherapistObj(newTherapistVisitForm))
-      
+      const card = new VisitCard()
+      card.render(data)
+
       // ! вот тут нужно вызвать функцию создающую карточку, передать в нее дату
 
       // ! после добавления карточки закрываем форму
@@ -178,3 +272,5 @@ class VisitTherapistForm extends VisitForm {
     return newTherapistVisitForm;
   }
 }
+
+
