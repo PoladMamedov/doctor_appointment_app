@@ -1,11 +1,23 @@
-import { list } from './constants.js';
-import { filters } from './Filter.js';
+
 import DoctorAPIService from './doctor_api_service.js';
 const request = new DoctorAPIService()
 let visitCards = document.querySelectorAll('.visit-wrap .visit-card');
+const list = document.querySelector('.visit-wrap');
+const searchInput = document.getElementById('searchInput');
+const selectStatus = document.querySelector('.select-options');
+const selectUrgency = document.querySelector('.select-urgency');
 
 export default class VisitCard {
    render({ doctor, name, priority, id }) {
+      if (priority === 'Звичайна') {
+         priority = 'Low'
+      }
+      if (priority === 'Пріоритетна') {
+         priority = 'Normal'
+      }
+      if (priority === 'Невідкладна') {
+         priority = 'High'
+      }
       const newCard = document.createElement('li');
       const randomVisit = ['Open', 'Done'];
       const randomIndex = Math.floor(Math.random() * randomVisit.length);
@@ -54,3 +66,56 @@ export default class VisitCard {
       });
    }
 }
+class VisitFilters {
+   constructor(list, visitCards) {
+      this.list = list;
+      this.visitCards = visitCards;
+      this.filters = {
+         searchText: '',
+         status: '',
+         urgency: '',
+      };
+   }
+
+   applyFilters() {
+      this.visitCards = visitCards;
+      visitCards.forEach((card) => {
+         const cardStatus = card.querySelector('.visit-status').textContent.trim();
+         const cardUrgency = card.querySelector('.visit-urgency').textContent.trim();
+         const cardName = card.querySelector('p').textContent.toLowerCase().replace(/\s/g, '');
+         const isNameMatch = cardName.includes(this.filters.searchText);
+
+         const isStatusMatch =
+            this.filters.status === '' ||
+            this.filters.status === 'Статус визита' ||
+            this.filters.status === cardStatus;
+
+         const isUrgencyMatch =
+            this.filters.urgency === '' ||
+            this.filters.urgency === 'Срочность визита' ||
+            this.filters.urgency === cardUrgency;
+
+         if (isNameMatch && isStatusMatch && isUrgencyMatch) {
+            card.style.display = 'block';
+         } else {
+            card.style.display = 'none';
+         }
+      });
+   }
+}
+
+const filters = new VisitFilters(list, visitCards);
+searchInput.addEventListener('input', () => {
+   filters.filters.searchText = searchInput.value.toLowerCase().replace(/\s/g, '');
+   filters.applyFilters();
+});
+
+selectStatus.addEventListener('change', () => {
+   filters.filters.status = selectStatus.value;
+   filters.applyFilters();
+});
+
+selectUrgency.addEventListener('change', () => {
+   filters.filters.urgency = selectUrgency.value;
+   filters.applyFilters();
+});
