@@ -1,4 +1,4 @@
-
+import getCardsFromServer from "./getCardsfromServer.js"; 
 
 const autorization = async (email, password) => {
   const getToken = await fetch("https://ajax.test-danit.com/api/v2/cards/login", {
@@ -15,8 +15,7 @@ const autorization = async (email, password) => {
     document.querySelector(".authorization-btn").remove();
     document.querySelector("#create-visit-btn").style.display = "block";
 
-
-    // виклик данних з сервера, get запрос на отримання списка карток користувача
+    getCardsFromServer()
     // та активація функції фільтрів
   } else {
     // внизу форми авторизації виводимо повідомдення з помилкою

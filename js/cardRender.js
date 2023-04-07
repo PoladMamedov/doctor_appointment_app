@@ -1,4 +1,5 @@
 
+
 import DoctorAPIService from './doctor_api_service.js';
 const request = new DoctorAPIService()
 let visitCards = document.querySelectorAll('.visit-wrap .visit-card');

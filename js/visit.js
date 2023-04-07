@@ -3,7 +3,10 @@ import VisitCard from "./cardRender.js";
 const request = new DoctorAPIService();
 const noItem = document.querySelector('.no-item')
 
+
 export default class VisitForm {
+  
+
   doctorSelect(form) {
     form.querySelector("#visit-doctor-select").addEventListener("change", (e) => {
       if (e.target.selectedIndex === 1) {

@@ -2,7 +2,7 @@ import Modal from "./Modal.js";
 
 import DoctorAPIService from "./doctor_api_service.js";
 import VisitForm from "./visit.js";
-
+import getCardsFromServer from "./getCardsfromServer.js"; 
 
 
 const form = new VisitForm();
@@ -13,10 +13,23 @@ createVisitBtn.addEventListener("click", (e) => {
 });
 
 
-
-const btn = document.querySelector(".authorization-btn");
-btn.addEventListener("click", (e) => {
+const logInBtn = document.querySelector(".authorization-btn");
+logInBtn.addEventListener("click", (e) => {
   new Modal().render();
 });
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (localStorage.Authorization) {
+    document.querySelector(".authorization-btn").remove();
+    document.querySelector("#create-visit-btn").style.display = "block";
+
+    getCardsFromServer()
+  } else {
+    
+    return;
+  }
+});
+
 
 
