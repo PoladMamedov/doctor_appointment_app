@@ -53,11 +53,18 @@
             <ul class="visit-wrap d-flex flex-wrap p-2 gap-5  justify-content-center">
                <li class="visit-card border rounded border-primary-subtle">
                   <div class="closeModal"></div>
-                  <p class="patient-name text-center fs-5 mt-3"> Egor </p>
+                  <p class="patient-name text-center fs-5 mt-3 p-0">Egor
+                     <span class="m-0 p-0 fs-5 hide-age hide">22 года</span>
+                  </p>
                   <p class="patient-doctor text-center fs-5"> Doctor </p>
-                  <div class="status-wrap">
+                  <div class="status-wrap parameters-wrap hide">
                      <p class="visit-status visit-text">Test</p>
                      <p class="visit-urgency visit-text">High</p>
+                  </div>
+                  <div class="hide-parameters hide">
+
+                     <p class="m-2 fs-6">Описание: ${description} </p>
+                     <p class="m-2 fs-6">Причина обращения: ${purpose}</p>
                   </div>
                   <div class="btn-wrap ms-5 me-5 mb-3">
                      <button class="btn btn-secondary more-btn fs-6">Показать больше</button>
