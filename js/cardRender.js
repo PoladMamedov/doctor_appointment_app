@@ -1,14 +1,13 @@
 
 import DoctorAPIService from './doctor_api_service.js';
 import toggleHideParameters from './HideParameters.js';
+import ageCheck from './checkAge.js';
 const request = new DoctorAPIService()
 let visitCards = document.querySelectorAll('.visit-wrap .visit-card');
 const list = document.querySelector('.visit-wrap');
 const searchInput = document.getElementById('searchInput');
 const selectStatus = document.querySelector('.select-options');
 const selectUrgency = document.querySelector('.select-urgency');
-
-
 
 
 visitCards.forEach((card) => {
@@ -20,7 +19,9 @@ visitCards.forEach((card) => {
 });
 
 export default class VisitCard {
-   render({ doctor, name, priority, id, age, description, purpose }) {
+   render(data) {
+      let { doctor, name, priority, id, age, description, purpose } = data;
+      age = ageCheck(data)
       if (priority === 'Звичайна') {
          priority = 'Low';
       }
@@ -42,7 +43,7 @@ export default class VisitCard {
       newCard.innerHTML = `
        <div class="closeModal"></div>
        <p class="patient-name text-center fs-4 mt-2">${name}
-       <span class="m-0 p-0 fs-5 hide-age hide">${age} года</span>
+       <span class="m-0 p-0 fs-5 hide-age hide">${age}</span>
        </p>
        <p class="patient-doctor text-center fs-5 mt-0">${doctor}</p>
        <div class="parameters-wrap m-0 p-0  hide">
