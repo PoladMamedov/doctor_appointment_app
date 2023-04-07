@@ -51,15 +51,20 @@
          <div class="mt-5 p-0  visits-container">
             <h2 class="text-left text-primary-emphasis p-2 mb-4">Ваши визиты:</h2>
             <ul class="visit-wrap d-flex flex-wrap p-2 gap-5  justify-content-center">
-               <li class="visit-card border rounded border-primary-subtle">
+               <li class="visit-card border rounded border-primary-subtle w-100">
                   <div class="closeModal"></div>
-                  <p class="patient-name text-center fs-5 mt-3"> Egor </p>
-                  <p class="patient-doctor text-center fs-5"> Doctor </p>
-                  <div class="status-wrap">
-                     <p class="visit-status visit-text">Test</p>
-                     <p class="visit-urgency visit-text">High</p>
+                  <p class="patient-name text-center fs-4 mt-2"> Egor </p>
+                  <p class="patient-doctor text-center fs-5 mt-0"> Doctor </p>
+                  <div class="parameters-wrap m-0 p-0 hide">
+                     <p class="visit-status visit-text fs-6">Test</p>
+                     <p class="visit-urgency visit-text fs-6">High</p>
                   </div>
-                  <div class="btn-wrap ms-5 me-5 mb-3">
+                  <div class="hide-parameters hide">
+                     <p class="m-2 fs-6">Возвраст пациента: 22 года</p>
+                     <p class="m-2 fs-6">Описание:</p>
+                     <p class="m-2 fs-6">Причина обращения: </p>
+                  </div>
+                  <div class="btn-wrap ms-5 me-5 mb-3 d-flex justify-content-center gap-3">
                      <button class="btn btn-secondary more-btn fs-6">Показать больше</button>
                      <button class="btn btn-outline-primary">Редактировать</button>
                   </div>
