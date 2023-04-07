@@ -52,7 +52,7 @@ export default class DoctorAPIService {
     }
   }
 
-  async qetAllCards(token) {
+  async getAllCards(token) {
     try {
       const response = await fetch("https://ajax.test-danit.com/api/v2/cards", {
         method: "GET",
@@ -67,7 +67,7 @@ export default class DoctorAPIService {
     }
   }
 
-  async qetCard(token, cardId) {
+  async getCard(token, cardId) {
     try {
       const response = await fetch(
         `https://ajax.test-danit.com/api/v2/cards/${cardId}`,
