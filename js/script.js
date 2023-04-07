@@ -1,9 +1,5 @@
 import Modal from "./Modal.js";
-
-import DoctorAPIService from "./doctor_api_service.js";
 import VisitForm from "./visit.js";
-
-
 
 const form = new VisitForm();
 const createVisitBtn = document.querySelector("#create-visit-btn");
@@ -12,11 +8,7 @@ createVisitBtn.addEventListener("click", (e) => {
   document.body.prepend(visitForm);
 });
 
-
-
 const btn = document.querySelector(".authorization-btn");
 btn.addEventListener("click", (e) => {
   new Modal().render();
 });
-
-
