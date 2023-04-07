@@ -1,4 +1,4 @@
-
+import VisitCard from "./cardRender.js";
 
 const checkDoctor = (doctor, element) => {
     if (doctor === "Кардіолог") {
@@ -31,8 +31,10 @@ const getCardsFromServer = async () => {
     }).then((res) => res.text()
     );
   
+    const createCard = new VisitCard()
     JSON.parse(getCards).forEach((element) => {
-        console.log(element)
+        // console.log(element)
+        createCard.render(element)
         const { doctor } = element;
         // console.log(doctor)
         checkDoctor(doctor, element);
