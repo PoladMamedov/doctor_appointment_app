@@ -1,32 +1,29 @@
 import DoctorAPIService from "./doctor_api_service.js";
 import VisitCard from "./cardRender.js";
-const noItem = document.querySelector('.no-item')
+const noItem = document.querySelector(".no-item");
 const request = new DoctorAPIService();
 
 //! Главный класс для формы создания карточки, создает все поля которые есть у всех врачей
 export default class VisitForm {
   doctorSelect(form) {
     form.querySelector("#visit-doctor-select").addEventListener("change", (e) => {
-      if (e.target.selectedIndex === 1) {
-        form.remove();
-        const newCardiologistForm = new VisitCardiologistForm();
-        document.body.prepend(newCardiologistForm.render(true));
-      } else if (e.target.selectedIndex === 2) {
-        form.remove();
-        const newDentistForm = new VisitDentistForm();
-        document.body.prepend(newDentistForm.render(true));
-      } else if (e.target.selectedIndex === 3) {
-        form.remove();
-        const newTherapistForm = new VisitTherapistForm();
-        document.body.prepend(newTherapistForm.render(true));
-      }
-    });
+        if (e.target.selectedIndex === 1) {
+          form.remove();
+          const newCardiologistForm = new VisitCardiologistForm();
+          document.body.prepend(newCardiologistForm.render());
+        } else if (e.target.selectedIndex === 2) {
+          form.remove();
+          const newDentistForm = new VisitDentistForm();
+          document.body.prepend(newDentistForm.render());
+        } else if (e.target.selectedIndex === 3) {
+          form.remove();
+          const newTherapistForm = new VisitTherapistForm();
+          document.body.prepend(newTherapistForm.render());
+        }
+      });
   }
   handleClickOutsideTheForm(e, form) {
-    if (
-      form.contains(e.target) ||
-      e.target.id === "create-visit-btn"
-    ) {
+    if (form.contains(e.target) || e.target.id === "create-visit-btn") {
       return;
     } else {
       form.remove();
@@ -35,7 +32,7 @@ export default class VisitForm {
   }
   render() {
     const newVisitForm = document.createElement("form");
-    newVisitForm.id = "create-visit-form"
+    newVisitForm.id = "create-visit-form";
     newVisitForm.classList.add(
       "w-75",
       "d-flex",
@@ -51,8 +48,7 @@ export default class VisitForm {
       "bg-light",
       "z-3"
     );
-    newVisitForm.innerHTML =
-      `<label class="form-label">Заповніть форму:</label> 
+    newVisitForm.innerHTML = `<label class="form-label">Заповніть форму:</label> 
     <select id="visit-doctor-select" class="form-select mb-2">
        <option selected disabled>Оберіть лікаря:</option>
        <option>Кардіолог</option>
@@ -82,11 +78,11 @@ export default class VisitForm {
     });
 
     newVisitForm.querySelector("#visit-cancel-btn").addEventListener("click", (e) => {
-      newVisitForm.remove();
+        newVisitForm.remove();
     });
 
     document.addEventListener("click", (e) => {
-      this.handleClickOutsideTheForm(e, newVisitForm)
+      this.handleClickOutsideTheForm(e, newVisitForm);
     });
 
     return newVisitForm;
@@ -106,12 +102,11 @@ class VisitCardiologistForm extends VisitForm {
       massIndex: form.querySelector("#mass-index").value,
       heartDiseases: form.querySelector("#heart-diseases").value,
       age: form.querySelector("#age").value,
-    }
+    };
   }
-  render(create) {
+  render() {
     const newCardiologistVisitForm = super.render();
-    const additionalInfo =
-      `<input required id="pressure" placeholder="Звичайний тиск" type="text" class="form-control mb-2">
+    const additionalInfo = `<input required id="pressure" placeholder="Звичайний тиск" type="text" class="form-control mb-2">
    <input required id="mass-index" placeholder="Індекс маси тіла" type="text" class="form-control mb-2">
    <input required id="heart-diseases" placeholder="Перенесені захворювання серцево-судинної системи" type="text" class="form-control mb-2">
    <input required id="age" placeholder="Вік" type="text" class="form-control mb-2">`;
@@ -119,14 +114,11 @@ class VisitCardiologistForm extends VisitForm {
     newCardiologistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 1;
     newCardiologistVisitForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      if (create) {
-        const data = await request.postCard(localStorage.Authorization, this.createCardiologistObj(newCardiologistVisitForm))
-        const card = new VisitCard()
-        card.render(data)
-        noItem.remove()
-      } else {
-      }
-      newCardiologistVisitForm.remove()
+      const data = await request.postCard(localStorage.Authorization,this.createCardiologistObj(newCardiologistVisitForm));
+      const card = new VisitCard();
+      card.render(data);
+      noItem.remove();
+      newCardiologistVisitForm.remove();
     });
     return newCardiologistVisitForm;
   }
@@ -142,24 +134,21 @@ class VisitDentistForm extends VisitForm {
       description: form.querySelector("#decription").value,
       priority: form.querySelector("#priority-select").value,
       lastDate: form.querySelector("#last-visit").value,
-    }
+    };
   }
-  render(create) {
+  render() {
     const newDentistVisitForm = super.render();
     const additionalInfo = `<input required id="last-visit" placeholder="Дата останнього візиту" type="text" class="form-control mb-2">`;
     newDentistVisitForm.querySelector("#priority-select-wrapper").insertAdjacentHTML("afterend", additionalInfo);
     newDentistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 2;
     newDentistVisitForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      if (create) {
-        const data = await request.postCard(localStorage.Authorization, this.createDentistObj(newDentistVisitForm))
-        const card = new VisitCard()
-        card.render(data)
-        noItem.remove()
-      } else {
-      }
-      newDentistVisitForm.remove()
-    } );
+      const data = await request.postCard(localStorage.Authorization,this.createDentistObj(newDentistVisitForm));
+      const card = new VisitCard();
+      card.render(data);
+      noItem.remove();
+      newDentistVisitForm.remove();
+    });
     return newDentistVisitForm;
   }
 }
@@ -174,24 +163,20 @@ class VisitTherapistForm extends VisitForm {
       description: form.querySelector("#decription").value,
       priority: form.querySelector("#priority-select").value,
       age: form.querySelector("#age").value,
-    }
+    };
   }
-  render(create) {
+  render() {
     const newTherapistVisitForm = super.render();
     const additionalInfo = `<input required id="age" placeholder="Вік" type="text" class="form-control mb-2">`;
     newTherapistVisitForm.querySelector("#priority-select-wrapper").insertAdjacentHTML("afterend", additionalInfo);
     newTherapistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 3;
     newTherapistVisitForm.addEventListener("submit", async (e) => {
-      e.preventDefault()
-      if(create){
-        const data = await request.postCard(localStorage.Authorization, this.createTherapistObj(newTherapistVisitForm))
-        const card = new VisitCard()
-        card.render(data)
-        noItem.remove()
-      } else {
-
-      }
-      newTherapistVisitForm.remove()
+      e.preventDefault();
+      const data = await request.postCard(localStorage.Authorization,this.createTherapistObj(newTherapistVisitForm));
+      const card = new VisitCard();
+      card.render(data);
+      noItem.remove();
+      newTherapistVisitForm.remove();
     });
     return newTherapistVisitForm;
   }
