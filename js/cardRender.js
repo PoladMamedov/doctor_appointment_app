@@ -15,6 +15,11 @@ function toggleHideParameters(e) {
    hideAge.classList.toggle('hide')
    parametersWrap.classList.toggle('hide');
    wrap.classList.toggle('hide');
+   if (!wrap.classList.contains('hide')) {
+      e.target.textContent = 'Показать меньше'
+   } else {
+      e.target.textContent = 'Показать больше'
+   }
 }
 
 visitCards.forEach((card) => {
@@ -70,6 +75,7 @@ export default class VisitCard {
 
 
       newCard.addEventListener('click', (e) => {
+
          if (e.target.classList.contains('more-btn')) {
             toggleHideParameters(e);
          }
