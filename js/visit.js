@@ -1,23 +1,24 @@
 import DoctorAPIService from "./doctor_api_service.js";
 import VisitCard from "./cardRender.js";
-const request = new DoctorAPIService();
 const noItem = document.querySelector('.no-item')
+const request = new DoctorAPIService();
 
+//! Главный класс для формы создания карточки, создает все поля которые есть у всех врачей
 export default class VisitForm {
   doctorSelect(form) {
     form.querySelector("#visit-doctor-select").addEventListener("change", (e) => {
       if (e.target.selectedIndex === 1) {
         form.remove();
         const newCardiologistForm = new VisitCardiologistForm();
-        document.body.prepend(newCardiologistForm.render());
+        document.body.prepend(newCardiologistForm.render(true));
       } else if (e.target.selectedIndex === 2) {
         form.remove();
         const newDentistForm = new VisitDentistForm();
-        document.body.prepend(newDentistForm.render());
+        document.body.prepend(newDentistForm.render(true));
       } else if (e.target.selectedIndex === 3) {
         form.remove();
         const newTherapistForm = new VisitTherapistForm();
-        document.body.prepend(newTherapistForm.render());
+        document.body.prepend(newTherapistForm.render(true));
       }
     });
   }
@@ -50,7 +51,7 @@ export default class VisitForm {
       "z-3"
     );
     newVisitForm.innerHTML =
-      `<label class="form-label">Заповніть форму:</label>
+      `<label class="form-label">Заповніть форму:</label> 
     <select id="visit-doctor-select" class="form-select mb-2">
        <option selected disabled>Оберіть лікаря:</option>
        <option>Кардіолог</option>
@@ -59,19 +60,23 @@ export default class VisitForm {
     </select>
     <input required id="fio" placeholder="П.І.Б." type="text" class="form-control mb-2">
     <input required id="visit-purpose" placeholder="Ціль візиту" type="text" class="form-control mb-2">
-    <input required id="decription" placeholder="Опис" type="text" class="form-control mb-2">
-    <select id="priority-select" class="form-select mb-2">
-       <option selected disabled>Терміновість:</option>
-       <option>Звичайна</option>
-       <option>Пріоритетна</option>
-       <option>Невідкладна</option>
-    </select>
+    <input id="decription" placeholder="Опис" type="text" class="form-control mb-2">
+
+    <div id="priority-select-wrapper" class="form-floating mb-2">
+      <select id="priority-select" class="form-select">
+        <option selected>Звичайна</option>
+        <option>Пріоритетна</option>
+        <option>Невідкладна</option>
+      </select>
+      <label for="floatingSelect">Терміновість:</label>
+    </div>
+
     <button id="visit-submit-btn" type="submit" class="btn btn-primary">Створити запис</button>
     <button id="visit-cancel-btn" type="button" class="btn btn-danger mt-2">Скасувати</button>`;
 
     this.doctorSelect(newVisitForm);
 
-    newVisitForm.querySelector("#visit-submit-btn").addEventListener("click", (e) => {
+    newVisitForm.addEventListener("submit", (e) => {
       e.preventDefault();
     });
 
@@ -87,8 +92,9 @@ export default class VisitForm {
   }
 }
 
+// ! клас для кардиолога, дочерний клас основного класа. заменяет главную форму на форму нужного врача, а также обрабатывает запрос на добавление на сервер, и создание карточки
 class VisitCardiologistForm extends VisitForm {
-  createCardiolojistObj(form) {
+  createCardiologistObj(form) {
     return {
       doctor: form.querySelector("#visit-doctor-select").value,
       name: form.querySelector("#fio").value,
@@ -101,30 +107,31 @@ class VisitCardiologistForm extends VisitForm {
       age: form.querySelector("#age").value,
     }
   }
-  render() {
+  render(create) {
     const newCardiologistVisitForm = super.render();
     const additionalInfo =
       `<input required id="pressure" placeholder="Звичайний тиск" type="text" class="form-control mb-2">
    <input required id="mass-index" placeholder="індекс маси тіла" type="text" class="form-control mb-2">
    <input required id="heart-diseases" placeholder="Перенесені захворювання серцево-судинної системи" type="text" class="form-control mb-2">
    <input required id="age" placeholder="вік" type="text" class="form-control mb-2">`;
-    newCardiologistVisitForm.querySelector("#priority-select").insertAdjacentHTML("afterend", additionalInfo);
+    newCardiologistVisitForm.querySelector("#priority-select-wrapper").insertAdjacentHTML("afterend", additionalInfo);
     newCardiologistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 1;
-    newCardiologistVisitForm.querySelector("#visit-submit-btn").addEventListener("click", async (e) => {
-      // ! добавление на сервер, дата это вернувшийся обьект с айди
-      const data = await request.postCard(localStorage.Authorization, this.createCardiolojistObj(newCardiologistVisitForm))
-      const card = new VisitCard()
-      card.render(data)
-      noItem.remove()
-      // ! вот тут нужно вызвать функцию создающую карточку, передать в нее дату
-
-      // ! после добавления карточки закрываем форму
+    newCardiologistVisitForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (create) {
+        const data = await request.postCard(localStorage.Authorization, this.createCardiologistObj(newCardiologistVisitForm))
+        const card = new VisitCard()
+        card.render(data)
+        noItem.remove()
+      } else {
+      }
       newCardiologistVisitForm.remove()
     });
     return newCardiologistVisitForm;
   }
 }
 
+// ! клас для стоматолога, дочерний клас основного класа. заменяет главную форму на форму нужного врача, а также обрабатывает запрос на добавление на сервер, и создание карточки
 class VisitDentistForm extends VisitForm {
   createDentistObj(form) {
     return {
@@ -136,27 +143,27 @@ class VisitDentistForm extends VisitForm {
       lastDate: form.querySelector("#last-visit").value,
     }
   }
-  render() {
+  render(create) {
     const newDentistVisitForm = super.render();
     const additionalInfo = `<input required id="last-visit" placeholder="дата останнього візиту" type="text" class="form-control mb-2">`;
-    newDentistVisitForm.querySelector("#priority-select").insertAdjacentHTML("afterend", additionalInfo);
+    newDentistVisitForm.querySelector("#priority-select-wrapper").insertAdjacentHTML("afterend", additionalInfo);
     newDentistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 2;
-    newDentistVisitForm.querySelector("#visit-submit-btn").addEventListener("click", async (e) => {
-      // ! добавление на сервер, дата это вернувшийся обьект с айди
-      const data = await request.postCard(localStorage.Authorization, this.createDentistObj(newDentistVisitForm))
-
-      // ! вот тут нужно вызвать функцию создающую карточку, передать в нее дату
-      const card = new VisitCard()
-      card.render(data)
-      noItem.remove()
-
-      // ! после добавления карточки закрываем форму
+    newDentistVisitForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (create) {
+        const data = await request.postCard(localStorage.Authorization, this.createDentistObj(newDentistVisitForm))
+        const card = new VisitCard()
+        card.render(data)
+        noItem.remove()
+      } else {
+      }
       newDentistVisitForm.remove()
-    });
+    } );
     return newDentistVisitForm;
   }
 }
 
+// ! клас для терапевта, дочерний клас основного класа. заменяет главную форму на форму нужного врача, а также обрабатывает запрос на добавление на сервер, и создание карточки
 class VisitTherapistForm extends VisitForm {
   createTherapistObj(form) {
     return {
@@ -168,25 +175,23 @@ class VisitTherapistForm extends VisitForm {
       age: form.querySelector("#age").value,
     }
   }
-  render() {
+  render(create) {
     const newTherapistVisitForm = super.render();
     const additionalInfo = `<input required id="age" placeholder="вік" type="text" class="form-control mb-2">`;
-    newTherapistVisitForm.querySelector("#priority-select").insertAdjacentHTML("afterend", additionalInfo);
+    newTherapistVisitForm.querySelector("#priority-select-wrapper").insertAdjacentHTML("afterend", additionalInfo);
     newTherapistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 3;
-    newTherapistVisitForm.querySelector("#visit-submit-btn").addEventListener("click", async (e) => {
-      // ! добавление на сервер, дата это вернувшийся обьект с айди
-      const data = await request.postCard(localStorage.Authorization, this.createTherapistObj(newTherapistVisitForm))
-      const card = new VisitCard()
-      card.render(data)
-      noItem.remove()
+    newTherapistVisitForm.addEventListener("submit", async (e) => {
+      e.preventDefault()
+      if(create){
+        const data = await request.postCard(localStorage.Authorization, this.createTherapistObj(newTherapistVisitForm))
+        const card = new VisitCard()
+        card.render(data)
+        noItem.remove()
+      } else {
 
-      // ! вот тут нужно вызвать функцию создающую карточку, передать в нее дату
-
-      // ! после добавления карточки закрываем форму
+      }
       newTherapistVisitForm.remove()
     });
     return newTherapistVisitForm;
   }
 }
-
-
