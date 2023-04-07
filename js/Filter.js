@@ -1,5 +1,7 @@
+import { searchInput, list, selectStatus, selectUrgency, visitCards } from './constants.js';
 
-class VisitFilters {
+
+export default class VisitFilters {
    constructor(list, visitCards) {
       this.list = list;
       this.visitCards = visitCards;
@@ -11,7 +13,8 @@ class VisitFilters {
    }
 
    applyFilters() {
-      this.visitCards.forEach((card) => {
+      this.visitCards = visitCards;
+      visitCards.forEach((card) => {
          const cardStatus = card.querySelector('.visit-status').textContent.trim();
          const cardUrgency = card.querySelector('.visit-urgency').textContent.trim();
          const cardName = card.querySelector('p').textContent.toLowerCase().replace(/\s/g, '');
@@ -36,14 +39,8 @@ class VisitFilters {
    }
 }
 
-const searchInput = document.getElementById('searchInput');
-const list = document.querySelector('.visit-wrap');
-const selectStatus = document.querySelector('.select-options');
-const selectUrgency = document.querySelector('.select-urgency');
-const visitCards = document.querySelectorAll('.visit-wrap .visit-card');
-
 const filters = new VisitFilters(list, visitCards);
-
+export { filters }
 searchInput.addEventListener('input', () => {
    filters.filters.searchText = searchInput.value.toLowerCase().replace(/\s/g, '');
    filters.applyFilters();
@@ -58,6 +55,7 @@ selectUrgency.addEventListener('change', () => {
    filters.filters.urgency = selectUrgency.value;
    filters.applyFilters();
 });
+
 
 
 
