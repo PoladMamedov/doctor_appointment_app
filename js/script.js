@@ -18,3 +18,5 @@ const btn = document.querySelector(".authorization-btn");
 btn.addEventListener("click", (e) => {
   new Modal().render();
 });
+
+

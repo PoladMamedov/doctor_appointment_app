@@ -1,4 +1,6 @@
 import DoctorAPIService from "./doctor_api_service.js";
+import VisitCard from "./cardRender.js";
+import { noItem } from './constants.js';
 const request = new DoctorAPIService();
 
 const searchInput = document.getElementById('searchInput');
@@ -66,16 +68,6 @@ selectUrgency.addEventListener('change', () => {
 });
 class VisitCard {
   render({ doctor, name, priority }) {
-    if (priority === "Звичайна") {
-      priority = 'Low'
-    }
-    if (priority === "Пріоритетна") {
-      priority = 'Normal'
-    }
-    if (priority === "Невідкладна") {
-      priority = 'High'
-    }
-    console.log(priority);
     const newCard = document.createElement('li');
     const randomVisit = ['Open', 'Done'];
     const randomIndex = Math.floor(Math.random() * randomVisit.length);
