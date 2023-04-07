@@ -48,7 +48,7 @@ export default class VisitCard {
       newCard.innerHTML = `
        <div class="closeModal"></div>
        <p class="patient-name text-center fs-4 mt-2">${name}
-       <span class="m-0 p-0 fs-5 hide-age hide">${age}</span>
+       <span class="m-0 p-0 fs-5 hide-age hide">${age} года</span>
        </p>
        <p class="patient-doctor text-center fs-5 mt-0">${doctor}</p>
        <div class="parameters-wrap m-0 p-0  hide">
