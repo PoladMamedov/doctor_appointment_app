@@ -151,14 +151,3 @@ selectUrgency.addEventListener('change', () => {
    filters.filters.urgency = selectUrgency.value;
    filters.applyFilters();
 });
-
-
-// function checkCard() {
-//    if (ul.children.length === 0) {
-//       console.log('Немає');
-//       noItem.style.display = 'block';
-//    }else{
-//       console.log('тут є');
-//       noItem.style.display = 'none';
-//    }
-// }
