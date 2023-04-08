@@ -2,6 +2,7 @@
 import DoctorAPIService from './doctor_api_service.js';
 import toggleHideParameters from './HideParameters.js';
 import ageCheck from './checkAge.js';
+import {noItem, ul} from './constants.js';
 const request = new DoctorAPIService()
 let visitCards = document.querySelectorAll('.visit-wrap .visit-card');
 const list = document.querySelector('.visit-wrap');
@@ -9,6 +10,13 @@ const searchInput = document.getElementById('searchInput');
 const selectStatus = document.querySelector('.select-options');
 const selectUrgency = document.querySelector('.select-urgency');
 
+export function checkCards() {
+   if (ul.children.length === 0) {
+      noItem.style.display = 'block';
+   }else{
+      noItem.style.display = 'none';
+   }
+}
 
 visitCards.forEach((card) => {
    card.addEventListener('click', (e) => {
@@ -85,6 +93,7 @@ export default class VisitCard {
          } else {
             throw new Error('Ошибка запроса на сервер');
          }
+         checkCards();
       });
    }
 }
@@ -142,3 +151,14 @@ selectUrgency.addEventListener('change', () => {
    filters.filters.urgency = selectUrgency.value;
    filters.applyFilters();
 });
+
+
+// function checkCard() {
+//    if (ul.children.length === 0) {
+//       console.log('Немає');
+//       noItem.style.display = 'block';
+//    }else{
+//       console.log('тут є');
+//       noItem.style.display = 'none';
+//    }
+// }

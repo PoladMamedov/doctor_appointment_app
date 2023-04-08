@@ -1,6 +1,6 @@
 import DoctorAPIService from "./doctor_api_service.js";
 import VisitCard from "./cardRender.js";
-const noItem = document.querySelector(".no-item");
+import { checkCards } from "./cardRender.js";
 const request = new DoctorAPIService();
 
 //! Главный класс для формы создания карточки, создает все поля которые есть у всех врачей
@@ -117,7 +117,8 @@ class VisitCardiologistForm extends VisitForm {
       const data = await request.postCard(localStorage.Authorization,this.createCardiologistObj(newCardiologistVisitForm));
       const card = new VisitCard();
       card.render(data);
-      noItem.remove();
+      checkCards();
+      // noItem.style.display = 'none';
       newCardiologistVisitForm.remove();
     });
     return newCardiologistVisitForm;
@@ -146,7 +147,8 @@ class VisitDentistForm extends VisitForm {
       const data = await request.postCard(localStorage.Authorization,this.createDentistObj(newDentistVisitForm));
       const card = new VisitCard();
       card.render(data);
-      noItem.remove();
+      checkCards();
+      // noItem.style.display = 'none';
       newDentistVisitForm.remove();
     });
     return newDentistVisitForm;
@@ -175,7 +177,8 @@ class VisitTherapistForm extends VisitForm {
       const data = await request.postCard(localStorage.Authorization,this.createTherapistObj(newTherapistVisitForm));
       const card = new VisitCard();
       card.render(data);
-      noItem.remove();
+      checkCards();
+      // noItem.style.display = 'none';
       newTherapistVisitForm.remove();
     });
     return newTherapistVisitForm;
