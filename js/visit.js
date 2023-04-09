@@ -7,20 +7,20 @@ const request = new DoctorAPIService();
 export default class VisitForm {
   doctorSelect(form) {
     form.querySelector("#visit-doctor-select").addEventListener("change", (e) => {
-        if (e.target.selectedIndex === 1) {
-          form.remove();
-          const newCardiologistForm = new VisitCardiologistForm();
-          document.body.prepend(newCardiologistForm.render());
-        } else if (e.target.selectedIndex === 2) {
-          form.remove();
-          const newDentistForm = new VisitDentistForm();
-          document.body.prepend(newDentistForm.render());
-        } else if (e.target.selectedIndex === 3) {
-          form.remove();
-          const newTherapistForm = new VisitTherapistForm();
-          document.body.prepend(newTherapistForm.render());
-        }
-      });
+      if (e.target.selectedIndex === 1) {
+        form.remove();
+        const newCardiologistForm = new VisitCardiologistForm();
+        document.body.prepend(newCardiologistForm.render());
+      } else if (e.target.selectedIndex === 2) {
+        form.remove();
+        const newDentistForm = new VisitDentistForm();
+        document.body.prepend(newDentistForm.render());
+      } else if (e.target.selectedIndex === 3) {
+        form.remove();
+        const newTherapistForm = new VisitTherapistForm();
+        document.body.prepend(newTherapistForm.render());
+      }
+    });
   }
   handleClickOutsideTheForm(e, form) {
     if (form.contains(e.target) || e.target.id === "create-visit-btn") {
@@ -78,7 +78,7 @@ export default class VisitForm {
     });
 
     newVisitForm.querySelector("#visit-cancel-btn").addEventListener("click", (e) => {
-        newVisitForm.remove();
+      newVisitForm.remove();
     });
 
     document.addEventListener("click", (e) => {
@@ -114,7 +114,7 @@ class VisitCardiologistForm extends VisitForm {
     newCardiologistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 1;
     newCardiologistVisitForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const data = await request.postCard(localStorage.Authorization,this.createCardiologistObj(newCardiologistVisitForm));
+      const data = await request.postCard(localStorage.Authorization, this.createCardiologistObj(newCardiologistVisitForm));
       const card = new VisitCard();
       card.render(data);
       checkCards();
@@ -144,7 +144,7 @@ class VisitDentistForm extends VisitForm {
     newDentistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 2;
     newDentistVisitForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const data = await request.postCard(localStorage.Authorization,this.createDentistObj(newDentistVisitForm));
+      const data = await request.postCard(localStorage.Authorization, this.createDentistObj(newDentistVisitForm));
       const card = new VisitCard();
       card.render(data);
       checkCards();
@@ -174,7 +174,7 @@ class VisitTherapistForm extends VisitForm {
     newTherapistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 3;
     newTherapistVisitForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const data = await request.postCard(localStorage.Authorization,this.createTherapistObj(newTherapistVisitForm));
+      const data = await request.postCard(localStorage.Authorization, this.createTherapistObj(newTherapistVisitForm));
       const card = new VisitCard();
       card.render(data);
       checkCards();

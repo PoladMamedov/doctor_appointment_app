@@ -2,7 +2,7 @@
 import DoctorAPIService from './doctor_api_service.js';
 import toggleHideParameters from './HideParameters.js';
 import ageCheck from './checkAge.js';
-import {noItem, ul} from './constants.js';
+import { noItem, ul } from './constants.js';
 const request = new DoctorAPIService()
 let visitCards = document.querySelectorAll('.visit-wrap .visit-card');
 const list = document.querySelector('.visit-wrap');
@@ -13,7 +13,7 @@ const selectUrgency = document.querySelector('.select-urgency');
 export function checkCards() {
    if (ul.children.length === 0) {
       noItem.style.display = 'block';
-   }else{
+   } else {
       noItem.style.display = 'none';
    }
 }
@@ -59,7 +59,7 @@ export default class VisitCard {
           <p class="visit-urgency visit-text fs-6">${priority}</p>
        </div>
        <div class="hide-parameters hide"> 
-          <p class="m-2 fs-6">Описание: ${description} </p>
+          <p class="m-2 fs-6 cardDescription">Описание: ${description} </p>
           <p class="m-2 fs-6">Причина обращения: ${purpose}</p>
        </div>
        <div class="btn-wrap ms-5 me-5 mb-3 d-flex justify-content-center gap-3">
@@ -104,6 +104,7 @@ class VisitFilters {
       this.visitCards = visitCards;
       this.filters = {
          searchText: '',
+         description: '',
          status: '',
          urgency: '',
       };
@@ -115,19 +116,19 @@ class VisitFilters {
          const cardStatus = card.querySelector('.visit-status').textContent.trim();
          const cardUrgency = card.querySelector('.visit-urgency').textContent.trim();
          const cardName = card.querySelector('p').textContent.toLowerCase().replace(/\s/g, '');
+         const cardDescription = card.querySelector('.cardDescription').textContent.substring(9).toLowerCase().replace(/\s/g, '');
          const isNameMatch = cardName.includes(this.filters.searchText);
-
+         const isDescriptionMatch = cardDescription.includes(this.filters.description);
          const isStatusMatch =
             this.filters.status === '' ||
             this.filters.status === 'Статус визита' ||
             this.filters.status === cardStatus;
-
          const isUrgencyMatch =
             this.filters.urgency === '' ||
             this.filters.urgency === 'Срочность визита' ||
             this.filters.urgency === cardUrgency;
 
-         if (isNameMatch && isStatusMatch && isUrgencyMatch) {
+         if (isNameMatch || isDescriptionMatch && isStatusMatch && isUrgencyMatch) {
             card.style.display = 'block';
          } else {
             card.style.display = 'none';
@@ -139,6 +140,8 @@ class VisitFilters {
 const filters = new VisitFilters(list, visitCards);
 searchInput.addEventListener('input', () => {
    filters.filters.searchText = searchInput.value.toLowerCase().replace(/\s/g, '');
+   filters.filters.description = searchInput.value.toLowerCase().replace(/\s/g, '');
+
    filters.applyFilters();
 });
 
