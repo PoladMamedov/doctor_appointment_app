@@ -1,5 +1,5 @@
 import getCardsFromServer from "./getCardsfromServer.js"; 
-
+import logOut from "./logout.js";
 
 const autorization = async (email, password) => {
   const getToken = await fetch("https://ajax.test-danit.com/api/v2/cards/login", {
@@ -13,11 +13,14 @@ const autorization = async (email, password) => {
     console.log("Авторизація пройшла успішно")
     localStorage.setItem("Authorization", getToken);
     document.querySelector("#form").remove();
-    document.querySelector(".authorization-btn").remove();
+    document.querySelector(".authorization-btn").style.display = "none";;
     document.querySelector("#create-visit-btn").style.display = "block";
 
+    document.querySelector("#logout").style.display = "block";
+    document.querySelector("#logout").addEventListener("click",(e) => {
+      logOut(e)
+    })
     getCardsFromServer()
-    // та активація функції фільтрів
   } else {
     // внизу форми авторизації виводимо повідомдення з помилкою
     document.querySelector("#form").insertAdjacentHTML(
@@ -34,3 +37,7 @@ function checkStatus(status) {
 };
 
 export default autorization;
+
+
+
+
