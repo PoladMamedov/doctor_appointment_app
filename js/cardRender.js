@@ -1,23 +1,15 @@
-
 import DoctorAPIService from './doctor_api_service.js';
 import toggleHideParameters from './HideParameters.js';
 import ageCheck from './checkAge.js';
-import { noItem, ul } from './constants.js';
 import cardBackground from './bgColor.js';
-const request = new DoctorAPIService()
+import { checkCards } from './checkCards.js';
+const request = new DoctorAPIService();
 let visitCards = document.querySelectorAll('.visit-wrap .visit-card');
 const list = document.querySelector('.visit-wrap');
 const searchInput = document.getElementById('searchInput');
 const selectStatus = document.querySelector('.select-options');
 const selectUrgency = document.querySelector('.select-urgency');
 
-export function checkCards() {
-   if (ul.children.length === 0) {
-      noItem.style.display = 'block';
-   } else {
-      noItem.style.display = 'none';
-   }
-}
 
 visitCards.forEach((card) => {
    card.addEventListener('click', (e) => {
