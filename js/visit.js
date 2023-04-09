@@ -1,6 +1,6 @@
 import DoctorAPIService from "./doctor_api_service.js";
 import VisitCard from "./cardRender.js";
-import { checkCards } from "./checkCards.js";
+import checkCards from "./checkCards.js";
 const request = new DoctorAPIService();
 
 //! Главный класс для формы создания карточки, создает все поля которые есть у всех врачей

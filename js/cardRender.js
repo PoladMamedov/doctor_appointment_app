@@ -2,7 +2,7 @@ import DoctorAPIService from './doctor_api_service.js';
 import toggleHideParameters from './HideParameters.js';
 import ageCheck from './checkAge.js';
 import cardBackground from './bgColor.js';
-import { checkCards } from './checkCards.js';
+import checkCards  from './checkCards.js';
 const request = new DoctorAPIService();
 let visitCards = document.querySelectorAll('.visit-wrap .visit-card');
 const list = document.querySelector('.visit-wrap');
