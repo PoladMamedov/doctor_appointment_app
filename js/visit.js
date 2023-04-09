@@ -5,6 +5,8 @@ import { VisitCardDantist } from "./cardRender.js";
 import { VisitCardCardio } from "./cardRender.js";
 const request = new DoctorAPIService();
 
+
+
 //! Главный класс для формы создания карточки, создает все поля которые есть у всех врачей
 export default class VisitForm {
   doctorSelect(form) {

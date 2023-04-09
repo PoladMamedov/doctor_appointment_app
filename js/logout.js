@@ -1,5 +1,4 @@
 
-
 export default  function logOut(e) {
     e.preventDefault()
     localStorage.removeItem("Authorization");
@@ -8,4 +7,5 @@ export default  function logOut(e) {
     const cards = [...document.querySelectorAll(".visit-card")];
     cards.forEach((card) => card.remove())
     document.querySelector(".authorization-btn").style.display = "block";
+
   }
