@@ -46,7 +46,6 @@ export default class Modal {
 
         this.submitBtn.addEventListener("click", (e) => {
           e.preventDefault();
-        //   console.log(this.inputEmail.value, this.inputPass.value)
           autorization(this.inputEmail.value, this.inputPass.value);
         });
       }
@@ -57,5 +56,7 @@ export default class Modal {
       }
 
 }
+
+
 
 
