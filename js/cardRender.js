@@ -2,7 +2,7 @@ import DoctorAPIService from './doctor_api_service.js';
 import toggleHideParameters from './HideParameters.js';
 import ageCheck from './checkAge.js';
 import cardBackground from './bgColor.js';
-import checkCards  from './checkCards.js';
+import checkCards from './checkCards.js';
 const request = new DoctorAPIService();
 let visitCards = document.querySelectorAll('.visit-wrap .visit-card');
 const list = document.querySelector('.visit-wrap');
@@ -93,6 +93,137 @@ export default class VisitCard {
    }
 }
 
+export class VisitCardDantist extends VisitCard {
+   render(data) {
+      let { doctor, name, priority, id, age, description, purpose, lastDate } = data;
+
+      age = ageCheck(data)
+      if (priority === 'Звичайна') {
+         priority = 'Low';
+      }
+      if (priority === 'Пріоритетна') {
+         priority = 'Normal';
+      }
+      if (priority === 'Невідкладна') {
+         priority = 'High';
+      }
+      const newCard = document.createElement('li');
+      const randomVisit = ['Open', 'Done'];
+      const randomIndex = Math.floor(Math.random() * randomVisit.length);
+      const randomValue = randomVisit[randomIndex];
+      newCard.classList.add('visit-card', 'border', 'rounded', 'border-primary-subtle', 'w-100', 'gap-1');
+      cardBackground(doctor, newCard)
+      newCard.id = id;
+      const divClose = document.createElement('div');
+      divClose.classList.add('closeModal');
+      newCard.prepend(divClose);
+      newCard.innerHTML = `
+       <div class="closeModal"></div>
+       <p class="patient-name text-center fs-4 mt-2">${name}
+       <span class="m-0 p-0 fs-5 hide-age hide">${age}</span>
+       </p>
+       <p class="patient-doctor text-center fs-5 mt-0">${doctor}</p>
+       <div class="parameters-wrap m-0 p-0  hide">
+          <p class="visit-status visit-text fs-6">${randomValue}</p>
+          <p class="visit-urgency visit-text fs-6">${priority}</p>
+       </div>
+       <div class="hide-parameters hide"> 
+          <p class="m-2 fs-6 cardDescription">Описание: ${description} </p>
+          <p class="m-2 fs-6">Причина обращения: ${purpose}</p>
+          <p class="m-2 fs-6">Дата последнего визита: ${lastDate} </p>
+
+       </div>
+       <div class="btn-wrap ms-5 me-5 mb-3 d-flex justify-content-center gap-3">
+          <button class="btn btn-secondary more-btn fs-6">Показать больше</button>
+          <button class="btn btn-outline-primary">Редактировать</button>
+       </div>
+      `;
+
+      list.appendChild(newCard);
+      this.removeCard(newCard, newCard.id);
+
+
+      newCard.addEventListener('click', (e) => {
+
+         if (e.target.classList.contains('more-btn')) {
+            toggleHideParameters(e);
+         }
+      });
+
+      visitCards = document.querySelectorAll('.visit-wrap .visit-card');
+      filters.applyFilters(visitCards);
+      return newCard;
+   }
+}
+
+export class VisitCardCardio extends VisitCard {
+   render(data) {
+      let { doctor, name, priority, id, age, description, purpose, massIndex, pressure, heartDiseases
+      } = data;
+
+      age = ageCheck(data)
+      if (priority === 'Звичайна') {
+         priority = 'Low';
+      }
+      if (priority === 'Пріоритетна') {
+         priority = 'Normal';
+      }
+      if (priority === 'Невідкладна') {
+         priority = 'High';
+      }
+      const newCard = document.createElement('li');
+      const randomVisit = ['Open', 'Done'];
+      const randomIndex = Math.floor(Math.random() * randomVisit.length);
+      const randomValue = randomVisit[randomIndex];
+      newCard.classList.add('visit-card', 'border', 'rounded', 'border-primary-subtle', 'w-100', 'gap-1');
+      cardBackground(doctor, newCard)
+      newCard.id = id;
+      const divClose = document.createElement('div');
+      divClose.classList.add('closeModal');
+      newCard.prepend(divClose);
+      newCard.innerHTML = `
+       <div class="closeModal"></div>
+       <p class="patient-name text-center fs-4 mt-2">${name}
+       <span class="m-0 p-0 fs-5 hide-age hide">${age}</span>
+       </p>
+       <p class="patient-doctor text-center fs-5 mt-0">${doctor}</p>
+       <div class="parameters-wrap m-0 p-0  hide">
+          <p class="visit-status visit-text fs-6">${randomValue}</p>
+          <p class="visit-urgency visit-text fs-6">${priority}</p>
+       </div>
+       <div class="hide-parameters hide"> 
+          <p class="m-2 fs-6 cardDescription">Описание: ${description} </p>
+          <p class="m-2 fs-6">Причина обращения: ${purpose}</p>
+          <p class="m-2 fs-6">Индекс массы тела: ${massIndex} </p>
+          <p class="m-2 fs-6">Среднее давление: ${pressure} </p>
+          <p class="m-2 fs-6">Перенесенные болезни: ${heartDiseases} </p>
+
+
+       </div>
+       <div class="btn-wrap ms-5 me-5 mb-3 d-flex justify-content-center gap-3">
+          <button class="btn btn-secondary more-btn fs-6">Показать больше</button>
+          <button class="btn btn-outline-primary">Редактировать</button>
+       </div>
+      `;
+
+      list.appendChild(newCard);
+      this.removeCard(newCard, newCard.id);
+
+
+      newCard.addEventListener('click', (e) => {
+
+         if (e.target.classList.contains('more-btn')) {
+            toggleHideParameters(e);
+         }
+      });
+
+      visitCards = document.querySelectorAll('.visit-wrap .visit-card');
+      filters.applyFilters(visitCards);
+      return newCard;
+   }
+}
+
+
 class VisitFilters {
    constructor(list, visitCards) {
       this.list = list;
@@ -123,7 +254,7 @@ class VisitFilters {
             this.filters.urgency === 'Срочность визита' ||
             this.filters.urgency === cardUrgency;
 
-         if (isNameMatch || isDescriptionMatch && isStatusMatch && isUrgencyMatch) {
+         if ((isNameMatch || isDescriptionMatch) && isStatusMatch && isUrgencyMatch) {
             card.style.display = 'block';
          } else {
             card.style.display = 'none';
