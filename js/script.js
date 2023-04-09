@@ -2,7 +2,7 @@ import Modal from "./Modal.js";
 import VisitForm from "./visit.js";
 import getCardsFromServer from "./getCardsfromServer.js";
 import logOut from "./logout.js";
-
+import {noItem, ul} from  "./constants.js";
 
 const form = new VisitForm();
 const createVisitBtn = document.querySelector("#create-visit-btn");
@@ -37,3 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 });
+
+
+
+
