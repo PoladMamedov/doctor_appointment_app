@@ -3,6 +3,7 @@ import VisitForm from "./visit.js";
 import getCardsFromServer from "./getCardsfromServer.js";
 import logOut from "./logout.js";
 
+
 const form = new VisitForm();
 const createVisitBtn = document.querySelector("#create-visit-btn");
 createVisitBtn.addEventListener("click", (e) => {
@@ -16,7 +17,9 @@ createVisitBtn.addEventListener("click", (e) => {
 
 const logInBtn = document.querySelector(".authorization-btn");
 logInBtn.addEventListener("click", (e) => {
-  new Modal().render();
+  if(!document.querySelector("#form")) {
+    new Modal().render();
+  }
 });
 
 
