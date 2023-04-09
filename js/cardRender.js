@@ -154,7 +154,20 @@ export class VisitCardDantist extends VisitCard {
       filters.applyFilters(visitCards);
       return newCard;
    }
+   removeCard(card, cardId) {
+      const closeModal = card.querySelector('.closeModal');
+      closeModal.addEventListener('click', async () => {
+         const delRequest = await request.deleteCard(localStorage.Authorization, cardId);
+         if (delRequest.ok) {
+            card.remove();
+         } else {
+            throw new Error('Ошибка запроса на сервер');
+         }
+         checkCards();
+      });
+   }
 }
+
 
 export class VisitCardCardio extends VisitCard {
    render(data) {
