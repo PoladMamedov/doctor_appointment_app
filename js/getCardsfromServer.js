@@ -5,7 +5,6 @@ import VisitCard from "./cardRender.js";
 const checkDoctor = (doctor, element) => {
 
   if (doctor === "Кардіолог") {
-
     const newCard = new VisitCardCardio();
     newCard.render(element);
   } else if (doctor === "Стоматолог") {
@@ -18,6 +17,8 @@ const checkDoctor = (doctor, element) => {
     newCard.render(element);
   }
 };
+
+
 const getCardsFromServer = async () => {
   const getCards = await fetch("https://ajax.test-danit.com/api/v2/cards/", {
     headers: {
@@ -31,6 +32,11 @@ const getCardsFromServer = async () => {
     const { doctor } = element;
     checkDoctor(doctor, element);
   });
+
+  if([...document.querySelectorAll(".visit-card")].length){
+    document.querySelector(".no-item").style.display = "none";
+  }
+
 }
 export default getCardsFromServer;
 
