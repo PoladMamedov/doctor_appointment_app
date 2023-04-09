@@ -33,9 +33,9 @@ const getCardsFromServer = async () => {
     checkDoctor(doctor, element);
   });
 
-  // if([...document.querySelectorAll(".visit-card")].length){
-  //   document.querySelector(".no-item").style.display = "none";
-  // }
+  if([...document.querySelectorAll(".visit-card")].length){
+    document.querySelector(".no-item").style.display = "none";
+  }
 
 }
 export default getCardsFromServer;
