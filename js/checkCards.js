@@ -7,3 +7,9 @@ export default function checkCards() {
        noItem.style.display = 'none';
     }
  }
+
+ document.addEventListener("DOMContentLoaded", () =>{
+   setTimeout(() => {
+      checkCards()      
+   }, 100);
+});
