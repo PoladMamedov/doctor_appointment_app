@@ -1,4 +1,5 @@
-import { noItem, ul } from './constants.js';
+const ul = document.querySelector('.visit-wrap');
+const noItem = document.querySelector('.no-item')
 
 export default function checkCards() {
     if (ul.children.length === 0) {

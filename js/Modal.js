@@ -41,8 +41,11 @@ export default class Modal {
           this.submitBtn,
           this.cancelBtn
         );
-        this.cancelBtn.addEventListener('click', () => {
-                this.form.remove()});
+
+        // this.cancelBtn.addEventListener('click', (e) => {
+        //   e.preventDefault()
+        //   this.form.remove()
+        // });
 
         this.submitBtn.addEventListener("click", (e) => {
           e.preventDefault();
@@ -52,7 +55,7 @@ export default class Modal {
 
       render(selector) {
         this.createElement();
-        document.querySelector("body").append(this.form);
+        document.querySelector("main").append(this.form);
       }
 
 }

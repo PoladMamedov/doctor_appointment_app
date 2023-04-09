@@ -15,8 +15,18 @@ createVisitBtn.addEventListener("click", (e) => {
 });
 
 const logInBtn = document.querySelector(".authorization-btn");
+
+var modalOpen = false;
+
 logInBtn.addEventListener("click", (e) => {
-  new Modal().render();
+  if (!modalOpen) { // перевірка, чи відкрите модальне вікно
+    modalOpen = true; // оновлення змінної
+    new Modal().render();
+  }
+});
+
+cancelBtn.addEventListener('click', (e) => {
+  this.form.remove()
 });
 
 
@@ -27,7 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     getCardsFromServer()
   } else {
-    
     return;
   }
 });
