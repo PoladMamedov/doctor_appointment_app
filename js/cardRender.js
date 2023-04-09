@@ -30,7 +30,7 @@ visitCards.forEach((card) => {
 export default class VisitCard {
    render(data) {
       let { doctor, name, priority, id, age, description, purpose } = data;
-      console.log(doctor);
+
       age = ageCheck(data)
       if (priority === 'Звичайна') {
          priority = 'Low';
@@ -144,7 +144,6 @@ const filters = new VisitFilters(list, visitCards);
 searchInput.addEventListener('input', () => {
    filters.filters.searchText = searchInput.value.toLowerCase().replace(/\s/g, '');
    filters.filters.description = searchInput.value.toLowerCase().replace(/\s/g, '');
-
    filters.applyFilters();
 });
 

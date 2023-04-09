@@ -115,6 +115,7 @@ class VisitCardiologistForm extends VisitForm {
     newCardiologistVisitForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       const data = await request.postCard(localStorage.Authorization, this.createCardiologistObj(newCardiologistVisitForm));
+      console.log(data);
       const card = new VisitCard();
       card.render(data);
       checkCards();
@@ -145,6 +146,8 @@ class VisitDentistForm extends VisitForm {
     newDentistVisitForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       const data = await request.postCard(localStorage.Authorization, this.createDentistObj(newDentistVisitForm));
+      console.log(data);
+
       const card = new VisitCard();
       card.render(data);
       checkCards();
@@ -175,6 +178,8 @@ class VisitTherapistForm extends VisitForm {
     newTherapistVisitForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       const data = await request.postCard(localStorage.Authorization, this.createTherapistObj(newTherapistVisitForm));
+      console.log(data);
+
       const card = new VisitCard();
       card.render(data);
       checkCards();
