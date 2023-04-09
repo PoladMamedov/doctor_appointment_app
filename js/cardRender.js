@@ -3,6 +3,7 @@ import DoctorAPIService from './doctor_api_service.js';
 import toggleHideParameters from './HideParameters.js';
 import ageCheck from './checkAge.js';
 import { noItem, ul } from './constants.js';
+import cardBackground from './bgColor.js';
 const request = new DoctorAPIService()
 let visitCards = document.querySelectorAll('.visit-wrap .visit-card');
 const list = document.querySelector('.visit-wrap');
@@ -29,6 +30,7 @@ visitCards.forEach((card) => {
 export default class VisitCard {
    render(data) {
       let { doctor, name, priority, id, age, description, purpose } = data;
+      console.log(doctor);
       age = ageCheck(data)
       if (priority === 'Звичайна') {
          priority = 'Low';
@@ -44,6 +46,7 @@ export default class VisitCard {
       const randomIndex = Math.floor(Math.random() * randomVisit.length);
       const randomValue = randomVisit[randomIndex];
       newCard.classList.add('visit-card', 'border', 'rounded', 'border-primary-subtle', 'w-100', 'gap-1');
+      cardBackground(doctor, newCard)
       newCard.id = id;
       const divClose = document.createElement('div');
       divClose.classList.add('closeModal');
