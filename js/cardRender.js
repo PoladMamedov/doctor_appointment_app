@@ -9,13 +9,13 @@ const searchInput = document.getElementById('searchInput');
 const selectStatus = document.querySelector('.select-options');
 const selectUrgency = document.querySelector('.select-urgency');
 
-visitCards.forEach((card) => {
-   card.addEventListener('click', (e) => {
-      if (e.target.classList.contains('more-btn')) {
-         toggleHideParameters(e);
-      }
-   });
-});
+// visitCards.forEach((card) => {
+//    card.addEventListener('click', (e) => {
+//       if (e.target.classList.contains('more-btn')) {
+//          toggleHideParameters(e);
+//       }
+//    });
+// });
 
 export default class VisitCard {
    render(data) {
@@ -56,7 +56,7 @@ export default class VisitCard {
        </div>
        <div class="btn-wrap ms-5 me-5 mb-3 d-flex justify-content-center gap-3">
           <button class="btn btn-secondary more-btn fs-6">Показать больше</button>
-          <button class="btn btn-outline-primary">Редактировать</button>
+          <button class="btn btn-outline-primary edit-btn">Редактировать</button>
        </div>
       `;
 
@@ -65,9 +65,12 @@ export default class VisitCard {
 
 
       newCard.addEventListener('click', (e) => {
-
          if (e.target.classList.contains('more-btn')) {
             toggleHideParameters(e);
+         } else if(e.target.classList.contains('edit-btn')) {
+            console.log("edit")
+            // !рендер модалки редактирования терапевт
+
          }
       });
 
@@ -129,7 +132,7 @@ export class VisitCardDantist extends VisitCard {
        </div>
        <div class="btn-wrap ms-5 me-5 mb-3 d-flex justify-content-center gap-3">
           <button class="btn btn-secondary more-btn fs-6">Показать больше</button>
-          <button class="btn btn-outline-primary">Редактировать</button>
+          <button class="btn btn-outline-primary edit-btn">Редактировать</button>
        </div>
       `;
 
@@ -138,9 +141,12 @@ export class VisitCardDantist extends VisitCard {
 
 
       newCard.addEventListener('click', (e) => {
-
          if (e.target.classList.contains('more-btn')) {
             toggleHideParameters(e);
+         }else if(e.target.classList.contains('edit-btn')) {
+            console.log("edit")
+            // !рендер модалки редактирования стоматолог
+
          }
       });
 
@@ -210,7 +216,7 @@ export class VisitCardCardio extends VisitCard {
        </div>
        <div class="btn-wrap ms-5 me-5 mb-3 d-flex justify-content-center gap-3">
           <button class="btn btn-secondary more-btn fs-6">Показать больше</button>
-          <button class="btn btn-outline-primary">Редактировать</button>
+          <button class="btn btn-outline-primary edit-btn">Редактировать</button>
        </div>
       `;
 
@@ -219,9 +225,12 @@ export class VisitCardCardio extends VisitCard {
 
 
       newCard.addEventListener('click', (e) => {
-
          if (e.target.classList.contains('more-btn')) {
             toggleHideParameters(e);
+         }else if(e.target.classList.contains('edit-btn')) {
+            console.log("edit")
+            // !рендер модалки редактирования кардиолог
+
          }
       });
 
