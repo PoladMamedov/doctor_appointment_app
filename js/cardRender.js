@@ -1,7 +1,5 @@
 import DoctorAPIService from './doctor_api_service.js';
 import toggleHideParameters from './HideParameters.js';
-import ageCheck from './checkAge.js';
-import cardBackground from './bgColor.js';
 import checkCards from './checkCards.js';
 const request = new DoctorAPIService();
 let visitCards = document.querySelectorAll('.visit-wrap .visit-card');
@@ -9,7 +7,6 @@ const list = document.querySelector('.visit-wrap');
 const searchInput = document.getElementById('searchInput');
 const selectStatus = document.querySelector('.select-options');
 const selectUrgency = document.querySelector('.select-urgency');
-
 
 visitCards.forEach((card) => {
    card.addEventListener('click', (e) => {
@@ -23,7 +20,7 @@ export default class VisitCard {
    render(data) {
       let { doctor, name, priority, id, age, description, purpose } = data;
 
-      age = ageCheck(data)
+
       if (priority === 'Звичайна') {
          priority = 'Low';
       }
@@ -37,8 +34,7 @@ export default class VisitCard {
       const randomVisit = ['Open', 'Done'];
       const randomIndex = Math.floor(Math.random() * randomVisit.length);
       const randomValue = randomVisit[randomIndex];
-      newCard.classList.add('visit-card', 'border', 'rounded', 'border-primary-subtle', 'w-100', 'gap-1');
-      cardBackground(doctor, newCard)
+      newCard.classList.add('visit-card', 'border', 'rounded', 'border-primary-subtle', 'w-100', 'gap-1', 'bg-info-subtle');
       newCard.id = id;
       const divClose = document.createElement('div');
       divClose.classList.add('closeModal');
@@ -46,7 +42,7 @@ export default class VisitCard {
       newCard.innerHTML = `
        <div class="closeModal"></div>
        <p class="patient-name text-center fs-4 mt-2">${name}
-       <span class="m-0 p-0 fs-5 hide-age hide">${age}</span>
+       <span class="m-0 p-0 fs-5 hide-age hide">${age} года</span>
        </p>
        <p class="patient-doctor text-center fs-5 mt-0">${doctor}</p>
        <div class="parameters-wrap m-0 p-0  hide">
@@ -95,9 +91,8 @@ export default class VisitCard {
 
 export class VisitCardDantist extends VisitCard {
    render(data) {
-      let { doctor, name, priority, id, age, description, purpose, lastDate } = data;
+      let { doctor, name, priority, id, description, purpose, lastDate } = data;
 
-      age = ageCheck(data)
       if (priority === 'Звичайна') {
          priority = 'Low';
       }
@@ -111,8 +106,7 @@ export class VisitCardDantist extends VisitCard {
       const randomVisit = ['Open', 'Done'];
       const randomIndex = Math.floor(Math.random() * randomVisit.length);
       const randomValue = randomVisit[randomIndex];
-      newCard.classList.add('visit-card', 'border', 'rounded', 'border-primary-subtle', 'w-100', 'gap-1');
-      cardBackground(doctor, newCard)
+      newCard.classList.add('visit-card', 'border', 'rounded', 'border-primary-subtle', 'w-100', 'gap-1', 'bg-primary', 'bg-opacity-25');
       newCard.id = id;
       const divClose = document.createElement('div');
       divClose.classList.add('closeModal');
@@ -120,8 +114,7 @@ export class VisitCardDantist extends VisitCard {
       newCard.innerHTML = `
        <div class="closeModal"></div>
        <p class="patient-name text-center fs-4 mt-2">${name}
-       <span class="m-0 p-0 fs-5 hide-age hide">${age}</span>
-       </p>
+       <span class="m-0 p-0 fs-5 hide-age hide"></span></p>
        <p class="patient-doctor text-center fs-5 mt-0">${doctor}</p>
        <div class="parameters-wrap m-0 p-0  hide">
           <p class="visit-status visit-text fs-6">${randomValue}</p>
@@ -174,7 +167,7 @@ export class VisitCardCardio extends VisitCard {
       let { doctor, name, priority, id, age, description, purpose, massIndex, pressure, heartDiseases
       } = data;
 
-      age = ageCheck(data)
+
       if (priority === 'Звичайна') {
          priority = 'Low';
       }
@@ -188,8 +181,8 @@ export class VisitCardCardio extends VisitCard {
       const randomVisit = ['Open', 'Done'];
       const randomIndex = Math.floor(Math.random() * randomVisit.length);
       const randomValue = randomVisit[randomIndex];
-      newCard.classList.add('visit-card', 'border', 'rounded', 'border-primary-subtle', 'w-100', 'gap-1');
-      cardBackground(doctor, newCard)
+      newCard.classList.add('visit-card', 'border', 'rounded', 'border-primary-subtle', 'w-100', 'gap-1', 'bg-info', 'bg-opacity-25');
+
       newCard.id = id;
       const divClose = document.createElement('div');
       divClose.classList.add('closeModal');
@@ -197,7 +190,7 @@ export class VisitCardCardio extends VisitCard {
       newCard.innerHTML = `
        <div class="closeModal"></div>
        <p class="patient-name text-center fs-4 mt-2">${name}
-       <span class="m-0 p-0 fs-5 hide-age hide">${age}</span>
+       <span class="m-0 p-0 fs-5 hide-age hide">${age} года</span>
        </p>
        <p class="patient-doctor text-center fs-5 mt-0">${doctor}</p>
        <div class="parameters-wrap m-0 p-0  hide">
