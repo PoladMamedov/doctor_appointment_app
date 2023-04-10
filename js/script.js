@@ -6,9 +6,7 @@ import logOut from "./logout.js";
 const form = new VisitForm();
 const createVisitBtn = document.querySelector("#create-visit-btn");
 createVisitBtn.addEventListener("click", (e) => {
-  if (document.body.contains(document.querySelector("#create-visit-form"))) {
-    return;
-  } else {
+  if (!document.querySelector("#create-visit-form")) {
     const visitForm = form.render();
     document.body.prepend(visitForm);
   }
@@ -16,22 +14,21 @@ createVisitBtn.addEventListener("click", (e) => {
 
 const logInBtn = document.querySelector(".authorization-btn");
 logInBtn.addEventListener("click", (e) => {
-  if(!document.querySelector("#form")) {
+  if (!document.querySelector("#form")) {
     new Modal().render();
   }
 });
-
 
 document.addEventListener("DOMContentLoaded", () => {
   if (localStorage.Authorization) {
     document.querySelector(".authorization-btn").style.display = "none";
     document.querySelector("#create-visit-btn").style.display = "block";
-    const logout =  document.querySelector("#logout")
+    const logout = document.querySelector("#logout");
     logout.style.display = "inline-block";
-    logout.addEventListener("click",(e) => {
-      logOut(e)
-    })
-    getCardsFromServer()
+    logout.addEventListener("click", (e) => {
+      logOut(e);
+    });
+    getCardsFromServer();
   } else {
     return;
   }

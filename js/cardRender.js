@@ -3,6 +3,7 @@ import toggleHideParameters from './HideParameters.js';
 import checkCards from './checkCards.js';
 import ageName from './ageName.js';
 const request = new DoctorAPIService();
+import VisitForm, { VisitTherapistForm, VisitCardiologistForm, VisitDentistForm } from './visit.js';
 let visitCards = document.querySelectorAll('.visit-wrap .visit-card');
 const list = document.querySelector('.visit-wrap');
 const searchInput = document.getElementById('searchInput');
@@ -69,8 +70,13 @@ export default class VisitCard {
             toggleHideParameters(e);
          } else if(e.target.classList.contains('edit-btn')) {
             console.log("edit")
-            // !рендер модалки редактирования терапевт
+            if(!document.querySelector("#create-visit-form")) {
+               // !рендер модалки редактирования терапевт
 
+               const newTherapistForm = new VisitTherapistForm(); 
+               document.body.prepend(newTherapistForm.render());
+               
+             }
          }
       });
 

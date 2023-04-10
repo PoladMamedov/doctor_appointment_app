@@ -27,7 +27,7 @@ export default class VisitForm {
     });
   }
   handleClickOutsideTheForm(e, form) {
-    if (form.contains(e.target) || e.target.id === "create-visit-btn") {
+    if (form.contains(e.target) || e.target.id === "create-visit-btn" || e.target.classList.contains("edit-btn")) {
       return;
     } else {
       form.remove();
@@ -94,7 +94,7 @@ export default class VisitForm {
 }
 
 // ! клас для кардиолога, дочерний клас основного класа. заменяет главную форму на форму нужного врача, а также обрабатывает запрос на добавление на сервер, и создание карточки
-class VisitCardiologistForm extends VisitForm {
+export class VisitCardiologistForm extends VisitForm {
   createCardiologistObj(form) {
     return {
       doctor: form.querySelector("#visit-doctor-select").value,
@@ -130,7 +130,7 @@ class VisitCardiologistForm extends VisitForm {
 }
 
 // ! клас для стоматолога, дочерний клас основного класа. заменяет главную форму на форму нужного врача, а также обрабатывает запрос на добавление на сервер, и создание карточки
-class VisitDentistForm extends VisitForm {
+export class VisitDentistForm extends VisitForm {
   createDentistObj(form) {
     return {
       doctor: form.querySelector("#visit-doctor-select").value,
@@ -161,7 +161,7 @@ class VisitDentistForm extends VisitForm {
 }
 
 // ! клас для терапевта, дочерний клас основного класа. заменяет главную форму на форму нужного врача, а также обрабатывает запрос на добавление на сервер, и создание карточки
-class VisitTherapistForm extends VisitForm {
+export class VisitTherapistForm extends VisitForm {
   createTherapistObj(form) {
     return {
       doctor: form.querySelector("#visit-doctor-select").value,
@@ -178,6 +178,7 @@ class VisitTherapistForm extends VisitForm {
     newTherapistVisitForm.querySelector("#priority-select-wrapper").insertAdjacentHTML("afterend", additionalInfo);
     newTherapistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 3;
     newTherapistVisitForm.addEventListener("submit", async (e) => {
+      // ! вот эту функцию вынести в клас как функция при создании, создать еще одну для редактирования
       e.preventDefault();
       const data = await request.postCard(localStorage.Authorization, this.createTherapistObj(newTherapistVisitForm));
       console.log(data);
