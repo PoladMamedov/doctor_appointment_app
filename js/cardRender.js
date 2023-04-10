@@ -1,6 +1,7 @@
 import DoctorAPIService from './doctor_api_service.js';
 import toggleHideParameters from './HideParameters.js';
 import checkCards from './checkCards.js';
+import ageName from './ageName.js';
 const request = new DoctorAPIService();
 let visitCards = document.querySelectorAll('.visit-wrap .visit-card');
 const list = document.querySelector('.visit-wrap');
@@ -20,7 +21,7 @@ export default class VisitCard {
    render(data) {
       let { doctor, name, priority, id, age, description, purpose } = data;
 
-
+      age = ageName(age)
       if (priority === 'Звичайна') {
          priority = 'Low';
       }
@@ -42,7 +43,7 @@ export default class VisitCard {
       newCard.innerHTML = `
        <div class="closeModal"></div>
        <p class="patient-name text-center fs-4 mt-2">${name}
-       <span class="m-0 p-0 fs-5 hide-age hide">${age} года</span>
+       <span class="m-0 p-0 fs-5 hide-age hide">${age}</span>
        </p>
        <p class="patient-doctor text-center fs-5 mt-0">${doctor}</p>
        <div class="parameters-wrap m-0 p-0  hide">
@@ -166,6 +167,7 @@ export class VisitCardCardio extends VisitCard {
    render(data) {
       let { doctor, name, priority, id, age, description, purpose, massIndex, pressure, heartDiseases
       } = data;
+      age = ageName(age)
 
 
       if (priority === 'Звичайна') {
@@ -190,7 +192,7 @@ export class VisitCardCardio extends VisitCard {
       newCard.innerHTML = `
        <div class="closeModal"></div>
        <p class="patient-name text-center fs-4 mt-2">${name}
-       <span class="m-0 p-0 fs-5 hide-age hide">${age} года</span>
+       <span class="m-0 p-0 fs-5 hide-age hide">${age}</span>
        </p>
        <p class="patient-doctor text-center fs-5 mt-0">${doctor}</p>
        <div class="parameters-wrap m-0 p-0  hide">
