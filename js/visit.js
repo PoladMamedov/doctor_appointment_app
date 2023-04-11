@@ -56,7 +56,7 @@ export default class VisitForm {
     );
     newVisitForm.innerHTML = `<label class="form-label">Заполните форму:</label> 
     <select id="visit-doctor-select" class="form-select mb-2">
-       <option selected disabled>Выберите лікаря:</option>
+       <option selected disabled>Выберите врача:</option>
        <option>Кардиолог</option>
        <option>Стоматолог</option>
        <option>Терапевт</option>
