@@ -14,15 +14,7 @@ export default class VisitCard {
       let { doctor, name, priority, id, age, description, purpose } = data;
 
       age = ageName(age)
-      if (priority === 'Звичайна') {
-         priority = 'Low';
-      }
-      if (priority === 'Пріоритетна') {
-         priority = 'Normal';
-      }
-      if (priority === 'Невідкладна') {
-         priority = 'High';
-      }
+
       const newCard = document.createElement('li');
       const randomVisit = ['Open', 'Done'];
       const randomIndex = Math.floor(Math.random() * randomVisit.length);
