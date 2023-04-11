@@ -11,7 +11,14 @@ export default class Modal {
         this.submitBtn = document.createElement("button");
         this.cancelBtn =  document.createElement("button");
       }
-    
+      handleClickOutsideTheForm(e, form) {
+        if (form.contains(e.target) || e.target.classList.contains("authorization-btn")) {
+          return;
+        } else {
+          form.remove();
+          document.removeEventListener("click", this.handleClickOutsideTheForm);
+        }
+      }
       createElement() {
         this.form.classList.add("w-50","d-flex","flex-column","border","border-primary","rounded","p-4","position-absolute","top-50","start-50","translate-middle","bg-light");
         this.form.id = ("form")
@@ -49,9 +56,12 @@ export default class Modal {
           autorization(this.inputEmail.value, this.inputPass.value);
         });
       }
-
+      
       render(selector) {
         this.createElement();
+        document.addEventListener("click", (e) => {
+          this.handleClickOutsideTheForm(e, this.form);
+        });
         document.querySelector("body").append(this.form);
       }
 
