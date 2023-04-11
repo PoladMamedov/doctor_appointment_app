@@ -54,16 +54,16 @@ export default class VisitForm {
       "bg-light",
       "z-3"
     );
-    newVisitForm.innerHTML = `<label class="form-label">Заповніть форму:</label> 
+    newVisitForm.innerHTML = `<label class="form-label">Заполните форму:</label> 
     <select id="visit-doctor-select" class="form-select mb-2">
-       <option selected disabled>Оберіть лікаря:</option>
-       <option>Кардіолог</option>
+       <option selected disabled>Выберите лікаря:</option>
+       <option>Кардиолог</option>
        <option>Стоматолог</option>
        <option>Терапевт</option>
     </select>
-    <input required id="fio" placeholder="П.І.Б." type="text" class="form-control mb-2">
-    <input required id="visit-purpose" placeholder="Ціль візиту" type="text" class="form-control mb-2">
-    <input id="decription" placeholder="Опис" type="text" class="form-control mb-2">
+    <input required id="fio" placeholder="Ф.И.О." type="text" class="form-control mb-2">
+    <input required id="visit-purpose" placeholder="Цель визита" type="text" class="form-control mb-2">
+    <input id="decription" placeholder="Описание" type="text" class="form-control mb-2">
 
     <div id="priority-select-wrapper" class="form-floating mb-2">
       <select id="priority-select" class="form-select">
@@ -71,7 +71,7 @@ export default class VisitForm {
         <option>Приоритетная</option>
         <option>Неотложная</option>
       </select>
-      <label for="floatingSelect">Терміновість:</label>
+      <label for="floatingSelect">Срочность:</label>
     </div>
 
     <button id="visit-submit-btn" type="submit" class="btn btn-primary">Создать запись</button>
@@ -113,10 +113,10 @@ export class VisitCardiologistForm extends VisitForm {
   }
   render(oldCard, edit = false) {
     const newCardiologistVisitForm = super.render();
-    const additionalInfo = `<input required id="pressure" placeholder="Звичайний тиск" type="text" class="form-control mb-2">
-   <input required id="mass-index" placeholder="Індекс маси тіла" type="text" class="form-control mb-2">
-   <input required id="heart-diseases" placeholder="Перенесені захворювання серцево-судинної системи" type="text" class="form-control mb-2">
-   <input required id="age" placeholder="Вік" type="text" class="form-control mb-2">`;
+    const additionalInfo = `<input required id="pressure" placeholder="Обычное давление" type="text" class="form-control mb-2">
+   <input required id="mass-index" placeholder="Индекс массы тела" type="text" class="form-control mb-2">
+   <input required id="heart-diseases" placeholder="Перенесенные заболевания сердечно-сосудистой системы" type="text" class="form-control mb-2">
+   <input required id="age" placeholder="Возраст" type="text" class="form-control mb-2">`;
     newCardiologistVisitForm.querySelector("#priority-select-wrapper").insertAdjacentHTML("afterend", additionalInfo);
     newCardiologistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 1;
     if (edit) {
@@ -167,7 +167,7 @@ export class VisitDentistForm extends VisitForm {
   }
   render(oldCard, edit = false) {
     const newDentistVisitForm = super.render();
-    const additionalInfo = `<input required id="last-visit" placeholder="Дата останнього візиту" type="text" class="form-control mb-2">`;
+    const additionalInfo = `<input required id="last-visit" placeholder="Дата последнего визита" type="text" class="form-control mb-2">`;
     newDentistVisitForm.querySelector("#priority-select-wrapper").insertAdjacentHTML("afterend", additionalInfo);
     newDentistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 2;
     if (edit) {
@@ -215,7 +215,7 @@ export class VisitTherapistForm extends VisitForm {
   }
   render(oldCard, edit = false) {
     const newTherapistVisitForm = super.render();
-    const additionalInfo = `<input required id="age" placeholder="Вік" type="text" class="form-control mb-2">`;
+    const additionalInfo = `<input required id="age" placeholder="Возраст" type="text" class="form-control mb-2">`;
     newTherapistVisitForm.querySelector("#priority-select-wrapper").insertAdjacentHTML("afterend", additionalInfo);
     newTherapistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 3;
     if (edit) {
