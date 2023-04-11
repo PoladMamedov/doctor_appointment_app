@@ -116,7 +116,18 @@ export class VisitCardiologistForm extends VisitForm {
     newCardiologistVisitForm.querySelector("#priority-select-wrapper").insertAdjacentHTML("afterend", additionalInfo);
     newCardiologistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 1;
     if(edit){
-      newCardiologistVisitForm.querySelector("#visit-doctor-select").setAttribute("disabled", "true");
+      const editingCardInfo = request.getCard(localStorage.Authorization, oldCard.id)
+      editingCardInfo.then(data => {
+        console.log(data)
+        newCardiologistVisitForm.querySelector("#fio").value = data.name;
+        newCardiologistVisitForm.querySelector("#visit-purpose").value = data.purpose;
+        newCardiologistVisitForm.querySelector("#decription").value = data.description;
+        newCardiologistVisitForm.querySelector("#age").value = data.age
+        newCardiologistVisitForm.querySelector("#pressure").value = data.pressure
+        newCardiologistVisitForm.querySelector("#mass-index").value = data.massIndex
+        newCardiologistVisitForm.querySelector("#heart-diseases").value = data.heartDiseases
+        newCardiologistVisitForm.querySelector("#visit-doctor-select").setAttribute("disabled", "true");
+      })
     }
     newCardiologistVisitForm.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -153,7 +164,15 @@ export class VisitDentistForm extends VisitForm {
     newDentistVisitForm.querySelector("#priority-select-wrapper").insertAdjacentHTML("afterend", additionalInfo);
     newDentistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 2;
     if(edit){
-      newDentistVisitForm.querySelector("#visit-doctor-select").setAttribute("disabled", "true");
+      const editingCardInfo = request.getCard(localStorage.Authorization, oldCard.id)
+      editingCardInfo.then(data => {
+        console.log(data)
+        newDentistVisitForm.querySelector("#fio").value = data.name;
+        newDentistVisitForm.querySelector("#visit-purpose").value = data.purpose;
+        newDentistVisitForm.querySelector("#decription").value = data.description;
+        newDentistVisitForm.querySelector("#last-visit").value = data.lastDate
+        newDentistVisitForm.querySelector("#visit-doctor-select").setAttribute("disabled", "true");
+      })
     }
     newDentistVisitForm.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -190,7 +209,15 @@ export class VisitTherapistForm extends VisitForm {
     newTherapistVisitForm.querySelector("#priority-select-wrapper").insertAdjacentHTML("afterend", additionalInfo);
     newTherapistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 3;
     if(edit){
-      newTherapistVisitForm.querySelector("#visit-doctor-select").setAttribute("disabled", "true");
+      const editingCardInfo = request.getCard(localStorage.Authorization, oldCard.id)
+      editingCardInfo.then(data => {
+        console.log(data)
+        newTherapistVisitForm.querySelector("#fio").value = data.name;
+        newTherapistVisitForm.querySelector("#visit-purpose").value = data.purpose;
+        newTherapistVisitForm.querySelector("#decription").value = data.description;
+        newTherapistVisitForm.querySelector("#age").value = data.age
+        newTherapistVisitForm.querySelector("#visit-doctor-select").setAttribute("disabled", "true");
+      })
     }
     newTherapistVisitForm.addEventListener("submit", async (e) => {
       e.preventDefault();
