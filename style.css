@@ -83,3 +83,8 @@ ul {
 .closeModal::after {
    transform: rotate(-45deg);
 }
+
+.registration-btn:hover {
+   outline: 1px solid rgb(27, 31, 227);
+   outline-offset: 3px;
+}

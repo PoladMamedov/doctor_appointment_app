@@ -4,7 +4,6 @@ import checkCards from './checkCards.js';
 import ageName from './ageName.js';
 const request = new DoctorAPIService();
 import { VisitTherapistForm, VisitCardiologistForm, VisitDentistForm } from './visit.js';
-let visitCards = document.querySelectorAll('.visit-wrap .visit-card');
 const list = document.querySelector('.visit-wrap');
 const searchInput = document.getElementById('searchInput');
 const selectStatus = document.querySelector('.select-options');
@@ -52,7 +51,7 @@ export default class VisitCard {
           <button class="btn btn-outline-primary edit-btn">Редактировать</button>
        </div>
       `;
-      if(addToList){
+      if (addToList) {
          list.appendChild(newCard);
       }
       this.removeCard(newCard, newCard.id);
@@ -61,17 +60,17 @@ export default class VisitCard {
       newCard.addEventListener('click', (e) => {
          if (e.target.classList.contains('more-btn')) {
             toggleHideParameters(e);
-         } else if(e.target.classList.contains('edit-btn')) {
-            if(!document.querySelector("#create-visit-form")) {
+         } else if (e.target.classList.contains('edit-btn')) {
+            if (!document.querySelector("#create-visit-form")) {
                // !рендер модалки редактирования терапевт
-               const newTherapistForm = new VisitTherapistForm(); 
+               const newTherapistForm = new VisitTherapistForm();
                document.body.prepend(newTherapistForm.render(newCard, true));
-             }
+            }
          }
       });
 
-      visitCards = document.querySelectorAll('.visit-wrap .visit-card');
-      filters.applyFilters(visitCards);
+
+      filters.applyFilters();
       return newCard;
    }
 
@@ -124,7 +123,6 @@ export class VisitCardDantist extends VisitCard {
           <p class="m-2 fs-6 cardDescription">Описание: ${description} </p>
           <p class="m-2 fs-6">Причина обращения: ${purpose}</p>
           <p class="m-2 fs-6">Дата последнего визита: ${lastDate} </p>
-
        </div>
        <div class="btn-wrap ms-5 me-5 mb-3 d-flex justify-content-center gap-3">
           <button class="btn btn-secondary more-btn fs-6">Показать больше</button>
@@ -132,7 +130,7 @@ export class VisitCardDantist extends VisitCard {
        </div>
       `;
 
-      if(addToList){
+      if (addToList) {
          list.appendChild(newCard);
       }
       this.removeCard(newCard, newCard.id);
@@ -141,29 +139,18 @@ export class VisitCardDantist extends VisitCard {
       newCard.addEventListener('click', (e) => {
          if (e.target.classList.contains('more-btn')) {
             toggleHideParameters(e);
-         }else if(e.target.classList.contains('edit-btn')) {
+         } else if (e.target.classList.contains('edit-btn')) {
             // !рендер модалки редактирования стоматолог
-            const newDentistForm = new VisitDentistForm(); 
+            const newDentistForm = new VisitDentistForm();
             document.body.prepend(newDentistForm.render(newCard, true));
          }
       });
 
-      visitCards = document.querySelectorAll('.visit-wrap .visit-card');
-      filters.applyFilters(visitCards);
+
+      filters.applyFilters();
       return newCard;
    }
-   removeCard(card, cardId) {
-      const closeModal = card.querySelector('.closeModal');
-      closeModal.addEventListener('click', async () => {
-         const delRequest = await request.deleteCard(localStorage.Authorization, cardId);
-         if (delRequest.ok) {
-            card.remove();
-         } else {
-            throw new Error('Ошибка запроса на сервер');
-         }
-         checkCards();
-      });
-   }
+
 }
 
 
@@ -209,8 +196,6 @@ export class VisitCardCardio extends VisitCard {
           <p class="m-2 fs-6">Индекс массы тела: ${massIndex} </p>
           <p class="m-2 fs-6">Среднее давление: ${pressure} </p>
           <p class="m-2 fs-6">Перенесенные болезни: ${heartDiseases} </p>
-
-
        </div>
        <div class="btn-wrap ms-5 me-5 mb-3 d-flex justify-content-center gap-3">
           <button class="btn btn-secondary more-btn fs-6">Показать больше</button>
@@ -218,7 +203,7 @@ export class VisitCardCardio extends VisitCard {
        </div>
       `;
 
-      if(addToList){
+      if (addToList) {
          list.appendChild(newCard);
       }
       this.removeCard(newCard, newCard.id);
@@ -227,24 +212,21 @@ export class VisitCardCardio extends VisitCard {
       newCard.addEventListener('click', (e) => {
          if (e.target.classList.contains('more-btn')) {
             toggleHideParameters(e);
-         }else if(e.target.classList.contains('edit-btn')) {
+         } else if (e.target.classList.contains('edit-btn')) {
             // !рендер модалки редактирования кардиолог
-            const newCardiologistForm = new VisitCardiologistForm(); 
+            const newCardiologistForm = new VisitCardiologistForm();
             document.body.prepend(newCardiologistForm.render(newCard, true));
          }
       });
 
-      visitCards = document.querySelectorAll('.visit-wrap .visit-card');
-      filters.applyFilters(visitCards);
+      filters.applyFilters();
       return newCard;
    }
 }
 
 
-class VisitFilters {
-   constructor(list, visitCards) {
-      this.list = list;
-      this.visitCards = visitCards;
+export class VisitFilters {
+   constructor() {
       this.filters = {
          searchText: '',
          description: '',
@@ -254,7 +236,7 @@ class VisitFilters {
    }
 
    applyFilters() {
-      this.visitCards = visitCards;
+      let visitCards = document.querySelectorAll('.visit-wrap .visit-card')
       visitCards.forEach((card) => {
          const cardStatus = card.querySelector('.visit-status').textContent.trim();
          const cardUrgency = card.querySelector('.visit-urgency').textContent.trim();
@@ -280,7 +262,7 @@ class VisitFilters {
    }
 }
 
-const filters = new VisitFilters(list, visitCards);
+const filters = new VisitFilters();
 searchInput.addEventListener('input', () => {
    filters.filters.searchText = searchInput.value.toLowerCase().replace(/\s/g, '');
    filters.filters.description = searchInput.value.toLowerCase().replace(/\s/g, '');

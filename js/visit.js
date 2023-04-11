@@ -3,8 +3,13 @@ import checkCards from "./checkCards.js";
 import VisitCard from "./cardRender.js";
 import { VisitCardDantist } from "./cardRender.js";
 import { VisitCardCardio } from "./cardRender.js";
+import { VisitFilters } from "./cardRender.js";
+
+
 const request = new DoctorAPIService();
 const visitList = document.querySelector(".visit-wrap");
+// let visitCards = document.querySelectorAll('.visit-wrap .visit-card');
+
 
 //! Главный класс для формы создания карточки, создает все поля которые есть у всех врачей
 export default class VisitForm {
@@ -115,7 +120,7 @@ export class VisitCardiologistForm extends VisitForm {
    <input required id="age" placeholder="Вік" type="text" class="form-control mb-2">`;
     newCardiologistVisitForm.querySelector("#priority-select-wrapper").insertAdjacentHTML("afterend", additionalInfo);
     newCardiologistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 1;
-    if(edit){
+    if (edit) {
       const editingCardInfo = request.getCard(localStorage.Authorization, oldCard.id)
       editingCardInfo.then(data => {
         newCardiologistVisitForm.querySelector("#fio").value = data.name;
@@ -131,9 +136,12 @@ export class VisitCardiologistForm extends VisitForm {
     newCardiologistVisitForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       const card = new VisitCardCardio();
-      if(edit){
+      if (edit) {
         const data = await request.updateCard(localStorage.Authorization, oldCard.id, this.createCardiologistObj(newCardiologistVisitForm));
         visitList.replaceChild(card.render(data, false), oldCard)
+        const filters = new VisitFilters()
+        filters.applyFilters();
+
       } else {
         const data = await request.postCard(localStorage.Authorization, this.createCardiologistObj(newCardiologistVisitForm));
         card.render(data);
@@ -162,7 +170,7 @@ export class VisitDentistForm extends VisitForm {
     const additionalInfo = `<input required id="last-visit" placeholder="Дата останнього візиту" type="text" class="form-control mb-2">`;
     newDentistVisitForm.querySelector("#priority-select-wrapper").insertAdjacentHTML("afterend", additionalInfo);
     newDentistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 2;
-    if(edit){
+    if (edit) {
       const editingCardInfo = request.getCard(localStorage.Authorization, oldCard.id)
       editingCardInfo.then(data => {
         newDentistVisitForm.querySelector("#fio").value = data.name;
@@ -175,9 +183,13 @@ export class VisitDentistForm extends VisitForm {
     newDentistVisitForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       const card = new VisitCardDantist();
-      if(edit){
+      if (edit) {
         const data = await request.updateCard(localStorage.Authorization, oldCard.id, this.createDentistObj(newDentistVisitForm));
         visitList.replaceChild(card.render(data, false), oldCard)
+        const filters = new VisitFilters()
+
+        filters.applyFilters();
+
       } else {
         const data = await request.postCard(localStorage.Authorization, this.createDentistObj(newDentistVisitForm));
         card.render(data);
@@ -201,12 +213,12 @@ export class VisitTherapistForm extends VisitForm {
       age: form.querySelector("#age").value,
     };
   }
-  render(oldCard, edit=false) {
+  render(oldCard, edit = false) {
     const newTherapistVisitForm = super.render();
     const additionalInfo = `<input required id="age" placeholder="Вік" type="text" class="form-control mb-2">`;
     newTherapistVisitForm.querySelector("#priority-select-wrapper").insertAdjacentHTML("afterend", additionalInfo);
     newTherapistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 3;
-    if(edit){
+    if (edit) {
       const editingCardInfo = request.getCard(localStorage.Authorization, oldCard.id)
       editingCardInfo.then(data => {
         newTherapistVisitForm.querySelector("#fio").value = data.name;
@@ -219,9 +231,14 @@ export class VisitTherapistForm extends VisitForm {
     newTherapistVisitForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       const card = new VisitCard();
-      if(edit){
+      if (edit) {
         const data = await request.updateCard(localStorage.Authorization, oldCard.id, this.createTherapistObj(newTherapistVisitForm));
-        visitList.replaceChild(card.render(data, false), oldCard)
+        let newCard = card.render(data, false);
+        visitList.replaceChild(newCard, oldCard)
+        const filters = new VisitFilters()
+
+        filters.applyFilters();
+
       } else {
         const data = await request.postCard(localStorage.Authorization, this.createTherapistObj(newTherapistVisitForm));
         card.render(data);
