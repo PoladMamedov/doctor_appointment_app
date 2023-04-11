@@ -118,7 +118,6 @@ export class VisitCardiologistForm extends VisitForm {
     if(edit){
       const editingCardInfo = request.getCard(localStorage.Authorization, oldCard.id)
       editingCardInfo.then(data => {
-        console.log(data)
         newCardiologistVisitForm.querySelector("#fio").value = data.name;
         newCardiologistVisitForm.querySelector("#visit-purpose").value = data.purpose;
         newCardiologistVisitForm.querySelector("#decription").value = data.description;
@@ -166,7 +165,6 @@ export class VisitDentistForm extends VisitForm {
     if(edit){
       const editingCardInfo = request.getCard(localStorage.Authorization, oldCard.id)
       editingCardInfo.then(data => {
-        console.log(data)
         newDentistVisitForm.querySelector("#fio").value = data.name;
         newDentistVisitForm.querySelector("#visit-purpose").value = data.purpose;
         newDentistVisitForm.querySelector("#decription").value = data.description;
@@ -211,7 +209,6 @@ export class VisitTherapistForm extends VisitForm {
     if(edit){
       const editingCardInfo = request.getCard(localStorage.Authorization, oldCard.id)
       editingCardInfo.then(data => {
-        console.log(data)
         newTherapistVisitForm.querySelector("#fio").value = data.name;
         newTherapistVisitForm.querySelector("#visit-purpose").value = data.purpose;
         newTherapistVisitForm.querySelector("#decription").value = data.description;
