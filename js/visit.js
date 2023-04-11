@@ -76,8 +76,9 @@ export default class VisitForm {
       <label for="floatingSelect">Терміновість:</label>
     </div>
 
-    <button id="visit-submit-btn" type="submit" class="btn btn-primary">Створити запис</button>
-    <button id="visit-cancel-btn" type="button" class="btn btn-danger mt-2">Скасувати</button>`;
+    <button id="visit-submit-btn" type="submit" class="btn btn-primary">Создать запись</button>
+    <button id="visit-cancel-btn" type="button" class="btn btn-danger mt-2">
+    Отменить</button>`;
 
     this.doctorSelect(newVisitForm);
 

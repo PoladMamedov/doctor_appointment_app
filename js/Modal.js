@@ -27,8 +27,8 @@ export default class Modal {
         this.inputPass.type = "password";
         this.inputPass.id = "password";
         this.inputPass.classList.add("form-control");
-        this.submitBtn.innerText = "Увійти";
-        this.cancelBtn.innerText = "Скасувати";
+        this.submitBtn.innerText = "Войти";
+        this.cancelBtn.innerText = "Отменить";
         this.submitBtn.classList.add("btn", "btn-primary", "mt-3");
         this.cancelBtn.classList.add("btn", "btn-danger", "mt-2");
 
