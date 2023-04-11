@@ -2,8 +2,8 @@ import DoctorAPIService from './doctor_api_service.js';
 import toggleHideParameters from './HideParameters.js';
 import checkCards from './checkCards.js';
 import ageName from './ageName.js';
-const request = new DoctorAPIService();
 import { VisitTherapistForm, VisitCardiologistForm, VisitDentistForm } from './visit.js';
+const request = new DoctorAPIService();
 const list = document.querySelector('.visit-wrap');
 const searchInput = document.getElementById('searchInput');
 const selectStatus = document.querySelector('.select-options');
@@ -159,17 +159,6 @@ export class VisitCardCardio extends VisitCard {
       let { doctor, name, priority, id, age, description, purpose, massIndex, pressure, heartDiseases
       } = data;
       age = ageName(age)
-
-
-      if (priority === 'Звичайна') {
-         priority = 'Low';
-      }
-      if (priority === 'Пріоритетна') {
-         priority = 'Normal';
-      }
-      if (priority === 'Невідкладна') {
-         priority = 'High';
-      }
       const newCard = document.createElement('li');
       const randomVisit = ['Open', 'Done'];
       const randomIndex = Math.floor(Math.random() * randomVisit.length);

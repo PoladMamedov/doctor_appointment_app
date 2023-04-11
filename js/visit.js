@@ -4,11 +4,9 @@ import VisitCard from "./cardRender.js";
 import { VisitCardDantist } from "./cardRender.js";
 import { VisitCardCardio } from "./cardRender.js";
 import { VisitFilters } from "./cardRender.js";
-
-
 const request = new DoctorAPIService();
 const visitList = document.querySelector(".visit-wrap");
-// let visitCards = document.querySelectorAll('.visit-wrap .visit-card');
+
 
 
 //! Главный класс для формы создания карточки, создает все поля которые есть у всех врачей
@@ -69,9 +67,9 @@ export default class VisitForm {
 
     <div id="priority-select-wrapper" class="form-floating mb-2">
       <select id="priority-select" class="form-select">
-        <option selected>Звичайна</option>
-        <option>Пріоритетна</option>
-        <option>Невідкладна</option>
+        <option selected>Обычная</option>
+        <option>Приоритетная</option>
+        <option>Неотложная</option>
       </select>
       <label for="floatingSelect">Терміновість:</label>
     </div>
@@ -146,6 +144,7 @@ export class VisitCardiologistForm extends VisitForm {
       } else {
         const data = await request.postCard(localStorage.Authorization, this.createCardiologistObj(newCardiologistVisitForm));
         card.render(data);
+        console.log(data);
       }
       checkCards();
       newCardiologistVisitForm.remove();
