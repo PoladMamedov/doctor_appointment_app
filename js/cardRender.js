@@ -3,23 +3,15 @@ import toggleHideParameters from './HideParameters.js';
 import checkCards from './checkCards.js';
 import ageName from './ageName.js';
 const request = new DoctorAPIService();
-import VisitForm, { VisitTherapistForm, VisitCardiologistForm, VisitDentistForm } from './visit.js';
+import { VisitTherapistForm, VisitCardiologistForm, VisitDentistForm } from './visit.js';
 let visitCards = document.querySelectorAll('.visit-wrap .visit-card');
 const list = document.querySelector('.visit-wrap');
 const searchInput = document.getElementById('searchInput');
 const selectStatus = document.querySelector('.select-options');
 const selectUrgency = document.querySelector('.select-urgency');
 
-// visitCards.forEach((card) => {
-//    card.addEventListener('click', (e) => {
-//       if (e.target.classList.contains('more-btn')) {
-//          toggleHideParameters(e);
-//       }
-//    });
-// });
-
 export default class VisitCard {
-   render(data) {
+   render(data, addToList = true) {
       let { doctor, name, priority, id, age, description, purpose } = data;
 
       age = ageName(age)
@@ -60,8 +52,9 @@ export default class VisitCard {
           <button class="btn btn-outline-primary edit-btn">Редактировать</button>
        </div>
       `;
-
-      list.appendChild(newCard);
+      if(addToList){
+         list.appendChild(newCard);
+      }
       this.removeCard(newCard, newCard.id);
 
 
@@ -69,13 +62,10 @@ export default class VisitCard {
          if (e.target.classList.contains('more-btn')) {
             toggleHideParameters(e);
          } else if(e.target.classList.contains('edit-btn')) {
-            console.log("edit")
             if(!document.querySelector("#create-visit-form")) {
                // !рендер модалки редактирования терапевт
-
                const newTherapistForm = new VisitTherapistForm(); 
-               document.body.prepend(newTherapistForm.render());
-               
+               document.body.prepend(newTherapistForm.render(newCard, true));
              }
          }
       });
@@ -100,7 +90,7 @@ export default class VisitCard {
 }
 
 export class VisitCardDantist extends VisitCard {
-   render(data) {
+   render(data, addToList = true) {
       let { doctor, name, priority, id, description, purpose, lastDate } = data;
 
       if (priority === 'Звичайна') {
@@ -142,7 +132,9 @@ export class VisitCardDantist extends VisitCard {
        </div>
       `;
 
-      list.appendChild(newCard);
+      if(addToList){
+         list.appendChild(newCard);
+      }
       this.removeCard(newCard, newCard.id);
 
 
@@ -150,9 +142,9 @@ export class VisitCardDantist extends VisitCard {
          if (e.target.classList.contains('more-btn')) {
             toggleHideParameters(e);
          }else if(e.target.classList.contains('edit-btn')) {
-            console.log("edit")
             // !рендер модалки редактирования стоматолог
-
+            const newDentistForm = new VisitDentistForm(); 
+            document.body.prepend(newDentistForm.render(newCard, true));
          }
       });
 
@@ -176,7 +168,7 @@ export class VisitCardDantist extends VisitCard {
 
 
 export class VisitCardCardio extends VisitCard {
-   render(data) {
+   render(data, addToList = true) {
       let { doctor, name, priority, id, age, description, purpose, massIndex, pressure, heartDiseases
       } = data;
       age = ageName(age)
@@ -226,7 +218,9 @@ export class VisitCardCardio extends VisitCard {
        </div>
       `;
 
-      list.appendChild(newCard);
+      if(addToList){
+         list.appendChild(newCard);
+      }
       this.removeCard(newCard, newCard.id);
 
 
@@ -234,9 +228,9 @@ export class VisitCardCardio extends VisitCard {
          if (e.target.classList.contains('more-btn')) {
             toggleHideParameters(e);
          }else if(e.target.classList.contains('edit-btn')) {
-            console.log("edit")
             // !рендер модалки редактирования кардиолог
-
+            const newCardiologistForm = new VisitCardiologistForm(); 
+            document.body.prepend(newCardiologistForm.render(newCard, true));
          }
       });
 

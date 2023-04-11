@@ -1,11 +1,10 @@
 import DoctorAPIService from "./doctor_api_service.js";
-import VisitCard from "./cardRender.js";
 import checkCards from "./checkCards.js";
+import VisitCard from "./cardRender.js";
 import { VisitCardDantist } from "./cardRender.js";
 import { VisitCardCardio } from "./cardRender.js";
 const request = new DoctorAPIService();
-
-
+const visitList = document.querySelector(".visit-wrap");
 
 //! Главный класс для формы создания карточки, создает все поля которые есть у всех врачей
 export default class VisitForm {
@@ -108,7 +107,7 @@ export class VisitCardiologistForm extends VisitForm {
       age: form.querySelector("#age").value,
     };
   }
-  render() {
+  render(oldCard, edit = false) {
     const newCardiologistVisitForm = super.render();
     const additionalInfo = `<input required id="pressure" placeholder="Звичайний тиск" type="text" class="form-control mb-2">
    <input required id="mass-index" placeholder="Індекс маси тіла" type="text" class="form-control mb-2">
@@ -116,12 +115,19 @@ export class VisitCardiologistForm extends VisitForm {
    <input required id="age" placeholder="Вік" type="text" class="form-control mb-2">`;
     newCardiologistVisitForm.querySelector("#priority-select-wrapper").insertAdjacentHTML("afterend", additionalInfo);
     newCardiologistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 1;
+    if(edit){
+      newCardiologistVisitForm.querySelector("#visit-doctor-select").setAttribute("disabled", "true");
+    }
     newCardiologistVisitForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const data = await request.postCard(localStorage.Authorization, this.createCardiologistObj(newCardiologistVisitForm));
-      console.log(data);
       const card = new VisitCardCardio();
-      card.render(data);
+      if(edit){
+        const data = await request.updateCard(localStorage.Authorization, oldCard.id, this.createCardiologistObj(newCardiologistVisitForm));
+        visitList.replaceChild(card.render(data, false), oldCard)
+      } else {
+        const data = await request.postCard(localStorage.Authorization, this.createCardiologistObj(newCardiologistVisitForm));
+        card.render(data);
+      }
       checkCards();
       newCardiologistVisitForm.remove();
     });
@@ -141,18 +147,24 @@ export class VisitDentistForm extends VisitForm {
       lastDate: form.querySelector("#last-visit").value,
     };
   }
-  render() {
+  render(oldCard, edit = false) {
     const newDentistVisitForm = super.render();
     const additionalInfo = `<input required id="last-visit" placeholder="Дата останнього візиту" type="text" class="form-control mb-2">`;
     newDentistVisitForm.querySelector("#priority-select-wrapper").insertAdjacentHTML("afterend", additionalInfo);
     newDentistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 2;
+    if(edit){
+      newDentistVisitForm.querySelector("#visit-doctor-select").setAttribute("disabled", "true");
+    }
     newDentistVisitForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const data = await request.postCard(localStorage.Authorization, this.createDentistObj(newDentistVisitForm));
-      console.log(data);
-
       const card = new VisitCardDantist();
-      card.render(data);
+      if(edit){
+        const data = await request.updateCard(localStorage.Authorization, oldCard.id, this.createDentistObj(newDentistVisitForm));
+        visitList.replaceChild(card.render(data, false), oldCard)
+      } else {
+        const data = await request.postCard(localStorage.Authorization, this.createDentistObj(newDentistVisitForm));
+        card.render(data);
+      }
       checkCards();
       newDentistVisitForm.remove();
     });
@@ -172,19 +184,24 @@ export class VisitTherapistForm extends VisitForm {
       age: form.querySelector("#age").value,
     };
   }
-  render() {
+  render(oldCard, edit=false) {
     const newTherapistVisitForm = super.render();
     const additionalInfo = `<input required id="age" placeholder="Вік" type="text" class="form-control mb-2">`;
     newTherapistVisitForm.querySelector("#priority-select-wrapper").insertAdjacentHTML("afterend", additionalInfo);
     newTherapistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 3;
+    if(edit){
+      newTherapistVisitForm.querySelector("#visit-doctor-select").setAttribute("disabled", "true");
+    }
     newTherapistVisitForm.addEventListener("submit", async (e) => {
-      // ! вот эту функцию вынести в клас как функция при создании, создать еще одну для редактирования
       e.preventDefault();
-      const data = await request.postCard(localStorage.Authorization, this.createTherapistObj(newTherapistVisitForm));
-      console.log(data);
-
       const card = new VisitCard();
-      card.render(data);
+      if(edit){
+        const data = await request.updateCard(localStorage.Authorization, oldCard.id, this.createTherapistObj(newTherapistVisitForm));
+        visitList.replaceChild(card.render(data, false), oldCard)
+      } else {
+        const data = await request.postCard(localStorage.Authorization, this.createTherapistObj(newTherapistVisitForm));
+        card.render(data);
+      }
       checkCards();
       newTherapistVisitForm.remove();
     });
