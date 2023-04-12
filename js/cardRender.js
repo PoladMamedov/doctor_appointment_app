@@ -51,11 +51,9 @@ export default class VisitCard {
       newCard.addEventListener('click', (e) => {
          if (e.target.classList.contains('more-btn')) {
             toggleHideParameters(e);
-         } else if (e.target.classList.contains('edit-btn')) {
-            if (!document.querySelector("#create-visit-form")) {
+         } else if (e.target.classList.contains('edit-btn') && !document.querySelector("#create-visit-form")) {
                const newTherapistForm = new VisitTherapistForm();
-               document.body.prepend(newTherapistForm.render(newCard, true));
-            }
+               newCard.prepend(newTherapistForm.render(newCard, true));
          }
       });
       filters.applyFilters();
@@ -115,10 +113,9 @@ export class VisitCardDantist extends VisitCard {
       newCard.addEventListener('click', (e) => {
          if (e.target.classList.contains('more-btn')) {
             toggleHideParameters(e);
-         } else if (e.target.classList.contains('edit-btn')) {
-
+         } else if (e.target.classList.contains('edit-btn') && !document.querySelector("#create-visit-form")) {
             const newDentistForm = new VisitDentistForm();
-            document.body.prepend(newDentistForm.render(newCard, true));
+            newCard.prepend(newDentistForm.render(newCard, true));
          }
       });
       filters.applyFilters();
@@ -169,10 +166,9 @@ export class VisitCardCardio extends VisitCard {
       newCard.addEventListener('click', (e) => {
          if (e.target.classList.contains('more-btn')) {
             toggleHideParameters(e);
-         } else if (e.target.classList.contains('edit-btn')) {
-
+         } else if (e.target.classList.contains('edit-btn') && !document.querySelector("#create-visit-form")) {
             const newCardiologistForm = new VisitCardiologistForm();
-            document.body.prepend(newCardiologistForm.render(newCard, true));
+            newCard.prepend(newCardiologistForm.render(newCard, true));
          }
       });
       filters.applyFilters();
