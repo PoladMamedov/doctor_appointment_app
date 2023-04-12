@@ -32,7 +32,7 @@ export default class VisitCard {
        </p>
        <p class="patient-doctor text-center fs-5 mt-0">${doctor}</p>
        <div class="parameters-wrap m-0 p-0  hide">
-          <p class="visit-status visit-text fs-6">${randomValue}</p>
+          <p class="visit-status visit-text  fs-6">${randomValue}</p>
           <p class="visit-urgency visit-text fs-6">${priority}</p>
        </div>
        <div class="hide-parameters hide"> 
