@@ -15,43 +15,43 @@
 <body>
    <header class="header">
       <nav
-         class="navbar navbar-expand-lg bg-body-tertiary border border-success p-2 mb-2 border-opacity-25 bg-primary-subtle">
+         class="navbar navbar-expand-lg bg-body-tertiary border border-success p-1 border-opacity-25 bg-primary-subtle">
          <div class="container-fluid container-lg">
             <a class="navbar-brand" href="#">
                <img class="main-logo" src="./img/logo.png" alt="logo" width="80" height="80">
             </a>
-            <button type="button" class="btn btn-primary authorization-btn  fs-4">Вход</button>
-            <button style="display: none;" id="create-visit-btn" type="button"
-               class="btn btn-primary registration-btn  fs-4">Создать визит</button>
-            <button style="display: none;" id="logout" type="button"
-               class="btn btn-danger registration-btn  fs-4">Выход</button>
+            <div class="d-flex gap-2 justify-content-between">
+               <button type="button" class="btn btn-primary authorization-btn  fs-4">Вход</button>
+               <button style="display: none;" id="create-visit-btn" type="button"
+                  class="btn btn-primary registration-btn  fs-4">+ Создать визит</button>
+               <button style="display: none;" id="logout" type="button"
+                  class="btn btn-danger registration-btn  fs-4">Выход</button>
+            </div>
          </div>
       </nav>
    </header>
    <main>
       <div class="container-fluid container-lg">
-         <form class="d-flex justify-content-between mt-4">
-            <div class="form-floating  w-25 h-25">
-               <input type="text" class="form-control " id="searchInput" placeholder="Our Visit">
-               <label for="searchInput ">Поиск визита</label>
+         <form class="d-flex justify-content-between mt-3 gap-3 flex-column flex-sm-row">
+            <div class="form-floating w-100">
+               <input type="text" class="form-control" id="searchInput" placeholder="Our Visit">
+               <label for="searchInput">Поиск визита</label>
             </div>
-            <select class=" select-options form-select form-select-lg  fs-6" style="width: 280px"
-               aria-label=".form-select-lg example">
+            <select class="select-options form-select w-100 form-select-lg fs-6">
                <option value="Статус визита" selected>Статус визита</option>
                <option value="Open">Open</option>
                <option value="Done">Done</option>
             </select>
-            <select class=" select-urgency form-select form-select-lg  fs-6" style="width: 260px"
-               aria-label=".form-select-lg example">
+            <select class=" select-urgency form-select form-select-lg w-100 fs-6">
                <option value="Срочность визита" selected>Срочность визита</option>
                <option value="Приоритетная">Приоритетная</option>
                <option value="Обычная">Обычная</option>
                <option value="Неотложная">Неотложная</option>
             </select>
          </form>
-         <div class="mt-5 p-0  visits-container">
-            <h2 class="text-left text-primary-emphasis p-2 mb-4">Ваши визиты:</h2>
-            <ul class="visit-wrap d-flex flex-wrap p-2 gap-5  justify-content-center">
+         <div class="mt-2 visits-container">
+            <h2 class="text-left text-primary-emphasis p-2 mb-2">Ваши визиты:</h2>
+            <ul class="visit-wrap d-flex flex-wrap p-2 gap-5 justify-content-center">
             </ul>
             <p class="no-item p-2">No items has been added</p>
          </div>
