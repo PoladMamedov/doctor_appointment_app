@@ -48,25 +48,19 @@ export default class VisitCard {
          list.appendChild(newCard);
       }
       this.removeCard(newCard, newCard.id);
-
-
       newCard.addEventListener('click', (e) => {
          if (e.target.classList.contains('more-btn')) {
             toggleHideParameters(e);
          } else if (e.target.classList.contains('edit-btn')) {
             if (!document.querySelector("#create-visit-form")) {
-               // !рендер модалки редактирования терапевт
                const newTherapistForm = new VisitTherapistForm();
                document.body.prepend(newTherapistForm.render(newCard, true));
             }
          }
       });
-
-
       filters.applyFilters();
       return newCard;
    }
-
    removeCard(card, cardId) {
       const closeModal = card.querySelector('.closeModal');
       closeModal.addEventListener('click', async () => {
@@ -85,15 +79,7 @@ export class VisitCardDantist extends VisitCard {
    render(data, addToList = true) {
       let { doctor, name, priority, id, description, purpose, lastDate } = data;
 
-      if (priority === 'Звичайна') {
-         priority = 'Low';
-      }
-      if (priority === 'Пріоритетна') {
-         priority = 'Normal';
-      }
-      if (priority === 'Невідкладна') {
-         priority = 'High';
-      }
+
       const newCard = document.createElement('li');
       const randomVisit = ['Open', 'Done'];
       const randomIndex = Math.floor(Math.random() * randomVisit.length);
@@ -122,31 +108,23 @@ export class VisitCardDantist extends VisitCard {
           <button class="btn btn-outline-primary edit-btn">Редактировать</button>
        </div>
       `;
-
       if (addToList) {
          list.appendChild(newCard);
       }
       this.removeCard(newCard, newCard.id);
-
-
       newCard.addEventListener('click', (e) => {
          if (e.target.classList.contains('more-btn')) {
             toggleHideParameters(e);
          } else if (e.target.classList.contains('edit-btn')) {
-            // !рендер модалки редактирования стоматолог
+
             const newDentistForm = new VisitDentistForm();
             document.body.prepend(newDentistForm.render(newCard, true));
          }
       });
-
-
       filters.applyFilters();
       return newCard;
    }
-
 }
-
-
 export class VisitCardCardio extends VisitCard {
    render(data, addToList = true) {
       let { doctor, name, priority, id, age, description, purpose, massIndex, pressure, heartDiseases
@@ -184,28 +162,23 @@ export class VisitCardCardio extends VisitCard {
           <button class="btn btn-outline-primary edit-btn">Редактировать</button>
        </div>
       `;
-
       if (addToList) {
          list.appendChild(newCard);
       }
-      this.removeCard(newCard, newCard.id);
-
-
+      this.removeCard(newCard, newCard.id)
       newCard.addEventListener('click', (e) => {
          if (e.target.classList.contains('more-btn')) {
             toggleHideParameters(e);
          } else if (e.target.classList.contains('edit-btn')) {
-            // !рендер модалки редактирования кардиолог
+
             const newCardiologistForm = new VisitCardiologistForm();
             document.body.prepend(newCardiologistForm.render(newCard, true));
          }
       });
-
       filters.applyFilters();
       return newCard;
    }
 }
-
 
 const filters = new VisitFilters();
 searchInput.addEventListener('input', () => {
