@@ -11,8 +11,12 @@ export default class DoctorAPIService {
           body: JSON.stringify({ email: email, password: password }),
         }
       );
-      const token = await response.text();
-      return token;
+      if(response.ok){
+        const token = await response.text();
+        return token;
+      } else {
+        return false;
+      }
     } catch (e) {
       console.log(e);
     }
