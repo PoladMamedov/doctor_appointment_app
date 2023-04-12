@@ -1,6 +1,7 @@
 import DoctorAPIService from "./doctor_api_service.js";
 import checkCards from "./checkCards.js";
-import VisitCard, { VisitCardDantist, VisitCardCardio, VisitFilters } from "./cardRender.js";
+import VisitFilters from './filter.js';
+import VisitCard, { VisitCardDantist, VisitCardCardio } from "./cardRender.js";
 const request = new DoctorAPIService();
 const visitList = document.querySelector(".visit-wrap");
 
