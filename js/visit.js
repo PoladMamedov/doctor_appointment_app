@@ -121,6 +121,7 @@ export class VisitCardiologistForm extends VisitForm {
         newCardiologistVisitForm.querySelector("#pressure").value = data.pressure;
         newCardiologistVisitForm.querySelector("#mass-index").value = data.massIndex;
         newCardiologistVisitForm.querySelector("#heart-diseases").value = data.heartDiseases;
+        newCardiologistVisitForm.querySelector("#visit-submit-btn").innerText = "Сохранить";
         newCardiologistVisitForm.querySelector("#visit-doctor-select").setAttribute("disabled", "true");
       });
     }
@@ -166,6 +167,7 @@ export class VisitDentistForm extends VisitForm {
         newDentistVisitForm.querySelector("#visit-purpose").value = data.purpose;
         newDentistVisitForm.querySelector("#decription").value = data.description;
         newDentistVisitForm.querySelector("#last-visit").value = data.lastDate;
+        newDentistVisitForm.querySelector("#visit-submit-btn").innerText = "Сохранить";
         newDentistVisitForm.querySelector("#visit-doctor-select").setAttribute("disabled", "true");
       });
     }
@@ -211,6 +213,7 @@ export class VisitTherapistForm extends VisitForm {
         newTherapistVisitForm.querySelector("#visit-purpose").value = data.purpose;
         newTherapistVisitForm.querySelector("#decription").value = data.description;
         newTherapistVisitForm.querySelector("#age").value = data.age;
+        newTherapistVisitForm.querySelector("#visit-submit-btn").innerText = "Сохранить";
         newTherapistVisitForm.querySelector("#visit-doctor-select").setAttribute("disabled", "true");
       });
     }
