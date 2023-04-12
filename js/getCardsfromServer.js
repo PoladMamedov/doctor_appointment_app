@@ -4,15 +4,13 @@ import VisitCard from "./cardRender.js";
 
 const checkDoctor = (doctor, element) => {
 
-  if (doctor === "Кардіолог") {
+  if (doctor === "Кардиолог") {
     const newCard = new VisitCardCardio();
     newCard.render(element);
   } else if (doctor === "Стоматолог") {
-
     const newCard = new VisitCardDantist();
     newCard.render(element);
   } else {
-
     const newCard = new VisitCard();
     newCard.render(element);
   }
