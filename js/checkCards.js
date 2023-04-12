@@ -10,7 +10,5 @@ export default function checkCards() {
  }
 
  document.addEventListener("DOMContentLoaded", () =>{
-   setTimeout(() => {
       checkCards()      
-   }, 100);
 });
