@@ -10,7 +10,7 @@ const searchInput = document.getElementById('searchInput');
 const selectStatus = document.querySelector('.select-options');
 const selectUrgency = document.querySelector('.select-urgency');
 
-export default class VisitCard {
+export default class VisitCardTherapist {
    render(data, addToList = true) {
       let { doctor, name, priority, id, age, description, purpose } = data;
 
@@ -52,8 +52,8 @@ export default class VisitCard {
          if (e.target.classList.contains('more-btn')) {
             toggleHideParameters(e);
          } else if (e.target.classList.contains('edit-btn') && !document.querySelector("#create-visit-form")) {
-               const newTherapistForm = new VisitTherapistForm();
-               newCard.prepend(newTherapistForm.render(newCard, true));
+            const newTherapistForm = new VisitTherapistForm();
+            newCard.prepend(newTherapistForm.render(newCard, true));
          }
       });
       filters.applyFilters();
@@ -73,7 +73,7 @@ export default class VisitCard {
    }
 }
 
-export class VisitCardDantist extends VisitCard {
+export class VisitCardDantist extends VisitCardTherapist {
    render(data, addToList = true) {
       let { doctor, name, priority, id, description, purpose, lastDate } = data;
 
@@ -122,7 +122,7 @@ export class VisitCardDantist extends VisitCard {
       return newCard;
    }
 }
-export class VisitCardCardio extends VisitCard {
+export class VisitCardCardio extends VisitCardTherapist {
    render(data, addToList = true) {
       let { doctor, name, priority, id, age, description, purpose, massIndex, pressure, heartDiseases
       } = data;

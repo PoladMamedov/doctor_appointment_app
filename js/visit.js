@@ -1,7 +1,7 @@
 import DoctorAPIService from "./doctor_api_service.js";
 import checkCards from "./checkCards.js";
 import VisitFilters from './filter.js';
-import VisitCard, { VisitCardDantist, VisitCardCardio } from "./cardRender.js";
+import VisitCardTherapist, { VisitCardDantist, VisitCardCardio } from "./cardRender.js";
 const request = new DoctorAPIService();
 const visitList = document.querySelector(".visit-wrap");
 
@@ -219,7 +219,7 @@ export class VisitTherapistForm extends VisitForm {
     }
     newTherapistVisitForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const card = new VisitCard();
+      const card = new VisitCardTherapist();
       if (edit) {
         const data = await request.updateCard(localStorage.Authorization, oldCard.id, this.createTherapistObj(newTherapistVisitForm));
         visitList.replaceChild(card.render(data, false), oldCard);

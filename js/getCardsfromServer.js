@@ -1,6 +1,6 @@
 import { VisitCardCardio } from "./cardRender.js";
 import { VisitCardDantist } from "./cardRender.js";
-import VisitCard from "./cardRender.js";
+import VisitCardTherapist from "./cardRender.js";
 
 const checkDoctor = (doctor, element) => {
 
@@ -11,7 +11,7 @@ const checkDoctor = (doctor, element) => {
     const newCard = new VisitCardDantist();
     newCard.render(element);
   } else {
-    const newCard = new VisitCard();
+    const newCard = new VisitCardTherapist();
     newCard.render(element);
   }
 };
@@ -31,7 +31,7 @@ const getCardsFromServer = async () => {
     checkDoctor(doctor, element);
   });
 
-  if([...document.querySelectorAll(".visit-card")].length){
+  if ([...document.querySelectorAll(".visit-card")].length) {
     document.querySelector(".no-item").style.display = "none";
   }
 
