@@ -1,0 +1,90 @@
+body {
+   background-color: #117edd21;
+}
+
+ul {
+   list-style: none;
+   margin: 0;
+   padding: 0;
+}
+
+.navbar {
+   padding: 0;
+}
+
+.main-logo {
+   transition: all .5s ease;
+}
+
+.main-logo:hover {
+   transform: scale(1.2);
+}
+
+.none {
+   display: none;
+}
+
+.parameters-wrap {
+   display: flex;
+   justify-content: center;
+   gap: 40px;
+   margin-bottom: 10px;
+   padding-top: 10px;
+}
+
+.visit-text {
+   font-size: 18px;
+   color: beige;
+   background-color: #0d6efd;
+   border-radius: 5px;
+   padding: 5px 15px
+}
+
+.hide {
+   display: none;
+}
+
+.visit-card {
+   position: relative;
+}
+
+.closeModal {
+   position: absolute;
+   top: 10px;
+   right: 20px;
+   width: 24px;
+   height: 24px;
+   opacity: 0.3;
+   cursor: pointer;
+   transition: opacity ease 0.5s;
+
+}
+
+.closeModal:hover {
+   opacity: 1;
+}
+
+.closeModal::before,
+.closeModal::after {
+   content: '';
+   position: absolute;
+   top: 10px;
+
+   display: block;
+   width: 24px;
+   height: 3px;
+   background: #000;
+}
+
+.closeModal::before {
+   transform: rotate(45deg);
+}
+
+.closeModal::after {
+   transform: rotate(-45deg);
+}
+
+.registration-btn:hover {
+   outline: 1px solid rgb(27, 31, 227);
+   outline-offset: 3px;
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Doctor Appointment Page</title>
+   <link href="https://d3j0t7vrtr92dk.cloudfront.net/danit/1624626442_favicon.png" rel="shortcut icon">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+   <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+   <header class="header">
+      <nav
+         class="navbar navbar-expand-lg bg-body-tertiary border border-success p-1 border-opacity-25 bg-primary-subtle">
+         <div class="container-fluid container-lg">
+            <a class="navbar-brand" href="#">
+               <img class="main-logo" src="./img/logo.png" alt="logo" width="80" height="80">
+            </a>
+            <div class="d-flex gap-2 justify-content-between">
+               <button type="button" class="btn btn-primary authorization-btn  fs-4">Вход</button>
+               <button style="display: none;" id="create-visit-btn" type="button"
+                  class="btn btn-primary registration-btn  fs-4">+ Создать визит</button>
+               <button style="display: none;" id="logout" type="button"
+                  class="btn btn-danger registration-btn  fs-4">Выход</button>
+            </div>
+         </div>
+      </nav>
+   </header>
+   <main>
+      <div class="container-fluid container-lg">
+
+         <form class="d-flex justify-content-between mt-3 gap-3 flex-column flex-sm-row">
+            <div class="form-floating w-100">
+               <input type="text" class="form-control" id="searchInput" placeholder="Our Visit">
+               <label for="searchInput">Поиск визита</label>
+            </div>
+            <select class="select-options form-select w-100 form-select-lg fs-6">
+               <option value="Статус визита" selected>Статус визита</option>
+               <option value="Open">Open</option>
+               <option value="Done">Done</option>
+            </select>
+            <select class=" select-urgency form-select form-select-lg w-100 fs-6">
+               <option value="Срочность визита" selected>Срочность визита</option>
+               <option value="Приоритетная">Приоритетная</option>
+               <option value="Обычная">Обычная</option>
+               <option value="Неотложная">Неотложная</option>
+            </select>
+         </form>
+         <div class="mt-2 visits-container">
+            <h2 class="text-left text-primary-emphasis p-2 mb-2">Ваши визиты:</h2>
+            <ul class="visit-wrap d-flex flex-wrap p-2 gap-4 justify-content-center"></ul>
+            <p class="no-item p-2">No items has been added</p>
+         </div>
+   </main>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+      crossorigin="anonymous"></script>
+   <script type="module" src="./js/script.js"></script>
+</body>
+
+</html>
