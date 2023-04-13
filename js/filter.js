@@ -10,6 +10,7 @@ export default class VisitFilters {
    }
 
    applyFilters() {
+      console.log();
       let visitCards = document.querySelectorAll('.visit-wrap .visit-card')
       visitCards.forEach((card) => {
          const cardStatus = card.querySelector('.visit-status').textContent.trim();

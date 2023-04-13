@@ -228,6 +228,7 @@ export class VisitTherapistForm extends VisitForm {
       } else {
         const data = await request.postCard(localStorage.Authorization, this.createTherapistObj(newTherapistVisitForm));
         card.render(data);
+
       }
       checkCards();
       newTherapistVisitForm.remove();
