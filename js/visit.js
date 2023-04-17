@@ -24,14 +24,6 @@ export default class VisitForm {
       }
     });
   }
-  handleClickOutsideTheForm(e, form) {
-    if (form.contains(e.target) || e.target.id === "create-visit-btn" || e.target.classList.contains("edit-btn")) {
-      return;
-    } else {
-      form.remove();
-      document.removeEventListener("click", this.handleClickOutsideTheForm);
-    }
-  }
   render() {
     const newVisitForm = document.createElement("form");
     newVisitForm.id = "create-visit-form";
@@ -82,11 +74,7 @@ export default class VisitForm {
       newVisitForm.remove();
       modalBackground.remove();
     });
-
-    document.addEventListener("click", (e) => {
-      this.handleClickOutsideTheForm(e, newVisitForm);
-    });
-
+    
     return newVisitForm;
   }
 }
