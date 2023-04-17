@@ -22,17 +22,6 @@ const modalBackground = {
   remove() {
     document.querySelector(".modal-bg").remove();
   },
-  handleClickOutsideTheForm(e, form) {
-    console.log(e.target);
-    console.log(this);
-    if (e.target.classList.contains("modal-bg")) {
-      form.remove();
-      modalBackground.remove();
-      document.removeEventListener("click", this.handleClickOutsideTheForm);
-    } else {
-      return;
-    }
-  },
 };
 
 export default modalBackground;
