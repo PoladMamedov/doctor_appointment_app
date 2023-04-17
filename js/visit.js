@@ -6,6 +6,10 @@ const request = new DoctorAPIService();
 const visitList = document.querySelector(".visit-wrap");
 
 export default class VisitForm {
+  constructor() {
+    this.body = document.querySelector("body");
+
+  }
   doctorSelect(form) {
     form.querySelector("#visit-doctor-select").addEventListener("change", (e) => {
       if (e.target.selectedIndex === 1) {
@@ -27,11 +31,16 @@ export default class VisitForm {
     if (form.contains(e.target) || e.target.id === "create-visit-btn" || e.target.classList.contains("edit-btn")) {
       return;
     } else {
+      this.window.remove()
+      // this.window.classList.remove('active')
       form.remove();
       document.removeEventListener("click", this.handleClickOutsideTheForm);
     }
   }
   render() {
+    this.window = document.createElement("div");
+    this.window.classList.add('modal', 'active')
+
     const newVisitForm = document.createElement("form");
     newVisitForm.id = "create-visit-form";
     newVisitForm.classList.add(
@@ -72,12 +81,16 @@ export default class VisitForm {
     Отменить</button>`;
 
     this.doctorSelect(newVisitForm);
+    this.window.append(newVisitForm)
 
     newVisitForm.addEventListener("submit", (e) => {
+      this.window.classList.remove('active')
       e.preventDefault();
     });
 
     newVisitForm.querySelector("#visit-cancel-btn").addEventListener("click", (e) => {
+      this.window.remove()
+      this.window.classList.remove('active')
       newVisitForm.remove();
     });
 
@@ -85,7 +98,7 @@ export default class VisitForm {
       this.handleClickOutsideTheForm(e, newVisitForm);
     });
 
-    return newVisitForm;
+    return this.window;
   }
 }
 
