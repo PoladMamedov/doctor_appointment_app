@@ -33,7 +33,6 @@ export default class DoctorAPIService {
         body: JSON.stringify(cardInfo),
       });
       const createdCard = response.json();
-      console.log(createdCard);
       return createdCard;
     } catch (e) {
       console.log(e);

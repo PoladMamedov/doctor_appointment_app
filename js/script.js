@@ -2,12 +2,14 @@ import Modal from "./Modal.js";
 import VisitForm from "./visit.js";
 import getCardsFromServer from "./getCardsfromServer.js";
 import logOut from "./logout.js";
+import modalBackground from "./modalBg.js";
 
 const form = new VisitForm();
 const createVisitBtn = document.querySelector("#create-visit-btn");
 createVisitBtn.addEventListener("click", (e) => {
   if (!document.querySelector("#create-visit-form")) {
     const visitForm = form.render();
+    modalBackground.add();
     document.body.prepend(visitForm);
   }
 });

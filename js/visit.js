@@ -1,15 +1,12 @@
 import DoctorAPIService from "./doctor_api_service.js";
 import checkCards from "./checkCards.js";
-import VisitFilters from './filter.js';
+import VisitFilters from "./filter.js";
 import VisitCardTherapist, { VisitCardDantist, VisitCardCardio } from "./cardRender.js";
+import modalBackground from "./modalBg.js";
 const request = new DoctorAPIService();
 const visitList = document.querySelector(".visit-wrap");
 
 export default class VisitForm {
-  constructor() {
-    this.body = document.querySelector("body");
-
-  }
   doctorSelect(form) {
     form.querySelector("#visit-doctor-select").addEventListener("change", (e) => {
       if (e.target.selectedIndex === 1) {
@@ -31,16 +28,11 @@ export default class VisitForm {
     if (form.contains(e.target) || e.target.id === "create-visit-btn" || e.target.classList.contains("edit-btn")) {
       return;
     } else {
-      this.window.remove()
-      // this.window.classList.remove('active')
       form.remove();
       document.removeEventListener("click", this.handleClickOutsideTheForm);
     }
   }
   render() {
-    this.window = document.createElement("div");
-    this.window.classList.add('modal', 'active')
-
     const newVisitForm = document.createElement("form");
     newVisitForm.id = "create-visit-form";
     newVisitForm.classList.add(
@@ -81,24 +73,21 @@ export default class VisitForm {
     Отменить</button>`;
 
     this.doctorSelect(newVisitForm);
-    this.window.append(newVisitForm)
 
     newVisitForm.addEventListener("submit", (e) => {
-      this.window.classList.remove('active')
       e.preventDefault();
     });
 
     newVisitForm.querySelector("#visit-cancel-btn").addEventListener("click", (e) => {
-      this.window.remove()
-      this.window.classList.remove('active')
       newVisitForm.remove();
+      modalBackground.remove();
     });
 
     document.addEventListener("click", (e) => {
       this.handleClickOutsideTheForm(e, newVisitForm);
     });
 
-    return this.window;
+    return newVisitForm;
   }
 }
 
@@ -125,6 +114,7 @@ export class VisitCardiologistForm extends VisitForm {
     newCardiologistVisitForm.querySelector("#priority-select-wrapper").insertAdjacentHTML("afterend", additionalInfo);
     newCardiologistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 1;
     if (edit) {
+      modalBackground.add();
       const editingCardInfo = request.getCard(localStorage.Authorization, oldCard.id);
       editingCardInfo.then((data) => {
         newCardiologistVisitForm.querySelector("#fio").value = data.name;
@@ -140,14 +130,22 @@ export class VisitCardiologistForm extends VisitForm {
     }
     newCardiologistVisitForm.addEventListener("submit", async (e) => {
       e.preventDefault();
+      modalBackground.remove();
       const card = new VisitCardCardio();
       if (edit) {
-        const data = await request.updateCard(localStorage.Authorization, oldCard.id, this.createCardiologistObj(newCardiologistVisitForm));
+        const data = await request.updateCard(
+          localStorage.Authorization,
+          oldCard.id,
+          this.createCardiologistObj(newCardiologistVisitForm)
+        );
         visitList.replaceChild(card.render(data, false), oldCard);
         const filters = new VisitFilters();
         filters.applyFilters();
       } else {
-        const data = await request.postCard(localStorage.Authorization, this.createCardiologistObj(newCardiologistVisitForm));
+        const data = await request.postCard(
+          localStorage.Authorization,
+          this.createCardiologistObj(newCardiologistVisitForm)
+        );
         card.render(data);
       }
       checkCards();
@@ -174,6 +172,7 @@ export class VisitDentistForm extends VisitForm {
     newDentistVisitForm.querySelector("#priority-select-wrapper").insertAdjacentHTML("afterend", additionalInfo);
     newDentistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 2;
     if (edit) {
+      modalBackground.add();
       const editingCardInfo = request.getCard(localStorage.Authorization, oldCard.id);
       editingCardInfo.then((data) => {
         newDentistVisitForm.querySelector("#fio").value = data.name;
@@ -186,9 +185,14 @@ export class VisitDentistForm extends VisitForm {
     }
     newDentistVisitForm.addEventListener("submit", async (e) => {
       e.preventDefault();
+      modalBackground.remove();
       const card = new VisitCardDantist();
       if (edit) {
-        const data = await request.updateCard(localStorage.Authorization, oldCard.id, this.createDentistObj(newDentistVisitForm));
+        const data = await request.updateCard(
+          localStorage.Authorization,
+          oldCard.id,
+          this.createDentistObj(newDentistVisitForm)
+        );
         visitList.replaceChild(card.render(data, false), oldCard);
         const filters = new VisitFilters();
         filters.applyFilters();
@@ -220,6 +224,7 @@ export class VisitTherapistForm extends VisitForm {
     newTherapistVisitForm.querySelector("#priority-select-wrapper").insertAdjacentHTML("afterend", additionalInfo);
     newTherapistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 3;
     if (edit) {
+      modalBackground.add();
       const editingCardInfo = request.getCard(localStorage.Authorization, oldCard.id);
       editingCardInfo.then((data) => {
         newTherapistVisitForm.querySelector("#fio").value = data.name;
@@ -232,16 +237,20 @@ export class VisitTherapistForm extends VisitForm {
     }
     newTherapistVisitForm.addEventListener("submit", async (e) => {
       e.preventDefault();
+      modalBackground.remove();
       const card = new VisitCardTherapist();
       if (edit) {
-        const data = await request.updateCard(localStorage.Authorization, oldCard.id, this.createTherapistObj(newTherapistVisitForm));
+        const data = await request.updateCard(
+          localStorage.Authorization,
+          oldCard.id,
+          this.createTherapistObj(newTherapistVisitForm)
+        );
         visitList.replaceChild(card.render(data, false), oldCard);
         const filters = new VisitFilters();
         filters.applyFilters();
       } else {
         const data = await request.postCard(localStorage.Authorization, this.createTherapistObj(newTherapistVisitForm));
         card.render(data);
-
       }
       checkCards();
       newTherapistVisitForm.remove();

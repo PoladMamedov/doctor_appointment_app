@@ -13,7 +13,6 @@ export default class Modal {
     this.cancelBtn = document.createElement("button");
   }
   handleClickOutsideTheForm(e, form) {
-    console.log(e.target);
     if (form.contains(e.target) || e.target.classList.contains("authorization-btn")) {
       return;
     } else {
@@ -55,7 +54,7 @@ export default class Modal {
       this.cancelBtn
     );
     this.window.append(this.form)
-    console.log(this.cancelBtn);
+    
     this.cancelBtn.addEventListener('click', () => {
       this.window.remove()
       this.window.classList.remove('active')
