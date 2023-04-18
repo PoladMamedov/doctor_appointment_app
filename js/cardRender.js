@@ -6,9 +6,7 @@ import VisitFilters from './filter.js';
 import { VisitTherapistForm, VisitCardiologistForm, VisitDentistForm } from './visit.js';
 const request = new DoctorAPIService();
 const list = document.querySelector('.visit-wrap');
-const searchInput = document.getElementById('searchInput');
-const selectStatus = document.querySelector('.select-options');
-const selectUrgency = document.querySelector('.select-urgency');
+
 
 export default class VisitCardTherapist {
    render(data, addToList = true) {
