@@ -11,18 +11,14 @@ const selectUrgency = document.querySelector(".select-urgency");
 const form = new VisitForm();
 const createVisitBtn = document.querySelector("#create-visit-btn");
 createVisitBtn.addEventListener("click", (e) => {
-  if (!document.querySelector("#create-visit-form")) {
     const visitForm = form.render();
     modalBackground.add();
     document.body.prepend(visitForm);
-  }
 });
 
 const logInBtn = document.querySelector(".authorization-btn");
 logInBtn.addEventListener("click", (e) => {
-  if (!document.querySelector("#form")) {
     new Modal().render();
-  }
 });
 
 document.addEventListener("DOMContentLoaded", () => {
