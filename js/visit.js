@@ -52,6 +52,7 @@ export default class VisitForm {
     <input required id="fio" placeholder="Ф.И.О." type="text" class="form-control mb-2">
     <input required id="visit-purpose" placeholder="Цель визита" type="text" class="form-control mb-2">
     <input id="decription" placeholder="Описание" type="text" class="form-control mb-2">
+    <input required id="visit-date" type="date" class="form-control mb-2">
     <div id="priority-select-wrapper" class="form-floating mb-2">
       <select id="priority-select" class="form-select">
         <option selected>Обычная</option>
@@ -86,6 +87,7 @@ export class VisitCardiologistForm extends VisitForm {
       name: form.querySelector("#fio").value,
       purpose: form.querySelector("#visit-purpose").value,
       description: form.querySelector("#decription").value,
+      date: form.querySelector("#visit-date").value,
       priority: form.querySelector("#priority-select").value,
       pressure: form.querySelector("#pressure").value,
       massIndex: form.querySelector("#mass-index").value,
@@ -97,11 +99,7 @@ export class VisitCardiologistForm extends VisitForm {
     modalBackground.remove();
     const card = new VisitCardCardio();
     if (edit) {
-      const data = await request.updateCard(
-        localStorage.Authorization,
-        oldCard.id,
-        this.createCardiologistObj(form)
-      );
+      const data = await request.updateCard(localStorage.Authorization, oldCard.id, this.createCardiologistObj(form));
       visitList.replaceChild(card.render(data, false), oldCard);
       const filters = new VisitFilters();
       filters.applyFilters();
@@ -127,6 +125,7 @@ export class VisitCardiologistForm extends VisitForm {
         newCardiologistVisitForm.querySelector("#fio").value = data.name;
         newCardiologistVisitForm.querySelector("#visit-purpose").value = data.purpose;
         newCardiologistVisitForm.querySelector("#decription").value = data.description;
+        newCardiologistVisitForm.querySelector("#visit-date").value = data.date;
         newCardiologistVisitForm.querySelector("#age").value = data.age;
         newCardiologistVisitForm.querySelector("#pressure").value = data.pressure;
         newCardiologistVisitForm.querySelector("#mass-index").value = data.massIndex;
@@ -149,6 +148,7 @@ export class VisitDentistForm extends VisitForm {
       name: form.querySelector("#fio").value,
       purpose: form.querySelector("#visit-purpose").value,
       description: form.querySelector("#decription").value,
+      date: form.querySelector("#visit-date").value,
       priority: form.querySelector("#priority-select").value,
       lastDate: form.querySelector("#last-visit").value,
     };
@@ -180,6 +180,7 @@ export class VisitDentistForm extends VisitForm {
         newDentistVisitForm.querySelector("#fio").value = data.name;
         newDentistVisitForm.querySelector("#visit-purpose").value = data.purpose;
         newDentistVisitForm.querySelector("#decription").value = data.description;
+        newDentistVisitForm.querySelector("#visit-date").value = data.date;
         newDentistVisitForm.querySelector("#last-visit").value = data.lastDate;
         newDentistVisitForm.querySelector("#visit-submit-btn").innerText = "Сохранить";
         newDentistVisitForm.querySelector("#visit-doctor-select").setAttribute("disabled", "true");
@@ -199,6 +200,7 @@ export class VisitTherapistForm extends VisitForm {
       name: form.querySelector("#fio").value,
       purpose: form.querySelector("#visit-purpose").value,
       description: form.querySelector("#decription").value,
+      date: form.querySelector("#visit-date").value,
       priority: form.querySelector("#priority-select").value,
       age: form.querySelector("#age").value,
     };
@@ -230,6 +232,7 @@ export class VisitTherapistForm extends VisitForm {
         newTherapistVisitForm.querySelector("#fio").value = data.name;
         newTherapistVisitForm.querySelector("#visit-purpose").value = data.purpose;
         newTherapistVisitForm.querySelector("#decription").value = data.description;
+        newTherapistVisitForm.querySelector("#visit-date").value = data.date;
         newTherapistVisitForm.querySelector("#age").value = data.age;
         newTherapistVisitForm.querySelector("#visit-submit-btn").innerText = "Сохранить";
         newTherapistVisitForm.querySelector("#visit-doctor-select").setAttribute("disabled", "true");
