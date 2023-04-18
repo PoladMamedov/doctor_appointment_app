@@ -177,18 +177,3 @@ export class VisitCardCardio extends VisitCardTherapist {
 }
 
 const filters = new VisitFilters();
-searchInput.addEventListener('input', () => {
-   filters.filters.searchText = searchInput.value.toLowerCase().replace(/\s/g, '');
-   filters.filters.description = searchInput.value.toLowerCase().replace(/\s/g, '');
-   filters.applyFilters();
-});
-
-selectStatus.addEventListener('change', () => {
-   filters.filters.status = selectStatus.value;
-   filters.applyFilters();
-});
-
-selectUrgency.addEventListener('change', () => {
-   filters.filters.urgency = selectUrgency.value;
-   filters.applyFilters();
-});
