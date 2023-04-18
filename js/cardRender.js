@@ -46,17 +46,11 @@ export default class VisitCardTherapist {
          list.appendChild(newCard);
       }
       this.removeCard(newCard, newCard.id);
-      newCard.addEventListener('click', (e) => {
-         if (e.target.classList.contains('more-btn')) {
-            toggleHideParameters(e);
-         } else if (e.target.classList.contains('edit-btn') && !document.querySelector("#create-visit-form")) {
-            const newTherapistForm = new VisitTherapistForm();
-            newCard.prepend(newTherapistForm.render(newCard, true));
-         }
-      });
+      this.addCardListener(newCard);
       filters.applyFilters();
       return newCard;
    }
+
    removeCard(card, cardId) {
       const closeModal = card.querySelector('.closeModal');
       closeModal.addEventListener('click', async () => {
@@ -69,7 +63,19 @@ export default class VisitCardTherapist {
          checkCards();
       });
    }
+
+   addCardListener(card) {
+      card.addEventListener('click', (e) => {
+         if (e.target.classList.contains('more-btn')) {
+            toggleHideParameters(e);
+         } else if (e.target.classList.contains('edit-btn') && !document.querySelector("#create-visit-form")) {
+            const newTherapistForm = new VisitTherapistForm();
+            card.prepend(newTherapistForm.render(card, true));
+         }
+      });
+   }
 }
+
 
 export class VisitCardDantist extends VisitCardTherapist {
    render(data, addToList = true) {
@@ -108,16 +114,20 @@ export class VisitCardDantist extends VisitCardTherapist {
          list.appendChild(newCard);
       }
       this.removeCard(newCard, newCard.id);
-      newCard.addEventListener('click', (e) => {
+      this.addCardListener(newCard);
+
+      filters.applyFilters();
+      return newCard;
+   }
+   addCardListener(card) {
+      card.addEventListener('click', (e) => {
          if (e.target.classList.contains('more-btn')) {
             toggleHideParameters(e);
          } else if (e.target.classList.contains('edit-btn') && !document.querySelector("#create-visit-form")) {
-            const newDentistForm = new VisitDentistForm();
-            newCard.prepend(newDentistForm.render(newCard, true));
+            const newDantistForm = new VisitDentistForm();
+            card.prepend(newDantistForm.render(card, true));
          }
       });
-      filters.applyFilters();
-      return newCard;
    }
 }
 export class VisitCardCardio extends VisitCardTherapist {
@@ -161,16 +171,20 @@ export class VisitCardCardio extends VisitCardTherapist {
          list.appendChild(newCard);
       }
       this.removeCard(newCard, newCard.id)
-      newCard.addEventListener('click', (e) => {
+      this.addCardListener(newCard);
+
+      filters.applyFilters();
+      return newCard;
+   }
+   addCardListener(card) {
+      card.addEventListener('click', (e) => {
          if (e.target.classList.contains('more-btn')) {
             toggleHideParameters(e);
          } else if (e.target.classList.contains('edit-btn') && !document.querySelector("#create-visit-form")) {
-            const newCardiologistForm = new VisitCardiologistForm();
-            newCard.prepend(newCardiologistForm.render(newCard, true));
+            const newCardioForm = new VisitCardiologistForm();
+            card.prepend(newCardioForm.render(card, true));
          }
       });
-      filters.applyFilters();
-      return newCard;
    }
 }
 
