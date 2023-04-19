@@ -1,9 +1,8 @@
-import { VisitCardCardio } from "./cardRender.js";
-import { VisitCardDantist } from "./cardRender.js";
-import VisitCardTherapist from "./cardRender.js";
+import VisitCardTherapist, { VisitCardDantist, VisitCardCardio } from "./cardRender.js";
+import DoctorAPIService from "./doctor_api_service.js";
+const request = new DoctorAPIService();
 
 const checkDoctor = (doctor, element) => {
-
   if (doctor === "Кардиолог") {
     const newCard = new VisitCardCardio();
     newCard.render(element);
@@ -16,17 +15,10 @@ const checkDoctor = (doctor, element) => {
   }
 };
 
-
 const getCardsFromServer = async () => {
-  const getCards = await fetch("https://ajax.test-danit.com/api/v2/cards/", {
-    headers: {
-      "Content-type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("Authorization")}`,
-    },
-  }).then((res) => res.text()
-  );
+  const cards = await request.getAllCards(localStorage.getItem("Authorization"));
 
-  JSON.parse(getCards).forEach((element) => {
+  cards.forEach((element) => {
     const { doctor } = element;
     checkDoctor(doctor, element);
   });
@@ -34,6 +26,6 @@ const getCardsFromServer = async () => {
   if ([...document.querySelectorAll(".visit-card")].length) {
     document.querySelector(".no-item").style.display = "none";
   }
+};
 
-}
 export default getCardsFromServer;

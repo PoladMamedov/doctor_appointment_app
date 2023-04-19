@@ -1,7 +1,8 @@
 import DoctorAPIService from "./doctor_api_service.js";
 import checkCards from "./checkCards.js";
-import VisitFilters from './filter.js';
+import VisitFilters from "./filter.js";
 import VisitCardTherapist, { VisitCardDantist, VisitCardCardio } from "./cardRender.js";
+import modalBackground from "./modalBg.js";
 const request = new DoctorAPIService();
 const visitList = document.querySelector(".visit-wrap");
 
@@ -22,14 +23,6 @@ export default class VisitForm {
         document.body.prepend(newTherapistForm.render());
       }
     });
-  }
-  handleClickOutsideTheForm(e, form) {
-    if (form.contains(e.target) || e.target.id === "create-visit-btn" || e.target.classList.contains("edit-btn")) {
-      return;
-    } else {
-      form.remove();
-      document.removeEventListener("click", this.handleClickOutsideTheForm);
-    }
   }
   render() {
     const newVisitForm = document.createElement("form");
@@ -59,6 +52,7 @@ export default class VisitForm {
     <input required id="fio" placeholder="Ф.И.О." type="text" class="form-control mb-2">
     <input required id="visit-purpose" placeholder="Цель визита" type="text" class="form-control mb-2">
     <input id="decription" placeholder="Описание" type="text" class="form-control mb-2">
+    <input required id="visit-date" type="date" class="form-control mb-2">
     <div id="priority-select-wrapper" class="form-floating mb-2">
       <select id="priority-select" class="form-select">
         <option selected>Обычная</option>
@@ -79,10 +73,7 @@ export default class VisitForm {
 
     newVisitForm.querySelector("#visit-cancel-btn").addEventListener("click", (e) => {
       newVisitForm.remove();
-    });
-
-    document.addEventListener("click", (e) => {
-      this.handleClickOutsideTheForm(e, newVisitForm);
+      modalBackground.remove();
     });
 
     return newVisitForm;
@@ -96,12 +87,28 @@ export class VisitCardiologistForm extends VisitForm {
       name: form.querySelector("#fio").value,
       purpose: form.querySelector("#visit-purpose").value,
       description: form.querySelector("#decription").value,
+      date: form.querySelector("#visit-date").value,
       priority: form.querySelector("#priority-select").value,
       pressure: form.querySelector("#pressure").value,
       massIndex: form.querySelector("#mass-index").value,
       heartDiseases: form.querySelector("#heart-diseases").value,
       age: form.querySelector("#age").value,
     };
+  }
+  async cardiologistFormSubmitHandler(e, form, oldCard, edit) {
+    modalBackground.remove();
+    const card = new VisitCardCardio();
+    if (edit) {
+      const data = await request.updateCard(localStorage.Authorization, oldCard.id, this.createCardiologistObj(form));
+      visitList.replaceChild(card.render(data, false), oldCard);
+      const filters = new VisitFilters();
+      filters.applyFilters();
+    } else {
+      const data = await request.postCard(localStorage.Authorization, this.createCardiologistObj(form));
+      card.render(data);
+    }
+    checkCards();
+    form.remove();
   }
   render(oldCard, edit = false) {
     const newCardiologistVisitForm = super.render();
@@ -112,11 +119,13 @@ export class VisitCardiologistForm extends VisitForm {
     newCardiologistVisitForm.querySelector("#priority-select-wrapper").insertAdjacentHTML("afterend", additionalInfo);
     newCardiologistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 1;
     if (edit) {
+      modalBackground.add();
       const editingCardInfo = request.getCard(localStorage.Authorization, oldCard.id);
       editingCardInfo.then((data) => {
         newCardiologistVisitForm.querySelector("#fio").value = data.name;
         newCardiologistVisitForm.querySelector("#visit-purpose").value = data.purpose;
         newCardiologistVisitForm.querySelector("#decription").value = data.description;
+        newCardiologistVisitForm.querySelector("#visit-date").value = data.date;
         newCardiologistVisitForm.querySelector("#age").value = data.age;
         newCardiologistVisitForm.querySelector("#pressure").value = data.pressure;
         newCardiologistVisitForm.querySelector("#mass-index").value = data.massIndex;
@@ -125,20 +134,8 @@ export class VisitCardiologistForm extends VisitForm {
         newCardiologistVisitForm.querySelector("#visit-doctor-select").setAttribute("disabled", "true");
       });
     }
-    newCardiologistVisitForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const card = new VisitCardCardio();
-      if (edit) {
-        const data = await request.updateCard(localStorage.Authorization, oldCard.id, this.createCardiologistObj(newCardiologistVisitForm));
-        visitList.replaceChild(card.render(data, false), oldCard);
-        const filters = new VisitFilters();
-        filters.applyFilters();
-      } else {
-        const data = await request.postCard(localStorage.Authorization, this.createCardiologistObj(newCardiologistVisitForm));
-        card.render(data);
-      }
-      checkCards();
-      newCardiologistVisitForm.remove();
+    newCardiologistVisitForm.addEventListener("submit", (e) => {
+      this.cardiologistFormSubmitHandler(e, newCardiologistVisitForm, oldCard, edit);
     });
     return newCardiologistVisitForm;
   }
@@ -151,9 +148,25 @@ export class VisitDentistForm extends VisitForm {
       name: form.querySelector("#fio").value,
       purpose: form.querySelector("#visit-purpose").value,
       description: form.querySelector("#decription").value,
+      date: form.querySelector("#visit-date").value,
       priority: form.querySelector("#priority-select").value,
       lastDate: form.querySelector("#last-visit").value,
     };
+  }
+  async dentistFormSubmitHandler(e, form, oldCard, edit) {
+    modalBackground.remove();
+    const card = new VisitCardDantist();
+    if (edit) {
+      const data = await request.updateCard(localStorage.Authorization, oldCard.id, this.createDentistObj(form));
+      visitList.replaceChild(card.render(data, false), oldCard);
+      const filters = new VisitFilters();
+      filters.applyFilters();
+    } else {
+      const data = await request.postCard(localStorage.Authorization, this.createDentistObj(form));
+      card.render(data);
+    }
+    checkCards();
+    form.remove();
   }
   render(oldCard, edit = false) {
     const newDentistVisitForm = super.render();
@@ -161,30 +174,20 @@ export class VisitDentistForm extends VisitForm {
     newDentistVisitForm.querySelector("#priority-select-wrapper").insertAdjacentHTML("afterend", additionalInfo);
     newDentistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 2;
     if (edit) {
+      modalBackground.add();
       const editingCardInfo = request.getCard(localStorage.Authorization, oldCard.id);
       editingCardInfo.then((data) => {
         newDentistVisitForm.querySelector("#fio").value = data.name;
         newDentistVisitForm.querySelector("#visit-purpose").value = data.purpose;
         newDentistVisitForm.querySelector("#decription").value = data.description;
+        newDentistVisitForm.querySelector("#visit-date").value = data.date;
         newDentistVisitForm.querySelector("#last-visit").value = data.lastDate;
         newDentistVisitForm.querySelector("#visit-submit-btn").innerText = "Сохранить";
         newDentistVisitForm.querySelector("#visit-doctor-select").setAttribute("disabled", "true");
       });
     }
-    newDentistVisitForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const card = new VisitCardDantist();
-      if (edit) {
-        const data = await request.updateCard(localStorage.Authorization, oldCard.id, this.createDentistObj(newDentistVisitForm));
-        visitList.replaceChild(card.render(data, false), oldCard);
-        const filters = new VisitFilters();
-        filters.applyFilters();
-      } else {
-        const data = await request.postCard(localStorage.Authorization, this.createDentistObj(newDentistVisitForm));
-        card.render(data);
-      }
-      checkCards();
-      newDentistVisitForm.remove();
+    newDentistVisitForm.addEventListener("submit", (e) => {
+      this.dentistFormSubmitHandler(e, newDentistVisitForm, oldCard, edit);
     });
     return newDentistVisitForm;
   }
@@ -197,9 +200,25 @@ export class VisitTherapistForm extends VisitForm {
       name: form.querySelector("#fio").value,
       purpose: form.querySelector("#visit-purpose").value,
       description: form.querySelector("#decription").value,
+      date: form.querySelector("#visit-date").value,
       priority: form.querySelector("#priority-select").value,
       age: form.querySelector("#age").value,
     };
+  }
+  async therapistFormSubmitHandler(e, form, oldCard, edit) {
+    modalBackground.remove();
+    const card = new VisitCardTherapist();
+    if (edit) {
+      const data = await request.updateCard(localStorage.Authorization, oldCard.id, this.createTherapistObj(form));
+      visitList.replaceChild(card.render(data, false), oldCard);
+      const filters = new VisitFilters();
+      filters.applyFilters();
+    } else {
+      const data = await request.postCard(localStorage.Authorization, this.createTherapistObj(form));
+      card.render(data);
+    }
+    checkCards();
+    form.remove();
   }
   render(oldCard, edit = false) {
     const newTherapistVisitForm = super.render();
@@ -207,31 +226,20 @@ export class VisitTherapistForm extends VisitForm {
     newTherapistVisitForm.querySelector("#priority-select-wrapper").insertAdjacentHTML("afterend", additionalInfo);
     newTherapistVisitForm.querySelector("#visit-doctor-select").selectedIndex = 3;
     if (edit) {
+      modalBackground.add();
       const editingCardInfo = request.getCard(localStorage.Authorization, oldCard.id);
       editingCardInfo.then((data) => {
         newTherapistVisitForm.querySelector("#fio").value = data.name;
         newTherapistVisitForm.querySelector("#visit-purpose").value = data.purpose;
         newTherapistVisitForm.querySelector("#decription").value = data.description;
+        newTherapistVisitForm.querySelector("#visit-date").value = data.date;
         newTherapistVisitForm.querySelector("#age").value = data.age;
         newTherapistVisitForm.querySelector("#visit-submit-btn").innerText = "Сохранить";
         newTherapistVisitForm.querySelector("#visit-doctor-select").setAttribute("disabled", "true");
       });
     }
-    newTherapistVisitForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const card = new VisitCardTherapist();
-      if (edit) {
-        const data = await request.updateCard(localStorage.Authorization, oldCard.id, this.createTherapistObj(newTherapistVisitForm));
-        visitList.replaceChild(card.render(data, false), oldCard);
-        const filters = new VisitFilters();
-        filters.applyFilters();
-      } else {
-        const data = await request.postCard(localStorage.Authorization, this.createTherapistObj(newTherapistVisitForm));
-        card.render(data);
-
-      }
-      checkCards();
-      newTherapistVisitForm.remove();
+    newTherapistVisitForm.addEventListener("submit", (e) => {
+      this.therapistFormSubmitHandler(e, newTherapistVisitForm, oldCard, edit);
     });
     return newTherapistVisitForm;
   }
