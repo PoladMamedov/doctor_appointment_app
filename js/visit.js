@@ -35,7 +35,7 @@ export default class VisitForm {
       "border-primary",
       "rounded",
       "p-4",
-      "position-absolute",
+      "position-fixed",
       "top-50",
       "start-50",
       "translate-middle",
