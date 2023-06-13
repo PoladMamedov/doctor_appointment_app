@@ -1,5 +1,6 @@
 body {
-  background-color: #117edd21;
+  background-color: #1d84de21;
+
 }
 
 ul {
@@ -87,6 +88,7 @@ ul {
   outline: 1px solid rgb(27, 31, 227);
   outline-offset: 3px;
 }
+
 .modal-bg {
   position: fixed;
   top: 0;
@@ -98,6 +100,7 @@ ul {
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
 }
+
 .modal-bg-active {
   opacity: 0.6;
 }
